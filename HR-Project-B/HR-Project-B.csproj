@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+=======
+<Project Sdk="Microsoft.NET.Sdk">
+>>>>>>> Stashed changes
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>

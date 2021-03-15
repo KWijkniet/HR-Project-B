@@ -6,8 +6,14 @@ namespace HR_Project_B
     {
         static void Main(string[] args)
         {
+<<<<<<< Updated upstream
             Register.Start();
             Console.WriteLine("Hello World!");
+=======
+            Karan.Start();
+
+
+>>>>>>> Stashed changes
         }
     }
 }
