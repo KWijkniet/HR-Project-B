@@ -173,29 +173,29 @@ namespace HR_Project_B
         // Create a new account
         private static void CreateAccount()
         {
-            Console.WriteLine("What should the name be?");
-            string name = Console.ReadLine();
-            Console.WriteLine("What should the password be?");
-            string password = Console.ReadLine();
-            Console.Clear();
+            //Console.WriteLine("What should the name be?");
+            //string name = Console.ReadLine();
+            //Console.WriteLine("What should the password be?");
+            //string password = Console.ReadLine();
+            //Console.Clear();
 
-            string title = "Are you sure you want to create this account?\n";
-            string[] options = new string[] { "Confirm", "Back" };
-            OptionMenu menu = new OptionMenu(title, options);
-            menu.Display();
-            Console.Clear();
+            //string title = "Are you sure you want to create this account?\n";
+            //string[] options = new string[] { "Confirm", "Back" };
+            //OptionMenu menu = new OptionMenu(title, options);
+            //menu.Display();
+            //Console.Clear();
 
-            Account account = new Account(name, password);
+            //Account account = new Account(name, password);
 
-            Account[] temp = new Account[accounts.Length + 1];
-            for (int i = 0; i < accounts.Length; i++)
-            {
-                temp[i] = accounts[i];
-            }
-            temp[^1] = account;
-            accounts = temp;
+            //Account[] temp = new Account[accounts.Length + 1];
+            //for (int i = 0; i < accounts.Length; i++)
+            //{
+            //    temp[i] = accounts[i];
+            //}
+            //temp[^1] = account;
+            //accounts = temp;
 
-            SaveAccounts();
+            //SaveAccounts();
         }
         #endregion
     }
