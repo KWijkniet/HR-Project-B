@@ -15,6 +15,7 @@ namespace HR_Project_B
         {
             Register.Start();
             Karan.Start();
+            Kelvin.Start();
 
         }
     }

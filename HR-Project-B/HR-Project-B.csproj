@@ -1,14 +1,21 @@
-
-
-
 <Project Sdk="Microsoft.NET.Sdk">
-
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <RootNamespace>HR_Project_B</RootNamespace>
+    <StartupObject>HR_Project_B.Program</StartupObject>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Data\Accounts.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Data\Accounts.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
