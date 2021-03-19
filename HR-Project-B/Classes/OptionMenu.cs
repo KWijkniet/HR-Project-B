@@ -10,6 +10,7 @@ namespace HR_Project_B
         private string title;
         private string[] options;
         private int index = 0;
+        private string prefix = "> ";
 
         public OptionMenu(string _title, string[] _options)
         {
@@ -58,13 +59,15 @@ namespace HR_Project_B
             for (int i = 0; i < options.Length; i++)
             {
                 string option = options[i];
-                string prefix = "  ";
 
                 if (index == i)
                 {
-                    prefix = "> ";
+                    result += prefix + option + "\n";
                 }
-                result += prefix + option + "\n";
+                else
+                {
+                    result += "  " + option + "\n";
+                }
             }
             Console.SetCursorPosition(0, 0);
             Console.WriteLine(result);
