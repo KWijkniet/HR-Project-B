@@ -9,61 +9,47 @@ namespace HR_Project_B
 {
     class Karan
     {
-        
-
         public static void Start()
         {
-            
             while (true)
-            
             {
-                int role = roleMenu();
-                Console.Clear();
-                if (role == 1)
+                int role = Program.account.role;
+
+                switch (role)
                 {
-                    if (!customerMenu()) // moeten de rollen komen te staan 
-                    {
-        
-                        continue;
-                    }
-                    
+                    case 0:
+                        if (!guestMenu())
+                        {
+                            return;
+                        }
+                        break;
+                    case 1:
+                        if (!customerMenu())
+                        {
+                            return;
+                        }
+                        break;
+                    case 2:
+                        if (!chefMenu())
+                        {
+                            return;
+                        }
+                        break;
+                    case 3:
+                        if (!mangerMenu())
+                        {
+                            return;
+                        }
+                        break;
+                    case 4:
+                        if (!adminMenu())
+                        {
+                            return;
+                        }
+                        break;
+                    default:
+                        break;
                 }
-                if (role == 2)
-                {
-                    if (!guestMenu()) // moeten de rollen komen te staan 
-                    {
-
-                        continue;
-                    }
-
-                }
-                if (role == 3)
-                {
-                    if (!chefMenu()) // moeten de rollen komen te staan 
-                    {
-
-                        continue;
-                    }
-
-                }
-                if (role == 4)
-                {
-                    if (!mangerMenu()) // moeten de rollen komen te staan 
-                    {
-
-                        continue;
-                    }
-
-                }
-                if (role == 5)
-                {
-                    if (!adminMenu()) // moeten de rollen komen te staan 
-                    {
-
-                        continue;
-                    }
-                }
-
             }
         }
         private static bool customerMenu()
@@ -73,7 +59,7 @@ namespace HR_Project_B
             "Sign up",
             "Menu",
             "Order",
-            "Back"};
+            "Logout"};
             // check whice case is pressed
             Console.CursorVisible = false;
             while (true)
@@ -102,7 +88,7 @@ namespace HR_Project_B
 
                 }
 
-                else if (selectedMenuItem == "Back")
+                else if (selectedMenuItem == "Logout")
                 {
                     return false;
                 }
@@ -110,60 +96,13 @@ namespace HR_Project_B
             }
             return true;
         }
-        private static int roleMenu()
-        {
-            List<string> menuItems = new List<string>() {
-            "Customer",
-            "Guest",
-            "Chef",
-            "Manager",
-            "Admin"};
-            // check whice case is pressed
-            Console.CursorVisible = false;
-            while (true)
-            {
-                string selectedMenuItem = menuDrawing.drawMenu(menuItems);
-                if (selectedMenuItem == "Customer")
-                {
-                    Console.Clear();
-                    Console.WriteLine("U bent nu customer"); 
-                    return 1;
-                }
-                else if (selectedMenuItem == "Guest") 
-                {
-                    Console.Clear();
-                    Console.WriteLine("U bent nu Guest"); return 2;
-                }
-                else if (selectedMenuItem == "Chef")
-                {
-                    Console.Clear();
-                    Console.WriteLine("U bent nu chef"); return 3;
-                }
-                else if (selectedMenuItem == "Manager")
-                {
-                    Console.Clear();
-                    Console.WriteLine("U bent nu manger"); return 4;
-                }
-
-                else if (selectedMenuItem == "Admin")
-                {
-                    Console.Clear();
-                    Console.WriteLine("U bent nu admin"); return 5;
-
-                }
-
-
-                Console.Clear();
-            }
-            return 0;
-        }
         private static bool guestMenu()
         {
             List<string> menuItems = new List<string>() {
             "Log in",
             "Sign up",
             "Menu",
-            "Exit"};
+            "Logout"};
             // check whice case is pressed
             Console.CursorVisible = false;
             while (true)
@@ -185,9 +124,9 @@ namespace HR_Project_B
                     Console.WriteLine("Zie Hier Het Menu"); Console.Read();
                 }
 
-                else if (selectedMenuItem == "Exit")
+                else if (selectedMenuItem == "Logout")
                 {
-                    Environment.Exit(0);
+                    return false;
                 }
                 Console.Clear();
             }
@@ -200,7 +139,7 @@ namespace HR_Project_B
             "Sign up",
             "Menu",
             "Order",
-            "Back"};
+            "Logout"};
             // check whice case is pressed
             Console.CursorVisible = false;
             while (true)
@@ -229,7 +168,7 @@ namespace HR_Project_B
 
                 }
 
-                else if (selectedMenuItem == "Back")
+                else if (selectedMenuItem == "Logout")
                 {
                     return false;
                 }
@@ -244,7 +183,7 @@ namespace HR_Project_B
             "Sign up",
             "Menu",
             "Order",
-            "Back"};
+            "Logout"};
             // check whice case is pressed
             Console.CursorVisible = false;
             while (true)
@@ -273,7 +212,7 @@ namespace HR_Project_B
 
                 }
 
-                else if (selectedMenuItem == "Back")
+                else if (selectedMenuItem == "Logout")
                 {
                     return false;
                 }
@@ -288,7 +227,7 @@ namespace HR_Project_B
             "Sign up",
             "Menu",
             "Order",
-            "Back"};
+            "Logout"};
             // check whice case is pressed
             Console.CursorVisible = false;
             while (true)
@@ -317,7 +256,7 @@ namespace HR_Project_B
 
                 }
 
-                else if (selectedMenuItem == "Back")
+                else if (selectedMenuItem == "Logout")
                 {
                     return false;
                 }
