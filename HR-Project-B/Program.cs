@@ -6,7 +6,6 @@ namespace HR_Project_B
     {
         static void Main(string[] args)
         {
-
             Register.Start();
             Kelvin.Start();
         }
