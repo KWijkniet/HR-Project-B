@@ -11,24 +11,18 @@ namespace HR_Project_B
         public string name;
         public string password;
 
-        public Account(string name, string password="secret")
+        public Account(string name, string password = "secret")
         {
             this.id = Guid.NewGuid().ToString();
             this.name = name;
             this.password = password;
         }
 
-        public string ToJSON()
+        public Account(dynamic data)
         {
-            return JsonConvert.SerializeObject(this, Formatting.Indented);
-        }
-
-        public void fromJSON(string json)
-        {
-            Account acc = JsonConvert.DeserializeObject<Account>(json);
-            id = acc.id;
-            name = acc.name;
-            password = acc.password;
+            this.id = data.id;
+            this.name = data.name;
+            this.password = data.password;
         }
     }
 }
