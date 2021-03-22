@@ -40,7 +40,7 @@ namespace HR_Project_B
                     Console.Clear();
                     break;
                 }
-                else { TextTool.TextColor("Your input was invalid. Please try again.", ConsoleColor.Red, false); }
+                else { TextTool.TextColor("Your input was invalid. Please try again.", ConsoleColor.Red, true); }
             }
 
             //Login
@@ -56,7 +56,7 @@ namespace HR_Project_B
 
                     if(userEmail.Length <= 0 || userPassword.Length <= 0)
                     {
-                        TextTool.TextColor("Your input was invalid. Please try again.", ConsoleColor.Red, false);
+                        TextTool.TextColor("Your input was invalid. Please try again.", ConsoleColor.Red, true);
                         continue;
                     }
 
@@ -75,7 +75,7 @@ namespace HR_Project_B
                     }
                     else
                     {
-                        TextTool.TextColor("Your input was invalid. Please try again.", ConsoleColor.Red, false);
+                        TextTool.TextColor("Your input was invalid. Please try again.", ConsoleColor.Red, true);
                         continue;
                     }
                 }
@@ -93,7 +93,7 @@ namespace HR_Project_B
                     }
                     else {
                         userUsername = "";
-                        TextTool.TextColor("Your input was invalid. Please try again.", ConsoleColor.Red, false);
+                        TextTool.TextColor("Your input was invalid. Please try again.", ConsoleColor.Red, true);
                     }
                 }
 
@@ -106,7 +106,7 @@ namespace HR_Project_B
                     }
                     else {
                         userPassword = "";
-                        TextTool.TextColor("Your input was invalid. Please try again.", ConsoleColor.Red, false);
+                        TextTool.TextColor("Your input was invalid. Please try again.", ConsoleColor.Red, true);
                     }
                 }
                 
@@ -119,7 +119,7 @@ namespace HR_Project_B
                     }
                     else {
                         userPhonenumber = "";
-                        TextTool.TextColor("Your input was invalid. Please try again.", ConsoleColor.Red, false);
+                        TextTool.TextColor("Your input was invalid. Please try again.", ConsoleColor.Red, true);
                     }
                 }
 
@@ -146,11 +146,11 @@ namespace HR_Project_B
                         userEmail = "";
                         if (!isUnique)
                         {
-                            TextTool.TextColor("Email already in use. Please try again.", ConsoleColor.Red, false);
+                            TextTool.TextColor("Email already in use. Please try again.", ConsoleColor.Red, true);
                         }
                         else
                         {
-                            TextTool.TextColor("Your input was invalid. Please try again.", ConsoleColor.Red, false);
+                            TextTool.TextColor("Your input was invalid. Please try again.", ConsoleColor.Red, true);
                         }
                     }
                 }
@@ -164,7 +164,7 @@ namespace HR_Project_B
                     }
                     else {
                         userRole = "";
-                        TextTool.TextColor("Your input was invalid. Please try again.", ConsoleColor.Red, false);
+                        TextTool.TextColor("Your input was invalid. Please try again.", ConsoleColor.Red, true);
                     }
                 }
 
