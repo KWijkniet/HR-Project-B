@@ -32,7 +32,6 @@ namespace HR_Project_B
                 }
                 //Kelvin.Start();
             }
-            
         }
 
         // Load accounts from the file
