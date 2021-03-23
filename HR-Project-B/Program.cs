@@ -15,7 +15,10 @@ namespace HR_Project_B
         private static void Main(string[] args)
         {
             LoadAccounts();
+            Console.CursorVisible = false;
 
+            MenuManager.Start();
+            return;
             while (true)
             {
                 //Clear on start
@@ -30,7 +33,6 @@ namespace HR_Project_B
                     //Show menu based on role
                     Karan.Start();
                 }
-                //Kelvin.Start();
             }
         }
 

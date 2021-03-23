@@ -9,7 +9,6 @@ namespace HR_Project_B
     class Kelvin
     {
         private static Account[] accounts;
-
         public static void Start()
         {
             Console.CursorVisible = false;
@@ -23,6 +22,7 @@ namespace HR_Project_B
         // Show Option menu
         private static void DebugMode()
         {
+            string title = "What do you want to do?";
             string[] options = new string[]
             {
                 "Create random users",
@@ -32,7 +32,7 @@ namespace HR_Project_B
                 "Update account",
                 "Create account"
             };
-            OptionMenu menu = new OptionMenu("What do you want to do?", options);
+            OptionMenu menu = new OptionMenu(title, options);
             int response = menu.Display();
 
             switch (response)
