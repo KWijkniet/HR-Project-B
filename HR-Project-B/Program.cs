@@ -19,6 +19,7 @@ namespace HR_Project_B
 
             MenuManager.Start();
             return;
+
             while (true)
             {
                 //Clear on start
@@ -26,7 +27,7 @@ namespace HR_Project_B
                 //Show login screen
                 Register.Start();
                 //If succesfull login
-                if(account != null)
+                if (account != null)
                 {
                     //Show blank page
                     Console.Clear();

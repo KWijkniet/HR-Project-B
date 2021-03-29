@@ -50,27 +50,32 @@ namespace HR_Project_B
                 }
                 UpdateList();
             }
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.Gray;
             return index;
         }
 
         private void UpdateList()
         {
-            string result = title + "\n";
+            Console.SetCursorPosition(0, 0);
+            Console.ResetColor();
+            Console.WriteLine(title);
             for (int i = 0; i < options.Length; i++)
             {
                 string option = options[i];
+                Console.ResetColor();
 
                 if (index == i)
                 {
-                    result += prefix + option + "\n";
+                    Console.BackgroundColor = ConsoleColor.Gray;
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.WriteLine(prefix + option + " ");
                 }
                 else
                 {
-                    result += "  " + option + "\n";
+                    Console.WriteLine("  " + option + " ");
                 }
             }
-            Console.SetCursorPosition(0, 0);
-            Console.WriteLine(result);
         }
     }
 }
