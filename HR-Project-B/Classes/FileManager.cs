@@ -13,9 +13,12 @@ namespace HR_Project_B
         public FileManager(string filename, string[] dir = null)
         {
             path = "";
-            for (int i = 0; i < dir.Length; i++)
+            if(dir != null)
             {
-                path += dir[i] + "/";
+                for (int i = 0; i < dir.Length; i++)
+                {
+                    path += dir[i] + "/";
+                }
             }
             path += filename;
         }

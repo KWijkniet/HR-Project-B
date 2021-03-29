@@ -15,6 +15,10 @@ namespace HR_Project_B
         private static void Main(string[] args)
         {
             LoadAccounts();
+            Console.CursorVisible = false;
+
+            MenuManager.Start();
+            return;
 
             while (true)
             {
@@ -23,16 +27,14 @@ namespace HR_Project_B
                 //Show login screen
                 Register.Start();
                 //If succesfull login
-                if(account != null)
+                if (account != null)
                 {
                     //Show blank page
                     Console.Clear();
                     //Show menu based on role
                     Dashboard.Start();
                 }
-                //Kelvin.Start();
             }
-            
         }
 
         // Load accounts from the file

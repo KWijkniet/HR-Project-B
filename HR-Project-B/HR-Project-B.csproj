@@ -9,9 +9,13 @@
 
   <ItemGroup>
     <None Remove="Data\Accounts.json" />
+    <None Remove="Data\Menu.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Data\Menu.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Data\Accounts.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
