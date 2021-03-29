@@ -32,7 +32,7 @@ namespace HR_Project_B
                     //Show blank page
                     Console.Clear();
                     //Show menu based on role
-                    Karan.Start();
+                    Dashboard.Start();
                 }
             }
         }

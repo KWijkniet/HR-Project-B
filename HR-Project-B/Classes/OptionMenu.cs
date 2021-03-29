@@ -59,7 +59,7 @@ namespace HR_Project_B
         {
             Console.SetCursorPosition(0, 0);
             Console.ResetColor();
-            Console.WriteLine(title);
+            TextTool.TextColor(title,ConsoleColor.Yellow, true);
             for (int i = 0; i < options.Length; i++)
             {
                 string option = options[i];
