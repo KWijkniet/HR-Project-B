@@ -9,18 +9,19 @@ namespace HR_Project_B
     class FileManager
     {
         public string path;
+        public bool debugging = true;
 
-        public FileManager(string filename, string[] dir = null)
+        public FileManager(string filename)
         {
             path = "";
-            if(dir != null)
+            if (debugging)
             {
-                for (int i = 0; i < dir.Length; i++)
-                {
-                    path += dir[i] + "/";
-                }
+                path = Path.GetFullPath(@"data").Split("bin")[0] + "data\\" + filename;
             }
-            path += filename;
+            else
+            {
+                path = "Data/" + filename;
+            }
         }
 
         public dynamic[] ReadJSON()

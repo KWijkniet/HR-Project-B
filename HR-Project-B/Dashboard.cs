@@ -216,7 +216,7 @@ namespace HR_Project_B
                 {
                     case 0:
                         Console.Clear();
-                        Console.WriteLine("Menu"); Console.Read();
+                        MenuManager.Start();
                         break;
                     case 1:
                         Console.Clear();

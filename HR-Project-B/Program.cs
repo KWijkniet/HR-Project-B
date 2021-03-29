@@ -9,6 +9,14 @@ namespace HR_Project_B
 {
     class Program
     {
+        /*
+            Role id's:
+            0 = Guest
+            1 = Customer
+            2 = Chef
+            3 = Manager
+            4 = Admin 
+        */
         public static Account[] accounts;
         public static Account account;
 
@@ -17,6 +25,7 @@ namespace HR_Project_B
             LoadAccounts();
             Console.CursorVisible = false;
 
+            account = accounts[2];
             MenuManager.Start();
             return;
 
@@ -40,7 +49,7 @@ namespace HR_Project_B
         // Load accounts from the file
         private static void LoadAccounts()
         {
-            FileManager fm = new FileManager("Accounts.json", new string[] { "Data" });
+            FileManager fm = new FileManager("Accounts.json");
 
             dynamic[] foundAccounts = fm.ReadJSON();
             accounts = new Account[foundAccounts.Length];
@@ -55,7 +64,7 @@ namespace HR_Project_B
         // Save accounts to the file
         public static void SaveAccounts()
         {
-            FileManager fm = new FileManager("Accounts.json", new string[] { "Data" });
+            FileManager fm = new FileManager("Accounts.json");
 
             dynamic[] foundAccounts = new dynamic[accounts.Length];
             for (int i = 0; i < accounts.Length; i++)

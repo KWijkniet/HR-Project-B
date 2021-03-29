@@ -14,5 +14,13 @@
         "role": 4,
         "email": "admin@admin.nl",
         "phone": "+31 123456789"
+    },
+    {
+        "id": "16236bbe-09ec-494d-8159-e0cc5b9758cb",
+        "name": "chef",
+        "password": "chef",
+        "role": 2,
+        "email": "chef@chef.nl",
+        "phone": "+31 123456789"
     }
 ]
