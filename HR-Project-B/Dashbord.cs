@@ -7,7 +7,7 @@ using System.IO;
 
 namespace HR_Project_B
 {
-    class Karan
+    class Dashbord
     {
         public static void Start()
         {
@@ -265,6 +265,6 @@ namespace HR_Project_B
             return true;
         }
 
-
+        
     }
 }

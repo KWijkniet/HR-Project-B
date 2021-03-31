@@ -15,7 +15,9 @@ namespace HR_Project_B
         private static void Main(string[] args)
         {
             LoadAccounts();
-
+            account = accounts[1];
+            UserManager.Start();
+            return;
             while (true)
             {
                 //Clear on start
@@ -28,7 +30,7 @@ namespace HR_Project_B
                     //Show blank page
                     Console.Clear();
                     //Show menu based on role
-                    Karan.Start();
+                    Dashbord.Start();
                 }
                 //Kelvin.Start();
             }
