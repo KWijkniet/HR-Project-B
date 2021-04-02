@@ -11,21 +11,27 @@ namespace HR_Project_B
     {
         public static void Start()
         {
-            string userChoice, userUsername, userPassword, userPhonenumber, userEmail, userRole;
+            string userUsername, userPassword, userPhonenumber, userEmail, userRole;
+            int userChoice;
 
-            TextTool.TextColor("Welcome to Jake Darcy’s restaurant\n", ConsoleColor.Green, true);
-            Console.WriteLine("1) Login\n2) Register an account\n3) Continue as guest\n4) Exit\n");
-            
+            string[] menuItems = new string[] {
+            "Login",
+            "Register an account",
+            "Continue as guest",
+            "Exit"};
+            // check whice case is pressed
+            Console.CursorVisible = false;
             while (true) //Loops until user gives valid input
             {
-                userChoice = Console.ReadLine();
-                if(userChoice == "4")
+                OptionMenu menu = new OptionMenu("Welcome user, select one of the options below.\n", menuItems);
+                userChoice = menu.Display();
+                if (userChoice == 3)
                 {
                     Environment.Exit(0);
                 }
-                if (userChoice == "1" || userChoice == "2" || userChoice == "3")
+                if (userChoice == 0 || userChoice == 1 || userChoice == 2)
                 {
-                    if (userChoice == "3")
+                    if (userChoice == 2)
                     {
                         userRole = "guest";
                         foreach (Account acc in Program.accounts)
@@ -42,9 +48,9 @@ namespace HR_Project_B
                 }
                 else { TextTool.TextColor("Your input was invalid. Please try again.", ConsoleColor.Red, true); }
             }
-
+            
             //Login
-            if (userChoice == "1")
+            if (userChoice == 0)
             {
                 while (true)
                 {
@@ -82,7 +88,7 @@ namespace HR_Project_B
             }
             
             //Registration
-            else if (userChoice == "2") 
+            else if (userChoice == 1) 
             {
                 //loops until valid username is given
                 while (true) {
@@ -117,8 +123,8 @@ namespace HR_Project_B
                     if (Regex.IsMatch(userPhonenumber, "^[0-9]{10}$")) {        //needs to have valid phonenumber format
                         userPhonenumber = "+31 " + userPhonenumber; break;
                     }
-                    else {
-                        userPhonenumber = "";
+                    else { 
+                        userPhonenumber = ""; 
                         TextTool.TextColor("Your input was invalid. Please try again.", ConsoleColor.Red, true);
                     }
                 }
@@ -168,10 +174,10 @@ namespace HR_Project_B
                     }
                 }
 
-                Console.Clear();
-
                 int roleIndex = userRole == "customer" ? 1 : userRole == "chef" ? 2 : userRole == "manager" ? 3 : userRole == "admin" ? 4 : 0;
                 Program.account = new Account(userUsername, roleIndex, userEmail, userPhonenumber, userPassword);
+
+                TextTool.TextColor("\nYour account has been created succesfully.", ConsoleColor.Green ,true); Console.WriteLine("Press enter to continue"); Console.Read(); Console.Clear();
 
                 Account[] temp = new Account[Program.accounts.Length + 1];
                 for (int i = 0; i < Program.accounts.Length; i++)
