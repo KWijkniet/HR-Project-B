@@ -1,15 +1,64 @@
 [
   {
     "id": "8d5bc0a7-0d6d-4a78-9b94-5874f19831b9",
-    "name": "test",
-    "description": "test",
+    "name": "Starters",
+    "description": " ",
     "items": [
       {
         "id": "18a9c233-5cf0-47d1-9d0d-999d6a6306fc",
         "categoryId": "8d5bc0a7-0d6d-4a78-9b94-5874f19831b9",
-        "name": "test",
-        "description": "test",
-        "price": 10.0
+        "name": "Shrimp Cocktail",
+        "description": "Cocktail of norwegian prawns with a spicy cocktail sauce",
+        "price": 9.2
+      },
+      {
+        "id": "2168b1b4-6808-43b7-bcca-9c63b5eca668",
+        "categoryId": "8d5bc0a7-0d6d-4a78-9b94-5874f19831b9",
+        "name": "French style salad",
+        "description": "Mixed salad with brie, walnuts, leek, garlic croutons and a honey dressing",
+        "price": 7.9
+      }
+    ]
+  },
+  {
+    "id": "8ecc217f-c250-4017-961a-bfa2977e87e0",
+    "name": "Meat",
+    "description": " ",
+    "items": [
+      {
+        "id": "d3a5184e-629f-4c42-b1cd-6e89aeaa0fbd",
+        "categoryId": "8ecc217f-c250-4017-961a-bfa2977e87e0",
+        "name": "Schnitzel",
+        "description": "Served with Stroganoff sauce, mushroom sauce or pepper sauce",
+        "price": 15.9
+      }
+    ]
+  },
+  {
+    "id": "328384fe-9e4c-4887-b5ee-94a47bdbcc8c",
+    "name": "Dessert",
+    "description": " ",
+    "items": [
+      {
+        "id": "1421a36d-9c1f-490c-93ac-2cc776b02e83",
+        "categoryId": "328384fe-9e4c-4887-b5ee-94a47bdbcc8c",
+        "name": "Chocolate Sundae",
+        "description": "Chocolate cake with vanilla ice cream and whipped cream",
+        "price": 7.5
+      },
+      {
+        "id": "34f77e88-0907-4b37-9617-fef6f8bb0a90",
+        "categoryId": "328384fe-9e4c-4887-b5ee-94a47bdbcc8c",
+        "name": "Crème Brûlée",
+        "description": "Vanilla cream with caramelised cane sugar and whipped cream",
+        "price": 7.4
+      },
+      {
+        "id": "ad5589a4-c5e4-4072-a03a-4ddbd63fbe79",
+        "categoryId": "328384fe-9e4c-4887-b5ee-94a47bdbcc8c",
+        "name": "Ice cream truffle",
+        "description": "With eggnog liquor and whipped cream",
+        "price": 6.9
       }
     ]
   }

@@ -25,10 +25,6 @@ namespace HR_Project_B
             LoadAccounts();
             Console.CursorVisible = false;
 
-            account = accounts[2];
-            MenuManager.Start();
-            return;
-
             while (true)
             {
                 //Clear on start
