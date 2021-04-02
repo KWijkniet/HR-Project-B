@@ -201,6 +201,7 @@ namespace HR_Project_B
         {
             string[] menuItems = new string[] {
             "Menu", //Can edit everything
+            "Manage Users", //View users and change their role
             "Reservation",
             "Bookings", //Can edit everything
             "Finance", //Overview
@@ -220,21 +221,25 @@ namespace HR_Project_B
                         break;
                     case 1:
                         Console.Clear();
-                        Console.WriteLine("Reservation"); Console.Read();
+                        UserManager.Start();
                         break;
                     case 2:
                         Console.Clear();
-                        Console.WriteLine("Bookings"); Console.Read();
+                        Console.WriteLine("Reservation"); Console.Read();
                         break;
                     case 3:
                         Console.Clear();
-                        Console.WriteLine("Finance"); Console.Read();
+                        Console.WriteLine("Bookings"); Console.Read();
                         break;
                     case 4:
                         Console.Clear();
-                        Information.Info(); Console.Read();
+                        Console.WriteLine("Finance"); Console.Read();
                         break;
                     case 5:
+                        Console.Clear();
+                        Information.Info(); Console.Read();
+                        break;
+                    case 6:
                         Program.account = null;
                         return false;
                 }
