@@ -7,11 +7,23 @@ namespace HR_Project_B
     class MenuManager
     {
         private static MenuCategory[] categories;
-        private static FileManager fm = new FileManager("Menu.json", new string[] { "Data" });
+        private static FileManager fm = new FileManager("Menu.json");
 
         public static void Start()
         {
+            if(Program.account == null)
+            {
+                return;
+            }
+
             LoadMenu();
+
+            if (Program.account.role <= 1 || Program.account.role == 3)
+            {
+                ViewMenu();
+                return;
+            }
+
             while (true)
             {
                 Console.Clear();
@@ -70,6 +82,14 @@ namespace HR_Project_B
 
         private static void CreateCategory()
         {
+            Console.Clear();
+            if (Program.account.role <= 2)
+            {
+                TextTool.TextColor("You dont have permissions to create categories. Press enter to continue", ConsoleColor.Red, true);
+                Console.ReadKey();
+                return;
+            }
+
             string name = "";
             string description = "";
 
@@ -205,6 +225,12 @@ namespace HR_Project_B
         private static void CreateItem(MenuCategory category)
         {
             Console.Clear();
+            if (Program.account.role <= 2)
+            {
+                TextTool.TextColor("You dont have permissions to create items. Press enter to continue", ConsoleColor.Red, true);
+                Console.ReadKey();
+                return;
+            }
             string name = "";
             string description = "";
             double price = 0.0;
@@ -248,6 +274,8 @@ namespace HR_Project_B
                 {
                     try
                     {
+                        var parts = temp.Split(".");
+                        temp = string.Join(",", parts);
                         price = double.Parse(temp);
                         validInput = true;
                     }
@@ -346,6 +374,13 @@ namespace HR_Project_B
                         break;
                     case 2:
                         //Edit price
+                        if(Program.account.role <= 2)
+                        {
+                            TextTool.TextColor("You dont have permissions to edit the price. Press enter to continue", ConsoleColor.Red, true);
+                            Console.ReadKey();
+                            break;
+                        }
+
                         while (true)
                         {
                             TextTool.TextColor("Item price:", ConsoleColor.Green, false);
@@ -354,6 +389,8 @@ namespace HR_Project_B
                             {
                                 try
                                 {
+                                    var parts = tempPrice.Split(".");
+                                    tempPrice = string.Join(",", parts);
                                     menuItem.price = double.Parse(tempPrice);
                                     category.UpdateItem(mainIndex, menuItem);
                                     SaveMenu();
@@ -395,6 +432,7 @@ namespace HR_Project_B
                 categories[i] = item;
             }
         }
+
         private static void SaveMenu()
         {
             dynamic[] found = new dynamic[categories.Length];
