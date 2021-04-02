@@ -48,7 +48,7 @@ namespace HR_Project_B
                 }
                 else { TextTool.TextColor("Your input was invalid. Please try again.", ConsoleColor.Red, true); }
             }
-
+            
             //Login
             if (userChoice == 0)
             {
@@ -123,8 +123,8 @@ namespace HR_Project_B
                     if (Regex.IsMatch(userPhonenumber, "^[0-9]{10}$")) {        //needs to have valid phonenumber format
                         userPhonenumber = "+31 " + userPhonenumber; break;
                     }
-                    else {
-                        userPhonenumber = "";
+                    else { 
+                        userPhonenumber = ""; 
                         TextTool.TextColor("Your input was invalid. Please try again.", ConsoleColor.Red, true);
                     }
                 }
@@ -174,10 +174,10 @@ namespace HR_Project_B
                     }
                 }
 
-                Console.Clear();
-
                 int roleIndex = userRole == "customer" ? 1 : userRole == "chef" ? 2 : userRole == "manager" ? 3 : userRole == "admin" ? 4 : 0;
                 Program.account = new Account(userUsername, roleIndex, userEmail, userPhonenumber, userPassword);
+
+                TextTool.TextColor("\nYour account has been created succesfully.", ConsoleColor.Green ,true); Console.WriteLine("Press enter to continue"); Console.Read(); Console.Clear();
 
                 Account[] temp = new Account[Program.accounts.Length + 1];
                 for (int i = 0; i < Program.accounts.Length; i++)

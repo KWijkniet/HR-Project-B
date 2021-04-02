@@ -63,23 +63,23 @@ namespace HR_Project_B
             Console.CursorVisible = false;
             while (true)
             {
-                OptionMenu menu = new OptionMenu("  Welcome " + Program.account.name + ", select one of the options below.\n", menuItems);
+                OptionMenu menu = new OptionMenu("Welcome " + Program.account.name + ", select one of the options below.\n", menuItems);
                 int index = menu.Display();
                 switch (index)
                 {
-                    case 0:
+                    case 0: //menu
                         Console.Clear();
-                        Console.WriteLine("Menu"); Console.Read();
+                        MenuManager.Start();
                         break;
-                    case 1:
+                    case 1: //reservation
                         Console.Clear();
                         Console.WriteLine("Reservation"); Console.Read();
                         break;
-                    case 2:
+                    case 2: //info
                         Console.Clear();
                         Information.Info(); Console.Read();
                         break;
-                    case 3:
+                    case 3: //logout
                         Program.account = null;
                         return false;
                 }
@@ -98,23 +98,23 @@ namespace HR_Project_B
             Console.CursorVisible = false;
             while (true)
             {
-                OptionMenu menu = new OptionMenu("  Welcome " + Program.account.name + ", select one of the options below.\n", menuItems);
+                OptionMenu menu = new OptionMenu("Welcome " + Program.account.name + ", select one of the options below.\n", menuItems);
                 int index = menu.Display();
                 switch (index)
                 {
-                    case 0:
+                    case 0: //menu
                         Console.Clear();
-                        Console.WriteLine("Menu"); Console.Read();
+                        MenuManager.Start();
                         break;
-                    case 1:
+                    case 1: //reservation
                         Console.Clear();
                         Console.WriteLine("Reservation"); Console.Read();
                         break;
-                    case 2:
+                    case 2: //info
                         Console.Clear();
                         Information.Info(); Console.Read();
                         break;
-                    case 3:
+                    case 3: //logout
                         Program.account = null;
                         return false;
                 }
@@ -133,23 +133,23 @@ namespace HR_Project_B
             Console.CursorVisible = false;
             while (true)
             {
-                OptionMenu menu = new OptionMenu("  Welcome " + Program.account.name + ", select one of the options below.\n", menuItems);
+                OptionMenu menu = new OptionMenu("Welcome " + Program.account.name + ", select one of the options below.\n", menuItems);
                 int index = menu.Display();
                 switch (index)
                 {
-                    case 0:
+                    case 0: //menu
                         Console.Clear();
-                        Console.WriteLine("Menu"); Console.Read();
+                        MenuManager.Start();
                         break;
-                    case 1:
+                    case 1: //reservation
                         Console.Clear();
                         Console.WriteLine("Reservation"); Console.Read();
                         break;
-                    case 2:
+                    case 2: //info
                         Console.Clear();
                         Information.Info(); Console.Read();
                         break;
-                    case 3:
+                    case 3: //logout
                         Program.account = null;
                         return false;
                 }
@@ -169,13 +169,13 @@ namespace HR_Project_B
             Console.CursorVisible = false;
             while (true)
             {
-                OptionMenu menu = new OptionMenu("  Welcome " + Program.account.name + ", select one of the options below.\n", menuItems);
+                OptionMenu menu = new OptionMenu("Welcome " + Program.account.name + ", select one of the options below.\n", menuItems);
                 int index = menu.Display();
                 switch (index)
                 {
                     case 0:
                         Console.Clear();
-                        Console.WriteLine("Menu"); Console.Read();
+                        MenuManager.Start();
                         break;
                     case 1:
                         Console.Clear();
@@ -210,13 +210,13 @@ namespace HR_Project_B
             Console.CursorVisible = false;
             while (true)
             {
-                OptionMenu menu = new OptionMenu("  Welcome " + Program.account.name + ", select one of the options below.\n", menuItems);
+                OptionMenu menu = new OptionMenu("Welcome " + Program.account.name + ", select one of the options below.\n", menuItems);
                 int index = menu.Display();
                 switch (index)
                 {
                     case 0:
                         Console.Clear();
-                        Console.WriteLine("Menu"); Console.Read();
+                        MenuManager.Start();
                         break;
                     case 1:
                         Console.Clear();
