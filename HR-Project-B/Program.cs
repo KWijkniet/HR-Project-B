@@ -24,7 +24,7 @@ namespace HR_Project_B
         {
             LoadAccounts();
             Console.CursorVisible = false;
-
+          
             while (true)
             {
                 //Clear on start
