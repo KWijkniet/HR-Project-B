@@ -18,19 +18,19 @@ namespace HR_Project_B
                 return;
             }
 
-            Text message = new Text("Menu Manager:");
-            Text[] messages = new Text[]
+            while (true)
             {
+                Program.ClearConsole();
+
+                Text message = new Text("Menu Manager:");
+                Text[] messages = new Text[]
+                {
                         new Text("View menu"),
                         new Text("Create Category"),
                         new Text("Edit Category"),
                         new Text("Back"),
-            };
+                };
 
-            while (true)
-            {
-                Program.ClearConsole();
-                
                 Menu menu = new Menu(message, messages);
                 int selected = menu.Display();
 
