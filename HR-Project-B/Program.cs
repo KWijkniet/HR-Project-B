@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using HR_Project_B.Components;
 
 namespace HR_Project_B
 {
@@ -19,9 +20,55 @@ namespace HR_Project_B
         */
         public static Account[] accounts;
         public static Account account;
+        public static Text restaurantText = new Text("Jake Darcy's restaurant\n", ConsoleColor.Yellow);
 
         private static void Main(string[] args)
         {
+            ClearConsole();
+            Text message = new Text("Hello there! Welcome to my restaurant. What is your name?");
+            Text error = new Text("Sorry but i dont think that is real name.", ConsoleColor.Red);
+            Input input = new Input(message, error, new InputSettings(true));
+            string name = input.Display();
+
+            while (true)
+            {
+                ClearConsole();
+                message = new Text("Welcome " + name + "!\nWhat can we do for you?");
+                Text[] messages = new Text[]
+                {
+                    new Text("View menu"),
+                    new Text("View information"),
+                    new Text("Make reservation"),
+                    new Text("Order take-away"),
+                    new Text("Leave"),
+                };
+
+                Menu menu = new Menu(message, messages);
+                int selected = menu.Display();
+
+                switch (selected)
+                {
+                    case 4:
+                        ClearConsole();
+                        message = new Text("Goodbye!\n");
+                        message.Display(true);
+
+                        menu = new Menu(new Text("Press enter to leave", default, default, ConsoleColor.Gray, ConsoleColor.Red));
+                        menu.Display();
+                        return;
+                    default:
+                        ClearConsole();
+                        message = new Text("Coming soon!\n");
+                        message.Display(true);
+
+                        menu = new Menu(new Text("Press enter to leave"));
+                        menu.Display();
+                        break;
+                }
+            }
+
+            return;
+
             LoadAccounts();
             Console.CursorVisible = false;
           
@@ -40,6 +87,12 @@ namespace HR_Project_B
                     Dashboard.Start();
                 }
             }
+        }
+
+        public static void ClearConsole()
+        {
+            Console.Clear();
+            restaurantText.Display(true);
         }
 
         // Load accounts from the file
