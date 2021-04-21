@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace HR_Project_B.Components
@@ -10,18 +8,31 @@ namespace HR_Project_B.Components
         public int minLength;
         public int maxLength;
         public string allowedCharacters;
+        public string customRegex;
         public bool newLine = false;
+        public bool canEscape = true;
 
-        public InputSettings(bool newLine = false, int minLength = 1, int maxLength = 999, string allowedCharacters = "A-Za-z ")
+        public InputSettings(bool newLine = false, int minLength = 1, int maxLength = 999, string allowedCharacters = "A-Za-z0-9 ", string customRegex = "", bool canEscape = true)
         {
             this.minLength = minLength;
             this.maxLength = maxLength;
             this.allowedCharacters = allowedCharacters;
             this.newLine = newLine;
+            this.customRegex = customRegex;
+            this.canEscape = canEscape;
         }
 
         public string GetRegex(bool ignoreLength = false)
         {
+            if(customRegex.Length > 0)
+            {
+                if (ignoreLength)
+                {
+                    return Regex.Replace(customRegex, "{.*?}", string.Empty);
+                }
+                return customRegex;
+            }
+
             if (ignoreLength)
             {
                 return "^[" + allowedCharacters + "]$";

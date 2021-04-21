@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
 using HR_Project_B.Components;
 
 namespace HR_Project_B
@@ -20,69 +15,32 @@ namespace HR_Project_B
         */
         public static Account[] accounts;
         public static Account account;
-        public static Text restaurantText = new Text("Jake Darcy's restaurant\n", ConsoleColor.Yellow);
+        public static Text restaurantText = new Text(@"
+             _____  ______  __  __   ____        ____    ______  ____    ____     __    __ 
+            /\___ \/\  _  \/\ \/\ \ /\  _`\     /\  _`\ /\  _  \/\  _`\ /\  _`\  /\ \  /\ \
+            \/__/\ \ \ \L\ \ \ \/'/'\ \ \L\_\   \ \ \/\ \ \ \L\ \ \ \L\ \ \ \/\_\\ `\`\\/'/
+               _\ \ \ \  __ \ \ , <  \ \  _\L    \ \ \ \ \ \  __ \ \ ,  /\ \ \/_/_`\ `\ /' 
+              /\ \_\ \ \ \/\ \ \ \\`\ \ \ \L\ \   \ \ \_\ \ \ \/\ \ \ \\ \\ \ \L\ \ `\ \ \ 
+              \ \____/\ \_\ \_\ \_\ \_\\ \____/    \ \____/\ \_\ \_\ \_\ \_\ \____/   \ \_\
+               \/___/  \/_/\/_/\/_/\/_/ \/___/      \/___/  \/_/\/_/\/_/\/ /\/___/     \/_/
+        ", ConsoleColor.Yellow);
 
         private static void Main(string[] args)
         {
-            ClearConsole();
-            Text message = new Text("Hello there! Welcome to my restaurant. What is your name?");
-            Text error = new Text("Sorry but i dont think that is real name.", ConsoleColor.Red);
-            Input input = new Input(message, error, new InputSettings(true));
-            string name = input.Display();
-
-            while (true)
-            {
-                ClearConsole();
-                message = new Text("Welcome " + name + "!\nWhat can we do for you?");
-                Text[] messages = new Text[]
-                {
-                    new Text("View menu"),
-                    new Text("View information"),
-                    new Text("Make reservation"),
-                    new Text("Order take-away"),
-                    new Text("Leave"),
-                };
-
-                Menu menu = new Menu(message, messages);
-                int selected = menu.Display();
-
-                switch (selected)
-                {
-                    case 4:
-                        ClearConsole();
-                        message = new Text("Goodbye!\n");
-                        message.Display(true);
-
-                        menu = new Menu(new Text("Press enter to leave", default, default, ConsoleColor.Gray, ConsoleColor.Red));
-                        menu.Display();
-                        return;
-                    default:
-                        ClearConsole();
-                        message = new Text("Coming soon!\n");
-                        message.Display(true);
-
-                        menu = new Menu(new Text("Press enter to leave"));
-                        menu.Display();
-                        break;
-                }
-            }
-
-            return;
-
             LoadAccounts();
             Console.CursorVisible = false;
           
             while (true)
             {
                 //Clear on start
-                Console.Clear();
+                ClearConsole();
                 //Show login screen
                 Register.Start();
                 //If succesfull login
                 if (account != null)
                 {
                     //Show blank page
-                    Console.Clear();
+                    ClearConsole();
                     //Show menu based on role
                     Dashboard.Start();
                 }

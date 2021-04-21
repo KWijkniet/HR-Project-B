@@ -1,251 +1,115 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
+using HR_Project_B.Components;
 
 namespace HR_Project_B
 {
+    public class DashboardOption
+    {
+        public string name;
+        public int id;
+        public int[] allowedRoles;
+
+        public DashboardOption(int id, string name, int[] options)
+        {
+            this.id = id;
+            this.name = name;
+            this.allowedRoles = options;
+        }
+
+        public bool HasAccess(int i)
+        {
+            if(allowedRoles.Length <= 0)
+            {
+                return true;
+            }
+            return allowedRoles.Contains<int>(i);
+        }
+    }
+
     class Dashboard
     {
+        private static DashboardOption[] options = new DashboardOption[]
+        {
+            new DashboardOption(0, "Menu", new int[0]),
+            new DashboardOption(1, "Manage Users", new int[]{4}),
+            new DashboardOption(2, "Reservations", new int[]{3,4}),
+            new DashboardOption(3, "Bookings", new int[]{3,4}),
+            new DashboardOption(4, "Finance", new int[]{3,4}),
+            new DashboardOption(5, "Info", new int[0]),
+            new DashboardOption(6, "Logout", new int[0]),
+        };
+
         public static void Start()
         {
             while (true)
             {
+                Program.ClearConsole();
                 int role = Program.account.role;
 
-                switch (role)
+                DashboardOption[] menuOptions = AllowedOptions(role);
+
+                Text message = new Text("Welcome " + Program.account.name + "!\nWhat can we do for you?");
+                Text[] messages = new Text[menuOptions.Length];
+
+                for (int i = 0; i < menuOptions.Length; i++)
+                {
+                    messages[i] = new Text(menuOptions[i].name);
+                }
+
+                Menu menu = new Menu(message, messages);
+                int selected = menu.Display();
+
+                Program.ClearConsole();
+
+                switch (menuOptions[selected].id)
                 {
                     case 0:
-                        if (!GuestMenu())
-                        {
-                            return;
-                        }
+                        MenuManager.Start();
                         break;
                     case 1:
-                        if (!CustomerMenu())
-                        {
-                            return;
-                        }
+                        UserManager.Start();
                         break;
                     case 2:
-                        if (!ChefMenu())
-                        {
-                            return;
-                        }
                         break;
                     case 3:
-                        if (!ManagerMenu())
-                        {
-                            return;
-                        }
                         break;
                     case 4:
-                        if (!AdminMenu())
-                        {
-                            return;
-                        }
                         break;
+                    case 5:
+                        Information.Start();
+                        break;
+                    case 6:
+                        Program.account = null;
+                        return;
                     default:
                         break;
                 }
             }
         }
-        private static bool CustomerMenu()
+
+        private static DashboardOption[] AllowedOptions(int role)
         {
-            string[] menuItems = new string[] {
-            "Menu",
-            "Reservation",
-            "Info",
-            "Logout"};
-            // check whice case is pressed
-            Console.CursorVisible = false;
-            while (true)
+            int count = 0;
+            for (int i = 0; i < options.Length; i++)
             {
-                OptionMenu menu = new OptionMenu("Welcome " + Program.account.name + ", select one of the options below.\n", menuItems);
-                int index = menu.Display();
-                switch (index)
+                if (options[i].HasAccess(role))
                 {
-                    case 0: //menu
-                        Console.Clear();
-                        MenuManager.Start();
-                        break;
-                    case 1: //reservation
-                        Console.Clear();
-                        Console.WriteLine("Reservation"); Console.Read();
-                        break;
-                    case 2: //info
-                        Console.Clear();
-                        Information.Info(); Console.Read();
-                        break;
-                    case 3: //logout
-                        Program.account = null;
-                        return false;
+                    count++;
                 }
-                Console.Clear();
             }
-            return true;
-        }
-        private static bool GuestMenu()
-        {
-            string[] menuItems = new string[] {
-            "Menu",
-            "Reservation",
-            "Info",
-            "Logout",};
-            // check whice case is pressed
-            Console.CursorVisible = false;
-            while (true)
+
+            DashboardOption[] result = new DashboardOption[count];
+            int index = 0;
+            for (int i = 0; i < options.Length; i++)
             {
-                OptionMenu menu = new OptionMenu("Welcome " + Program.account.name + ", select one of the options below.\n", menuItems);
-                int index = menu.Display();
-                switch (index)
+                if (options[i].HasAccess(role))
                 {
-                    case 0: //menu
-                        Console.Clear();
-                        MenuManager.Start();
-                        break;
-                    case 1: //reservation
-                        Console.Clear();
-                        Console.WriteLine("Reservation"); Console.Read();
-                        break;
-                    case 2: //info
-                        Console.Clear();
-                        Information.Info(); Console.Read();
-                        break;
-                    case 3: //logout
-                        Program.account = null;
-                        return false;
+                    result[index] = options[i];
+                    index++;
                 }
-                Console.Clear();
             }
-            return true;
-        }
-        private static bool ChefMenu()
-        {
-            string[] menuItems = new string[] {
-            "Menu", //Also gets to edit menu
-            "Reservation",
-            "Info",
-            "Logout",};
-            // check whice case is pressed
-            Console.CursorVisible = false;
-            while (true)
-            {
-                OptionMenu menu = new OptionMenu("Welcome " + Program.account.name + ", select one of the options below.\n", menuItems);
-                int index = menu.Display();
-                switch (index)
-                {
-                    case 0: //menu
-                        Console.Clear();
-                        MenuManager.Start();
-                        break;
-                    case 1: //reservation
-                        Console.Clear();
-                        Console.WriteLine("Reservation"); Console.Read();
-                        break;
-                    case 2: //info
-                        Console.Clear();
-                        Information.Info(); Console.Read();
-                        break;
-                    case 3: //logout
-                        Program.account = null;
-                        return false;
-                }
-                Console.Clear();
-            }
-            return true;
-        }
-        private static bool ManagerMenu()
-        {
-            string[] menuItems = new string[] {
-            "Menu",
-            "Reservation",
-            "Bookings", //Able to see and edit bookings
-            "Info",
-            "Logout",};
-            // check whice case is pressed
-            Console.CursorVisible = false;
-            while (true)
-            {
-                OptionMenu menu = new OptionMenu("Welcome " + Program.account.name + ", select one of the options below.\n", menuItems);
-                int index = menu.Display();
-                switch (index)
-                {
-                    case 0:
-                        Console.Clear();
-                        MenuManager.Start();
-                        break;
-                    case 1:
-                        Console.Clear();
-                        Console.WriteLine("Reservation"); Console.Read();
-                        break;
-                    case 2:
-                        Console.Clear();
-                        Console.WriteLine("Bookings"); Console.Read();
-                        break;
-                    case 3:
-                        Console.Clear();
-                        Information.Info(); Console.Read();
-                        break;
-                    case 4:
-                        Program.account = null;
-                        return false;
-                }
-                Console.Clear();
-            }
-            return true;
-        }
-        private static bool AdminMenu()
-        {
-            string[] menuItems = new string[] {
-            "Menu", //Can edit everything
-            "Manage Users", //View users and change their role
-            "Reservation",
-            "Bookings", //Can edit everything
-            "Finance", //Overview
-            "Info",
-            "Logout",};
-            // check whice case is pressed
-            Console.CursorVisible = false;
-            while (true)
-            {
-                OptionMenu menu = new OptionMenu("Welcome " + Program.account.name + ", select one of the options below.\n", menuItems);
-                int index = menu.Display();
-                switch (index)
-                {
-                    case 0:
-                        Console.Clear();
-                        MenuManager.Start();
-                        break;
-                    case 1:
-                        Console.Clear();
-                        UserManager.Start();
-                        break;
-                    case 2:
-                        Console.Clear();
-                        Console.WriteLine("Reservation"); Console.Read();
-                        break;
-                    case 3:
-                        Console.Clear();
-                        Console.WriteLine("Bookings"); Console.Read();
-                        break;
-                    case 4:
-                        Console.Clear();
-                        Console.WriteLine("Finance"); Console.Read();
-                        break;
-                    case 5:
-                        Console.Clear();
-                        Information.Info(); Console.Read();
-                        break;
-                    case 6:
-                        Program.account = null;
-                        return false;
-                }
-                Console.Clear();
-            }
-            return true;
+            return result;
         }
     }
 }
