@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using HR_Project_B.Components;
 
 namespace HR_Project_B
 {
@@ -11,11 +10,6 @@ namespace HR_Project_B
 
         public static void Start()
         {
-            if(Program.account == null)
-            {
-                return;
-            }
-
             LoadMenu();
 
             if (Program.account.role <= 1 || Program.account.role == 3)
@@ -26,14 +20,22 @@ namespace HR_Project_B
 
             while (true)
             {
-                Console.Clear();
-                string title = "Menu Manager:";
-                string[] options = new string[] { "View Menu", "Create Category", "Edit Category", "Back" };
-                OptionMenu menu = new OptionMenu(title, options);
-                int index = menu.Display();
+                Program.ClearConsole();
 
-                Console.Clear();
-                switch (index)
+                Text message = new Text("Menu Manager:");
+                Text[] messages = new Text[]
+                {
+                    new Text("View menu"),
+                    new Text("Create Category"),
+                    new Text("Edit Category"),
+                    new Text("Back"),
+                };
+
+                Menu menu = new Menu(message, messages);
+                int selected = menu.Display();
+
+                Program.ClearConsole();
+                switch (selected)
                 {
                     case 0:
                         //View Menu
@@ -61,66 +63,53 @@ namespace HR_Project_B
             Console.OutputEncoding = System.Text.Encoding.UTF8;
             foreach (MenuCategory category in categories)
             {
-                TextTool.TextColor(category.name, ConsoleColor.Green, true);
-                TextTool.TextColor(category.description, ConsoleColor.Green, true);
-                Console.WriteLine();
+                Text categoryText = new Text("\n" + category.name, ConsoleColor.Green);
+                categoryText.Display();
+
+                if(category.description.Length > 0)
+                {
+                    Text categoryDescription = new Text("\n" + category.description, ConsoleColor.Green);
+                    categoryDescription.Display();
+                }
+
                 int length = category.GetItemNames().Length;
                 for(int i = 0; i < length; i++)
                 {
                     MenuItem item = category.GetItem(i);
-                    TextTool.TextColor("- " + item.name + " (€" + item.price + "):", ConsoleColor.White, true);
-                    TextTool.TextColor("  " + item.description, ConsoleColor.White, true);
+
+                    Text itemText = new Text("\n- " + item.name + " (€" + item.price + "):");
+                    itemText.Display();
+
+                    if (item.description.Length > 0)
+                    {
+                        Text itemDescription = new Text("\n  " + item.description);
+                        itemDescription.Display();
+                    }
                 }
                 Console.WriteLine("\n");
             }
 
-            Console.WriteLine("> Done");
-            Console.ReadKey();
-            Console.Clear();
-            return;
+            Menu menu = new Menu(new Text("Press enter to go back"));
+            menu.Display();
         }
 
         private static void CreateCategory()
         {
-            Console.Clear();
-            if (Program.account.role <= 2)
+            Program.ClearConsole();
+            if (Program.account.role <= 2) { return; }
+
+            Input nameInput = new Input(new Text("\nCategory name: "), new Text("\nPlease enter a valid name!", ConsoleColor.Red), new InputSettings());
+            string name = nameInput.Display();
+            if(name == null)
             {
-                TextTool.TextColor("You dont have permissions to create categories. Press enter to continue", ConsoleColor.Red, true);
-                Console.ReadKey();
                 return;
             }
 
-            string name = "";
-            string description = "";
-
-            bool validInput = false;
-            while (!validInput)
+            Input descriptionInput = new Input(new Text("\nCategory description: "), new Text("\nPlease enter a valid description!", ConsoleColor.Red), new InputSettings(false, 0));
+            string description = descriptionInput.Display();
+            if (name == null)
             {
-                TextTool.TextColor("Category name:", ConsoleColor.Green, false);
-                name = Console.ReadLine();
-                if (name.Length > 0)
-                {
-                    validInput = true;
-                }
-                else
-                {
-                    TextTool.TextColor("Please enter a valid name!", ConsoleColor.Red, true);
-                }
-            }
-
-            validInput = false;
-            while (!validInput)
-            {
-                TextTool.TextColor("Category description:", ConsoleColor.Green, false);
-                description = Console.ReadLine();
-                if (description.Length > 0)
-                {
-                    validInput = true;
-                }
-                else
-                {
-                    TextTool.TextColor("Please enter a valid description!", ConsoleColor.Red, true);
-                }
+                return;
             }
 
             AddCategory(new MenuCategory(name, description));
@@ -131,23 +120,25 @@ namespace HR_Project_B
         {
             while (true)
             {
-                Console.Clear();
-                string title = "Select a category to edit:";
+                Program.ClearConsole();
                 string[] options = CategoryNames();
-                string[] temp = new string[options.Length + 1];
+
+                Text message = new Text("Select a category to edit:");
+                Text[] messages = new Text[options.Length + 1];
+
                 for (int i = 0; i < options.Length; i++)
                 {
-                    temp[i] = options[i];
+                    messages[i] = new Text(options[i]);
                 }
-                temp[^1] = "Back";
-                options = temp;
+                messages[^1] = new Text("Back");
 
-                OptionMenu menu = new OptionMenu(title, options);
-                int index = menu.Display();
+                Menu menu = new Menu(message, messages);
+                int selected = menu.Display();
 
-                Console.Clear();
-                if (index == options.Length - 1) { return; }
-                MenuCategory category = categories[index];
+                Program.ClearConsole();
+
+                if (selected == messages.Length - 1) { return; }
+                MenuCategory category = categories[selected];
 
                 EditCategory(category);
             }
@@ -157,50 +148,49 @@ namespace HR_Project_B
         {
             while (true)
             {
-                Console.Clear();
-                string title = "Menu Manager:";
-                string[] options = new string[] { "Edit name", "Edit description", "Add Item", "Edit Item", "Delete", "Done" };
-                OptionMenu menu = new OptionMenu(title, options);
-                int index = menu.Display();
+                Program.ClearConsole();
 
-                Console.Clear();
-                switch (index)
+                Text message = new Text("Select a category to edit:");
+                Text[] messages = new Text[]
+                {
+                    new Text("Edit name"),
+                    new Text("Edit description"),
+                    new Text("Add Item"),
+                    new Text("Edit Item"),
+                    new Text("Delete"),
+                    new Text("Back"),
+                };
+
+                Menu menu = new Menu(message, messages);
+                int selected = menu.Display();
+
+                Program.ClearConsole();
+
+                switch (selected)
                 {
                     case 0:
                         //Edit name
-                        while (true)
+                        Input nameInput = new Input(new Text("\nCategory name: "), new Text("\nPlease enter a valid name!", ConsoleColor.Red), new InputSettings());
+                        string name = nameInput.Display();
+                        if(name == null)
                         {
-                            TextTool.TextColor("Category name:", ConsoleColor.Green, false);
-                            string name = Console.ReadLine();
-                            if (name.Length > 0)
-                            {
-                                category.name = name;
-                                SaveMenu();
-                                break;
-                            }
-                            else
-                            {
-                                TextTool.TextColor("Please enter a valid name!", ConsoleColor.Red, true);
-                            }
+                            return;
                         }
+
+                        category.name = name;
+                        SaveMenu();
                         break;
                     case 1:
                         //Edit description
-                        while (true)
+                        Input descriptionInput = new Input(new Text("\nCategory description: "), new Text("\nPlease enter a valid description!", ConsoleColor.Red), new InputSettings(false, 0));
+                        string description = descriptionInput.Display();
+                        if (description == null)
                         {
-                            TextTool.TextColor("Category description:", ConsoleColor.Green, false);
-                            string description = Console.ReadLine();
-                            if (description.Length > 0)
-                            {
-                                category.description = description;
-                                SaveMenu();
-                                break;
-                            }
-                            else
-                            {
-                                TextTool.TextColor("Please enter a valid description!", ConsoleColor.Red, true);
-                            }
+                            return;
                         }
+
+                        category.description = description;
+                        SaveMenu();
                         break;
                     case 2:
                         CreateItem(category);
@@ -214,7 +204,7 @@ namespace HR_Project_B
                         SaveMenu();
                         return;
                     case 5:
-                        //Done
+                        //Back
                         return;
                     default:
                         break;
@@ -224,100 +214,76 @@ namespace HR_Project_B
 
         private static void CreateItem(MenuCategory category)
         {
-            Console.Clear();
-            if (Program.account.role <= 2)
+            Program.ClearConsole();
+            if (Program.account.role <= 2) { return; }
+
+            Input nameInput = new Input(new Text("\nItem name: "), new Text("\nPlease enter a valid name!", ConsoleColor.Red), new InputSettings());
+            string name = nameInput.Display();
+            if(name == null)
             {
-                TextTool.TextColor("You dont have permissions to create items. Press enter to continue", ConsoleColor.Red, true);
-                Console.ReadKey();
                 return;
             }
-            string name = "";
-            string description = "";
-            double price = 0.0;
 
-            bool validInput = false;
-            while (!validInput)
+            Input descriptionInput = new Input(new Text("\nItem description: "), new Text("\nPlease enter a valid description!", ConsoleColor.Red), new InputSettings());
+            string description = descriptionInput.Display();
+            if (description == null)
             {
-                TextTool.TextColor("Item name:", ConsoleColor.Green, false);
-                name = Console.ReadLine();
-                if (name.Length > 0)
-                {
-                    validInput = true;
-                }
-                else
-                {
-                    TextTool.TextColor("Please enter a valid name!", ConsoleColor.Red, true);
-                }
+                return;
             }
 
-            validInput = false;
-            while (!validInput)
+            while (true)
             {
-                TextTool.TextColor("Item description:", ConsoleColor.Green, false);
-                description = Console.ReadLine();
-                if (description.Length > 0)
+                Input priceInput = new Input(new Text("\nItem price: "), new Text("\nPlease enter a valid price!", ConsoleColor.Red), new InputSettings(false, 1, 999, "0-9,."));
+                string price = priceInput.Display();
+                if (price == null)
                 {
-                    validInput = true;
+                    return;
                 }
-                else
+
+                try
                 {
-                    TextTool.TextColor("Please enter a valid description!", ConsoleColor.Red, true);
+                    var parts = price.Split(".");
+                    price = string.Join(",", parts);
+                    double result = double.Parse(price);
+
+                    MenuItem item = new MenuItem(category.id, name, description, result);
+                    category.AddItem(item);
+                    SaveMenu();
+                    return;
+                }
+                catch (Exception)
+                {
+                    Text error = new Text("\nPlease enter a valid price!", ConsoleColor.Red);
+                    error.Display();
                 }
             }
-
-            validInput = false;
-            while (!validInput)
-            {
-                TextTool.TextColor("Item Price:", ConsoleColor.Green, false);
-                string temp = Console.ReadLine();
-                if (temp.Length > 0)
-                {
-                    try
-                    {
-                        var parts = temp.Split(".");
-                        temp = string.Join(",", parts);
-                        price = double.Parse(temp);
-                        validInput = true;
-                    }
-                    catch (Exception)
-                    {
-                        TextTool.TextColor("Please enter a valid description!", ConsoleColor.Red, true);
-                    }
-                }
-                else
-                {
-                    TextTool.TextColor("Please enter a valid description!", ConsoleColor.Red, true);
-                }
-            }
-
-            MenuItem item = new MenuItem(category.id, name, description, price);
-            category.AddItem(item);
-
-            SaveMenu();
         }
 
         private static void ShowEditItem(MenuCategory category)
         {
             while (true)
             {
-                string title = "Select an item to edit:";
+                Program.ClearConsole();
                 string[] options = category.GetItemNames();
-                string[] temp = new string[options.Length + 1];
+
+                Text message = new Text("Select an item to edit:");
+                Text[] messages = new Text[options.Length + 1];
+
                 for (int i = 0; i < options.Length; i++)
                 {
-                    temp[i] = options[i];
+                    messages[i] = new Text(options[i]);
                 }
-                temp[^1] = "Back";
-                options = temp;
+                messages[^1] = new Text("Back");
 
-                OptionMenu menu = new OptionMenu(title, options);
-                int mainIndex = menu.Display();
+                Menu menu = new Menu(message, messages);
+                int selected = menu.Display();
 
-                Console.Clear();
-                if (mainIndex == options.Length - 1) { return; }
-                MenuItem menuItem = category.GetItem(mainIndex);
+                Program.ClearConsole();
 
-                EditItem(mainIndex, category, menuItem);
+                if (selected == messages.Length - 1) { return; }
+                MenuItem menuItem = category.GetItem(selected);
+
+                EditItem(selected, category, menuItem);
             }
         }
 
@@ -325,95 +291,91 @@ namespace HR_Project_B
         {
             while (true)
             {
-                Console.Clear();
-                string title = "Item Manager:";
-                string[] options = new string[] { "Edit name", "Edit description", "Edit price", "Delete", "Done" };
-                OptionMenu menu = new OptionMenu(title, options);
-                int index = menu.Display();
+                Program.ClearConsole();
 
-                Console.Clear();
-                switch (index)
+                Text message = new Text("Item Manager:");
+                Text[] messages = new Text[]
+                {
+                    new Text("Edit name"),
+                    new Text("Edit description"),
+                    new Text("Edit price"),
+                    new Text("Delete"),
+                    new Text("Back"),
+                };
+
+                Menu menu = new Menu(message, messages);
+                int selected = menu.Display();
+
+                Program.ClearConsole();
+
+                switch (selected)
                 {
                     case 0:
                         //Edit name
-                        while (true)
+                        Input nameInput = new Input(new Text("\nItem name: "), new Text("\nPlease enter a valid name!", ConsoleColor.Red), new InputSettings());
+                        string name = nameInput.Display();
+                        if (name == null)
                         {
-                            TextTool.TextColor("Item name:", ConsoleColor.Green, false);
-                            string name = Console.ReadLine();
-                            if (name.Length > 0)
-                            {
-                                menuItem.name = name;
-                                category.UpdateItem(mainIndex, menuItem);
-                                SaveMenu();
-                                break;
-                            }
-                            else
-                            {
-                                TextTool.TextColor("Please enter a valid name!", ConsoleColor.Red, true);
-                            }
+                            return;
                         }
+
+                        menuItem.name = name;
+                        category.UpdateItem(mainIndex, menuItem);
+                        SaveMenu();
                         break;
                     case 1:
                         //Edit description
-                        while (true)
+                        Input descriptionInput = new Input(new Text("\nItem description: "), new Text("\nPlease enter a valid description!", ConsoleColor.Red), new InputSettings());
+                        string description = descriptionInput.Display();
+                        if (description == null)
                         {
-                            TextTool.TextColor("Item description:", ConsoleColor.Green, false);
-                            string description = Console.ReadLine();
-                            if (description.Length > 0)
-                            {
-                                menuItem.description = description;
-                                category.UpdateItem(mainIndex, menuItem);
-                                SaveMenu();
-                                break;
-                            }
-                            else
-                            {
-                                TextTool.TextColor("Please enter a valid description!", ConsoleColor.Red, true);
-                            }
+                            return;
                         }
+
+                        menuItem.description = description;
+                        category.UpdateItem(mainIndex, menuItem);
+                        SaveMenu();
                         break;
                     case 2:
                         //Edit price
                         if(Program.account.role <= 2)
                         {
-                            TextTool.TextColor("You dont have permissions to edit the price. Press enter to continue", ConsoleColor.Red, true);
-                            Console.ReadKey();
                             break;
                         }
 
                         while (true)
                         {
-                            TextTool.TextColor("Item price:", ConsoleColor.Green, false);
-                            string tempPrice = Console.ReadLine();
-                            if (tempPrice.Length > 0)
+                            Input priceInput = new Input(new Text("\nItem price: "), new Text("\nPlease enter a valid price!", ConsoleColor.Red), new InputSettings(false, 1, 999, "0-9,."));
+                            string price = priceInput.Display();
+                            if (price == null)
                             {
-                                try
-                                {
-                                    var parts = tempPrice.Split(".");
-                                    tempPrice = string.Join(",", parts);
-                                    menuItem.price = double.Parse(tempPrice);
-                                    category.UpdateItem(mainIndex, menuItem);
-                                    SaveMenu();
-                                    break;
-                                }
-                                catch (Exception)
-                                {
-                                    TextTool.TextColor("Please enter a valid description!", ConsoleColor.Red, true);
-                                }
+                                return;
                             }
-                            else
+
+                            try
                             {
-                                TextTool.TextColor("Please enter a valid description!", ConsoleColor.Red, true);
+                                var parts = price.Split(".");
+                                price = string.Join(",", parts);
+                                double result = double.Parse(price);
+
+                                menuItem.price = result;
+                                category.UpdateItem(mainIndex, menuItem);
+                                SaveMenu();
+                                return;
+                            }
+                            catch (Exception)
+                            {
+                                Text error = new Text("\nPlease enter a valid price!", ConsoleColor.Red);
+                                error.Display();
                             }
                         }
-                        break;
                     case 3:
                         //Delete
                         category.RemoveItem(menuItem);
                         SaveMenu();
                         return;
                     case 4:
-                        //Done
+                        //Back
                         return;
                     default:
                         break;
