@@ -25,10 +25,10 @@ namespace HR_Project_B
                 Text message = new Text("Menu Manager:");
                 Text[] messages = new Text[]
                 {
-                        new Text("View menu"),
-                        new Text("Create Category"),
-                        new Text("Edit Category"),
-                        new Text("Back"),
+                    new Text("View menu"),
+                    new Text("Create Category"),
+                    new Text("Edit Category"),
+                    new Text("Back"),
                 };
 
                 Menu menu = new Menu(message, messages);
