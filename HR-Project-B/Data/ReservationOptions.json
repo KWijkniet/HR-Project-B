@@ -1,0 +1,30 @@
+[
+  {
+    "id": "0",
+    "fee": 2.0,
+    "name": "Karan",
+    "chairsPairTable": 5,
+    "tables": 2
+  },
+  {
+    "id": "25a2f214-3636-4d87-af78-48d19a5e2cb6",
+    "fee": 2.0,
+    "name": "f",
+    "chairsPairTable": 2,
+    "tables": 2
+  },
+  {
+    "id": "adf7ebf5-4a74-4388-a81a-00c65c562d57",
+    "fee": 3.0,
+    "name": "d",
+    "chairsPairTable": 3,
+    "tables": 3
+  },
+  {
+    "id": "d9eec3ef-8396-46e0-bc0a-27b640b40058",
+    "fee": 1.0,
+    "name": "aka baas",
+    "chairsPairTable": 1,
+    "tables": 1
+  }
+]
