@@ -37,6 +37,7 @@ namespace HR_Project_B
             new DashboardOption(3, "Bookings", new int[]{3,4}),
             new DashboardOption(4, "Finance", new int[]{3,4}),
             new DashboardOption(5, "Info", new int[0]),
+            new DashboardOption(7, "Payment", new int[0]),
             new DashboardOption(6, "Logout", new int[0]),
         };
 
@@ -71,6 +72,7 @@ namespace HR_Project_B
                         UserManager.Start();
                         break;
                     case 2:
+                        Reservations.Start();
                         break;
                     case 3:
                         break;
@@ -82,6 +84,11 @@ namespace HR_Project_B
                     case 6:
                         Program.account = null;
                         return;
+                    case 7:
+                        Payment.GetUserPaymentInformation(Program.account.role);
+                        Payment.ShowReceipt(null);
+                        Console.ReadKey();
+                        break;
                     default:
                         break;
                 }

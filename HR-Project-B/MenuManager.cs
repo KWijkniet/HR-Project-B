@@ -316,7 +316,7 @@ namespace HR_Project_B
                         string name = nameInput.Display();
                         if (name == null)
                         {
-                            return;
+                            break;
                         }
 
                         menuItem.name = name;
@@ -329,7 +329,7 @@ namespace HR_Project_B
                         string description = descriptionInput.Display();
                         if (description == null)
                         {
-                            return;
+                            break;
                         }
 
                         menuItem.description = description;
@@ -349,7 +349,7 @@ namespace HR_Project_B
                             string price = priceInput.Display();
                             if (price == null)
                             {
-                                return;
+                                break;
                             }
 
                             try
@@ -369,6 +369,7 @@ namespace HR_Project_B
                                 error.Display();
                             }
                         }
+                        break;
                     case 3:
                         //Delete
                         category.RemoveItem(menuItem);
