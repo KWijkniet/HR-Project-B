@@ -71,6 +71,7 @@ namespace HR_Project_B
                         UserManager.Start();
                         break;
                     case 2:
+                        Reservations.Start();
                         break;
                     case 3:
                         break;
