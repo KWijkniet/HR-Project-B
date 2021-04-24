@@ -60,6 +60,8 @@ namespace HR_Project_B
             //Tuple<string, int, double>[] pickedMenuItemInfo = itemInfo;
             Tuple<string, int, double>[] pickedMenuItemInfo = new Tuple<string, int, double>[] { item1, item2, item3, item4 };
 
+            Console.WriteLine("");
+            Console.WriteLine("Receipt:");
             for (int i = 0; i < pickedMenuItemInfo.Length; i++)
             {
                 Console.WriteLine("{0,-20} {1,7}", $"{pickedMenuItemInfo[i].Item1} ({pickedMenuItemInfo[i].Item2}x)", $"{ pickedMenuItemInfo[i].Item3 * pickedMenuItemInfo[i].Item2} $");
