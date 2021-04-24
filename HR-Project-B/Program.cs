@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
+using HR_Project_B.Components;
 
 namespace HR_Project_B
 {
@@ -19,6 +15,15 @@ namespace HR_Project_B
         */
         public static Account[] accounts;
         public static Account account;
+        public static Text restaurantText = new Text(@"
+             _____  ______  __  __   ____        ____    ______  ____    ____     __    __ 
+            /\___ \/\  _  \/\ \/\ \ /\  _`\     /\  _`\ /\  _  \/\  _`\ /\  _`\  /\ \  /\ \
+            \/__/\ \ \ \L\ \ \ \/'/'\ \ \L\_\   \ \ \/\ \ \ \L\ \ \ \L\ \ \ \/\_\\ `\`\\/'/
+               _\ \ \ \  __ \ \ , <  \ \  _\L    \ \ \ \ \ \  __ \ \ ,  /\ \ \/_/_`\ `\ /' 
+              /\ \_\ \ \ \/\ \ \ \\`\ \ \ \L\ \   \ \ \_\ \ \ \/\ \ \ \\ \\ \ \L\ \ `\ \ \ 
+              \ \____/\ \_\ \_\ \_\ \_\\ \____/    \ \____/\ \_\ \_\ \_\ \_\ \____/   \ \_\
+               \/___/  \/_/\/_/\/_/\/_/ \/___/      \/___/  \/_/\/_/\/_/\/ /\/___/     \/_/
+        ", ConsoleColor.Yellow);
 
         private static void Main(string[] args)
         {
@@ -28,18 +33,24 @@ namespace HR_Project_B
             while (true)
             {
                 //Clear on start
-                Console.Clear();
+                ClearConsole();
                 //Show login screen
                 Register.Start();
                 //If succesfull login
                 if (account != null)
                 {
                     //Show blank page
-                    Console.Clear();
+                    ClearConsole();
                     //Show menu based on role
                     Dashboard.Start();
                 }
             }
+        }
+
+        public static void ClearConsole()
+        {
+            Console.Clear();
+            restaurantText.Display(true);
         }
 
         // Load accounts from the file

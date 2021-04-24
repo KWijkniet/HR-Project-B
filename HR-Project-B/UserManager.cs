@@ -1,95 +1,92 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using HR_Project_B.Components;
 
 namespace HR_Project_B
 {
     class UserManager
     {
         public static void Start() {
-            string titel = "Select a user";
-            string[] options = new string[Program.accounts.Length + 1];
-
-            // search
-            for (int i = 0; i < Program.accounts.Length; i++)
-            {
-                options[i] = Program.accounts[i].name;
-                    
-            }
-            options[^1] = "Back";
 
             while (true)
             {
-                Console.Clear();
-                OptionMenu menu = new OptionMenu(titel, options);
-                int response = menu.Display();
-                if (response == options.Length - 1)
+                Program.ClearConsole();
+
+                Text message = new Text("Select a user:");
+                Text[] messages = new Text[Program.accounts.Length + 1];
+
+                // search
+                for (int i = 0; i < Program.accounts.Length; i++)
                 {
-                    return;
+                    messages[i] = new Text(Program.accounts[i].name);
                 }
-                Account selectUser = Program.accounts[response];
-                
+                messages[^1] = new Text("Back");
+
+                Menu menu = new Menu(message, messages);
+                int selected = menu.Display();
+                if (selected == messages.Length - 1) { return; }
+
+                Account selectUser = Program.accounts[selected];
+
+                Program.ClearConsole();
                 if (selectUser.id == Program.account.id)
                 {
-                    Console.Clear();
-                    TextTool.TextColor("you can't edit your own account!", ConsoleColor.Red, true);
+                    Text error = new Text("you can't edit your own account!", ConsoleColor.Red);
+                    error.Display();
                     Console.ReadKey();
                     continue;
                 }
                 
                 if (selectUser.id == "0")
                 {
-                    Console.Clear();
-                    TextTool.TextColor("you can't edit the guest account!", ConsoleColor.Red, true);
+                    Text error = new Text("you can't edit the guest account!", ConsoleColor.Red);
+                    error.Display();
                     Console.ReadKey();
                     continue;
                 }
 
-                string roleName = "";
-                if(selectUser.role == 0)
+                EditUser(selectUser);
+            }
+        }
+
+        private static void EditUser(Account selectUser)
+        {
+            string roleName = selectUser.role == 0 ? "Guest" :
+                selectUser.role == 1 ? "Customer" :
+                selectUser.role == 2 ? "Chef" :
+                selectUser.role == 3 ? "Manager" :
+                selectUser.role == 4 ? "Admin" : "";
+            
+            while (true)
+            {
+                Program.ClearConsole();
+                string userInfo = $"Name: {selectUser.name}\nEmail: {selectUser.email}\nPhone: {selectUser.phone}\nRole: {roleName}";
+                Text userInfoText = new Text(userInfo + "\n\n");
+                userInfoText.Display();
+
+                Text roleText = new Text("Select a new role:");
+                Text[] roles = new Text[]
                 {
-                    roleName = "Guest";
+                        new Text("Customer"),
+                        new Text("Chef"),
+                        new Text("Manager"),
+                        new Text("Admin"),
+                        new Text("Back"),
+                };
 
-                }
-                else if (selectUser.role == 1)
+                Menu roleMenu = new Menu(roleText, roles);
+                int selectedRole = roleMenu.Display();
+                if (selectedRole == roles.Length - 1) { return; }
+
+                selectUser.role = selectedRole + 1;
+                for (int i = 0; i < Program.accounts.Length; i++)
                 {
-                    roleName = "Customer";
-
-                }
-                else if (selectUser.role == 2)
-                {
-                    roleName = "Chef";
-
-                }
-                else if (selectUser.role == 3)
-                {
-                    roleName = "Manager";
-
-                }
-                else if (selectUser.role == 4)
-                {
-                    roleName = "Admin";
-
-                }
-
-                while (true)
-                {
-                    Console.Clear();
-                    string userInfo = $"Name: {selectUser.name}\nEmail: {selectUser.email}\nPhone: {selectUser.phone}\nRole: {roleName}\n\nSelect a role:";
-
-                    OptionMenu roleSelector = new OptionMenu(userInfo, new string[] { "Customer", "Chef", "Manager", "Admin", });
-                    int index = roleSelector.Display();
-                    selectUser.role = index + 1;
-                    for (int i = 0; i < Program.accounts.Length; i++)
+                    if (Program.accounts[i].id == selectUser.id)
                     {
-                        if (Program.accounts[i].id == selectUser.id)
-                        {
-                            Program.accounts[i].role = selectUser.role;
-                        }
+                        Program.accounts[i].role = selectUser.role;
                     }
-                    Program.SaveAccounts();
-                    break;
                 }
+                Program.SaveAccounts();
+                return;
             }
         }
     }
