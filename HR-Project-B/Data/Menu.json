@@ -54,5 +54,19 @@
         "price": 7.8
       }
     ]
+  },
+  {
+    "id": "a144ed39-d16c-4aac-b9ea-8b2dfcf86c0a",
+    "name": "test",
+    "description": "test",
+    "items": [
+      {
+        "id": "5b8bf795-b600-4935-88a3-f5a2ca00394f",
+        "categoryId": "a144ed39-d16c-4aac-b9ea-8b2dfcf86c0a",
+        "name": "test item",
+        "description": "test",
+        "price": 10.0
+      }
+    ]
   }
 ]
