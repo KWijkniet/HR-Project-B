@@ -52,6 +52,7 @@ namespace HR_Project_B
 
         public static void ShowReceipt(Tuple<string, int, double>[] itemInfo) //Should take array with tuples containing <iten name, item amount, item price>
         {
+            Console.Clear();
             //Dummy Values
             Tuple<string, int, double> item1 = Tuple.Create("Steak", 2, 7.50);
             Tuple<string, int, double> item2 = Tuple.Create("Pasta", 1, 6.0);
@@ -64,9 +65,10 @@ namespace HR_Project_B
             Console.WriteLine("Receipt:");
             for (int i = 0; i < pickedMenuItemInfo.Length; i++)
             {
-                Console.WriteLine("{0,-20} {1,7}", $"{pickedMenuItemInfo[i].Item1} ({pickedMenuItemInfo[i].Item2}x)", $"{ pickedMenuItemInfo[i].Item3 * pickedMenuItemInfo[i].Item2} $");
+                Console.OutputEncoding = Encoding.UTF8;
+                Console.WriteLine("{0,-20} {1,7}", $"{pickedMenuItemInfo[i].Item1} ({pickedMenuItemInfo[i].Item2}x)", $"{ pickedMenuItemInfo[i].Item3 * pickedMenuItemInfo[i].Item2} €");
             }
-            Console.WriteLine("----------------- +"); Console.WriteLine($"Total price = {CalculateTotalPrice(pickedMenuItemInfo)} $");
+            Console.WriteLine("----------------- +"); Console.WriteLine($"Total price = {CalculateTotalPrice(pickedMenuItemInfo)} €");
         }
     }
 }
