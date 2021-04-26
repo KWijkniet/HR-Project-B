@@ -89,8 +89,25 @@ namespace HR_Project_B
                 Console.WriteLine("\n");
             }
 
-            Menu menu = new Menu(new Text("Press enter to go back"));
-            menu.Display();
+            Text title = new Text("Select an option below:");
+            Text[] options = new Text[]
+            {
+                new Text("Pay"),
+                new Text("Back")
+            };
+            Menu menu = new Menu(title, options);
+            int selected = menu.Display();
+
+            switch (selected)
+            {
+                case 0:
+                    PayMenu();
+                    break;
+                case 1:
+                    return;
+                default:
+                    break;
+            }
         }
 
         private static void CreateCategory()
@@ -443,6 +460,78 @@ namespace HR_Project_B
                 temp[i] = categories[i].name;
             }
             return temp;
+        }
+
+        private static void PayMenu()
+        {
+            while (true)
+            {
+                Program.ClearConsole();
+                Console.OutputEncoding = System.Text.Encoding.UTF8;
+                int count = 0;
+
+                for (int i = 0; i < categories.Length; i++)
+                {
+                    count += categories[i].items.Count;
+                }
+
+                Text title = new Text("Select an option below:");
+                Text[] options = new Text[count + 2];
+
+                int index = 0;
+                for (int i = 0; i < categories.Length; i++)
+                {
+                    for (int j = 0; j < categories[i].items.Count; j++)
+                    {
+                        MenuItem item = categories[i].items[j];
+                        Text tmp = new Text((index + 1) + ". " + item.name + " (€" + item.price + ")");
+
+                        options[index] = tmp;
+                        index++;
+                    }
+                }
+                options[^1] = new Text("Back");
+                options[^2] = new Text("Next step");
+
+                Menu menu = new Menu(title, options);
+                int selected = menu.Display();
+
+                if (selected == options.Length - 1)
+                {
+                    //back
+                    return;
+                }
+                else if (selected == options.Length - 2)
+                {
+                    //next step
+                }
+                else
+                {
+                    //select amount
+                    while (true)
+                    {
+                        Input amountInput = new Input(new Text("How many?"), new Text("Please enter an invalid amount.", ConsoleColor.Red));
+                        string result = amountInput.Display();
+                        if (result == null)
+                        {
+                            break;
+                        }
+
+                        try
+                        {
+                            double amount = int.Parse(result);
+
+                            //add to basket
+                            break;
+                        }
+                        catch (Exception)
+                        {
+                            Text error = new Text("\nPlease enter a valid amount!", ConsoleColor.Red);
+                            error.Display();
+                        }
+                    }
+                }
+            }
         }
     }
 }
