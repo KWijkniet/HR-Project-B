@@ -15,6 +15,12 @@ namespace HR_Project_B
         {
             LoadReservation();
 
+            if (Program.account.role <= 1 )
+            {
+                ViewReservations();
+                return;
+            }
+
             while (true){
                 Program.ClearConsole();
                 Text reservation = new Text("Reservation options");
@@ -61,6 +67,7 @@ namespace HR_Project_B
 
             
         }
+
         public static void ViewReservations()
         {
             foreach (ReservationOptions option in reservationOptions)
