@@ -5,13 +5,14 @@ namespace HR_Project_B.Components
 {
     class InputSettings
     {
-        public int minLength;
-        public int maxLength;
-        public string allowedCharacters;
-        public string customRegex;
-        public bool newLine = false;
-        public bool canEscape = true;
+        public int minLength;                   //Min length of the string
+        public int maxLength;                   //Max length of the string
+        public string allowedCharacters;        //A regex of the characters that are allowed to be pressed.
+        public string customRegex;              //Custom regex to override the allowedCharacters
+        public bool newLine = false;            //Show the input below the text
+        public bool canEscape = true;           //can you press escape to cancel the input
 
+        //set the settings when creating the input settings (with default values)
         public InputSettings(bool newLine = false, int minLength = 1, int maxLength = 999, string allowedCharacters = "A-Za-z0-9 ", string customRegex = "", bool canEscape = true)
         {
             this.minLength = minLength;
@@ -22,6 +23,7 @@ namespace HR_Project_B.Components
             this.canEscape = canEscape;
         }
 
+        //Get the regex that should be used to validate the input value
         public string GetRegex(bool ignoreLength = false)
         {
             if(customRegex.Length > 0)
@@ -47,6 +49,7 @@ namespace HR_Project_B.Components
         public Text error;
         public InputSettings settings = new InputSettings();
 
+        //Create an input. Will
         public Input(Text text, Text error, InputSettings settings = null)
         {
             this.text = text;
