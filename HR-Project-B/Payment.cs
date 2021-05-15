@@ -9,6 +9,126 @@ namespace HR_Project_B
 {
     class Payment
     {
+        private static MenuCategory[] categories;
+        private static FileManager fm = new FileManager("Menu.json");
+        private static ShoppingBasket basket = new ShoppingBasket();
+
+        public static void Start(ShoppingBasket _basket, MenuCategory[] _categories)
+        {
+            categories = _categories;
+            basket = _basket;
+            Display();
+        }
+
+        public static void Pay()
+        {
+            string name = Program.account.name;
+            string email = Program.account.email;
+            if (Program.account.role == 1)
+            {
+                Input nameInput = new Input(new Text("\nName:"), new Text("\nPlease enter a valid name!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z ", "", false));
+                name = nameInput.Display();
+
+                while (true)
+                {
+                    Input emailInput = new Input(new Text("\nEmail:"), new Text("\nPlease enter a valid email!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z0-9_.-@", "", false));
+                    email = emailInput.Display();
+                    if (!Regex.IsMatch(email, "^[A-Za-z0-9_.-]{1,64}@[A-Za-z-]{1,255}.(com|net|nl|org)$"))
+                    {
+                        Text error = new Text("\nPlease enter a valid email.", ConsoleColor.Red); error.Display();
+                        continue;
+                    }
+                    else { break; }
+                }
+            }
+
+            CustomReservations.LoadReservation();
+            Reservation[] reservations = CustomReservations.reservations();
+            while (true)
+            {
+                Input reservationInput = new Input(new Text("\nReservation Code:"), new Text("\nPlease enter a valid reservation code!", ConsoleColor.Red), new InputSettings(false, 36, 36, "A-Za-z0-9-", "", false));
+                string id = reservationInput.Display();
+
+                Reservation foundReservation = null;
+                foreach (Reservation reservation in reservations)
+                {
+                    if(reservation.orderID == id)
+                    {
+                        foundReservation = reservation;
+                        break;
+                    }
+                }
+
+                if (foundReservation != null)
+                {
+                    break;
+                }
+                else
+                {
+                    Text error = new Text("\nPlease enter a valid Reservation code.", ConsoleColor.Red);
+                    error.Display();
+                    continue;
+                }
+            }
+
+            //complete payment
+            Console.WriteLine("");
+            Menu menu = new Menu(new Text("Order has successfully been paid. Press enter to continue."));
+            menu.Display();
+        }
+
+        public static bool ValidateCreditCard(string creditcard)
+        {
+            return true;
+        }
+
+        private static void Display()
+        {
+            Program.ClearConsole();
+            Console.WriteLine("\nReceipt:");
+
+            Dictionary<string, int> items = basket.GetBasket();
+            foreach (string id in items.Keys)
+            {
+                MenuItem item = IdToItem(id);
+                Console.WriteLine("{0,-20} {1,7}", $"{item.name} ({items[id]}x)", $"{ item.price * items[id]} $");
+            }
+
+            Console.WriteLine("----------------- +");
+            Console.WriteLine($"Total price = {CalculatePrice()} $");
+        }
+
+        private static double CalculatePrice()
+        {
+            double result = 0;
+
+            Dictionary<string, int> items = basket.GetBasket();
+            foreach (string id in items.Keys)
+            {
+                MenuItem item = IdToItem(id);
+                result += item.price * items[id];
+            }
+
+            return result;
+        }
+
+        private static MenuItem IdToItem(string id)
+        {
+            foreach (MenuCategory category in categories)
+            {
+                foreach (MenuItem item in category.items)
+                {
+                    if(id == item.id)
+                    {
+                        return item;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        //old
         public static string[] GetUserPaymentInformation(int userRole) //Program.account.role
         {
             if (userRole == 0)

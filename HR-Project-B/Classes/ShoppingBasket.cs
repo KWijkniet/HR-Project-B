@@ -6,7 +6,7 @@ namespace HR_Project_B
 {
     class ShoppingBasket
     {
-        private Dictionary<string, int> items = null;
+        private Dictionary<string, int> items = new Dictionary<string, int>();
 
         public void AddToBasket(string id, int amount)
         {

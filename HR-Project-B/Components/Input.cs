@@ -49,7 +49,7 @@ namespace HR_Project_B.Components
         public Text error;
         public InputSettings settings = new InputSettings();
 
-        //Create an input. Will
+        //Create an input. Will use default settings if none given.
         public Input(Text text, Text error, InputSettings settings = null)
         {
             this.text = text;
@@ -60,6 +60,7 @@ namespace HR_Project_B.Components
             }
         }
 
+        //Display the input (will return the result when the users presses enter)
         public string Display()
         {
             bool wasCursorVisible = Console.CursorVisible;
@@ -87,6 +88,7 @@ namespace HR_Project_B.Components
             }
         }
 
+        //Validates the users input and executes extra lines where needed (escape = cancel, enter = submit)
         private string ReadLineOrEsc()
         {
             string result = "";
