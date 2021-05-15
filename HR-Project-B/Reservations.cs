@@ -15,12 +15,6 @@ namespace HR_Project_B
         {
             LoadReservation();
 
-            if (Program.account.role <= 1 )
-            {
-                ViewReservations();
-                return;
-            }
-
             while (true){
                 Program.ClearConsole();
                 Text reservation = new Text("Reservation options");
@@ -93,7 +87,7 @@ namespace HR_Project_B
         }
 
         // Load accounts from the file
-        private static void LoadReservation()
+        public static void LoadReservation()
         {
             FileManager fm = new FileManager("ReservationOptions.json");
 

@@ -19,5 +19,12 @@
     "name": "party table",
     "chairsPairTable": 15,
     "tables": 3
+  },
+  {
+    "id": "8cdbb6d8-1ab2-4fca-8e3f-adb6572a19eb",
+    "fee": 3.0,
+    "name": "dd",
+    "chairsPairTable": 3,
+    "tables": 3
   }
 ]

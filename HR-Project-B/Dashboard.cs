@@ -33,7 +33,8 @@ namespace HR_Project_B
         {
             new DashboardOption(0, "Menu", new int[0]),
             new DashboardOption(1, "Manage Users", new int[]{4}),
-            new DashboardOption(2, "Reservations", new int[]{0,1,3,4}),
+            new DashboardOption(2, "Manage Tables", new int[]{4}),
+            new DashboardOption(10,"Reservation",new int []{0,1,3}),
             new DashboardOption(3, "Take-away", new int[]{0,1}),
             new DashboardOption(4, "Cancel reservation", new int[]{0,1}),
             new DashboardOption(5, "Bookings", new int[]{3,4}),
@@ -41,6 +42,9 @@ namespace HR_Project_B
             new DashboardOption(7, "Info", new int[0]),
             new DashboardOption(8, "Payment", new int[0]),
             new DashboardOption(9, "Logout", new int[0]),
+
+           
+
         };
 
         public static void Start()
@@ -95,6 +99,9 @@ namespace HR_Project_B
                     case 9:
                         Program.account = null;
                         return;
+                    case 10:
+                        CustomerReservations.Start();
+                        break;
                     default:
                         break;
                 }
