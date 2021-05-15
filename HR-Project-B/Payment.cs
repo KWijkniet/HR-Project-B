@@ -42,13 +42,13 @@ namespace HR_Project_B
                 }
             }
 
-            CustomReservations.LoadReservation();
-            Reservation[] reservations = CustomReservations.reservations();
+            CustomerReservations.LoadReservation();
             while (true)
             {
-                Input reservationInput = new Input(new Text("\nReservation Code:"), new Text("\nPlease enter a valid reservation code!", ConsoleColor.Red), new InputSettings(false, 36, 36, "A-Za-z0-9-", "", false));
+                Input reservationInput = new Input(new Text("\nReservation Code:"), new Text("\nPlease enter a valid reservation code!", ConsoleColor.Red), new InputSettings(false, 8, 8, "A-Za-z0-9-", "", false));
                 string id = reservationInput.Display();
 
+                Reservation[] reservations = CustomerReservations.reservations;
                 Reservation foundReservation = null;
                 foreach (Reservation reservation in reservations)
                 {
@@ -59,16 +59,13 @@ namespace HR_Project_B
                     }
                 }
 
-                if (foundReservation != null)
-                {
-                    break;
-                }
-                else
+                if (foundReservation == null)
                 {
                     Text error = new Text("\nPlease enter a valid Reservation code.", ConsoleColor.Red);
                     error.Display();
                     continue;
                 }
+                break;
             }
 
             //complete payment
@@ -79,7 +76,33 @@ namespace HR_Project_B
 
         public static bool ValidateCreditCard(string creditcard)
         {
-            return true;
+            int[] parts = new int[creditcard.Length];
+
+            for (int i = 0; i < parts.Length; i++)
+            {
+                parts[i] = (int)(creditcard[i] - '0');
+            }
+
+            for (int i = parts.Length - 2; i >= 0; i -= 2)
+            {
+                int temp = parts[i];
+                temp *= 2;
+                
+                if(temp > 9)
+                {
+                    temp = temp % 10 + 1;
+                }
+
+                parts[i] = temp;
+            }
+
+            int total = 0;
+            for (int i = 0; i < parts.Length; i++)
+            {
+                total += parts[i];
+            }
+
+            return total % 10 == 0;
         }
 
         private static void Display()
@@ -189,10 +212,6 @@ namespace HR_Project_B
                 Console.WriteLine("{0,-20} {1,7}", $"{pickedMenuItemInfo[i].Item1} ({pickedMenuItemInfo[i].Item2}x)", $"{ pickedMenuItemInfo[i].Item3 * pickedMenuItemInfo[i].Item2} €");
             }
             Console.WriteLine("----------------- +"); Console.WriteLine($"Total price = {CalculateTotalPrice(pickedMenuItemInfo)} €");
-        }
-       public static bool ValidateCreditCard(string creditcard)
-        {
-            return true;
         }
     }
 }
