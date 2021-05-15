@@ -61,6 +61,7 @@ namespace HR_Project_B
 
             
         }
+
         public static void ViewReservations()
         {
             foreach (ReservationOptions option in reservationOptions)
@@ -86,7 +87,7 @@ namespace HR_Project_B
         }
 
         // Load accounts from the file
-        private static void LoadReservation()
+        public static void LoadReservation()
         {
             FileManager fm = new FileManager("ReservationOptions.json");
 
