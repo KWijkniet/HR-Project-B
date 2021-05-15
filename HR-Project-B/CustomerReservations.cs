@@ -153,7 +153,28 @@ namespace HR_Project_B
             }
             ReservationOptions table = tables[selected];
 
-            Reservation reservation = new Reservation("", "Table reservation", table.id,Program.account.role == 1 ? "": Program.account.id, name, email);
+            //Payment
+            string creditCard;
+
+            while (true)
+            {
+                Input creditInput = new Input(new Text("\nCredit card:"), new Text("\nPlease enter a credit card!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z ", "", false));
+                creditCard = creditInput.Display();
+
+                if (Payment.ValidateCreditCard(creditCard))
+                {
+                    break;
+                }
+                else
+                {
+                    Text error = new Text("\nPlease enter a valid Credit card.", ConsoleColor.Red);
+                    error.Display();
+                    continue;
+                }
+            }
+
+
+            Reservation reservation = new Reservation(creditCard, "Table reservation", table.id,Program.account.role == 1 ? "": Program.account.id, name, email);
 
             Reservation[] temp = new Reservation[reservations.Length + 1];
             for (int i = 0; i < reservations.Length; i++)
@@ -164,6 +185,7 @@ namespace HR_Project_B
             reservations = temp;
             SaveReservation();
 
+         
 
         }
 

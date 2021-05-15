@@ -70,5 +70,9 @@ namespace HR_Project_B
             }
             Console.WriteLine("----------------- +"); Console.WriteLine($"Total price = {CalculateTotalPrice(pickedMenuItemInfo)} €");
         }
+       public static bool ValidateCreditCard(string creditcard)
+        {
+            return true;
+        }
     }
 }
