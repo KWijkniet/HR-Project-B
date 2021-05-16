@@ -66,8 +66,6 @@ namespace HR_Project_B
                 Reservation newReservation = new Reservation(foundOptions[i]);
 
                 reservations[i] = newReservation;
-
-
             }
         }
 
@@ -131,7 +129,7 @@ namespace HR_Project_B
             //make resevation here
             Program.ClearConsole();
 
-            Text message = new Text("Select a table:");
+            Text message = new Text("Select a table: ");
             Text[] messages = new Text[tables.Length + 1];
 
             // search
@@ -158,7 +156,7 @@ namespace HR_Project_B
 
             while (true)
             {
-                Input creditInput = new Input(new Text("\nCredit card:"), new Text("\nPlease enter a credit card!", ConsoleColor.Red), new InputSettings(false, 13, 16, "0-9", "", false));
+                Input creditInput = new Input(new Text("\nCredit card: "), new Text("\nPlease enter a credit card!", ConsoleColor.Red), new InputSettings(false, 13, 16, "0-9", "", false));
                 creditCard = creditInput.Display();
 
                 if (Payment.ValidateCreditCard(creditCard))
@@ -183,9 +181,6 @@ namespace HR_Project_B
             temp[^1] = reservation;
             reservations = temp;
             SaveReservation();
-
-         
-
         }
 
         public static void CreateTakeaway() //should be private
@@ -226,7 +221,7 @@ namespace HR_Project_B
 
             while (true)
             {
-                Input creditInput = new Input(new Text("\nCredit card: "), new Text("\nPlease enter a credit card!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z ", "", false));
+                Input creditInput = new Input(new Text("\nCredit card:"), new Text("\nPlease enter a credit card!", ConsoleColor.Red), new InputSettings(false, 13, 16, "0-9", "", false));
                 creditCard = creditInput.Display();
 
                 if (Payment.ValidateCreditCard(creditCard))
@@ -240,7 +235,6 @@ namespace HR_Project_B
                     continue;
                 }
             }
-
             Reservation reservation = new Reservation(creditCard, "Takeaway", "", Program.account.role == 1 ? "" : Program.account.id, name, email);
 
             Reservation[] temp = new Reservation[reservations.Length + 1];
@@ -252,9 +246,7 @@ namespace HR_Project_B
             reservations = temp;
             SaveReservation();
         }
-            
-            
-
+           
         private static void VieuwReservation() //VIEWreservation
         {
             foreach (Reservation option in FilterReservations())
@@ -271,14 +263,16 @@ namespace HR_Project_B
                         break;
                     }
                 }
-
-                Text optionTable = new Text("\n" + "Table name: " + foundTable.name, ConsoleColor.Green);
-                optionTable.Display();
+                if (option.orderType == "Table reservation")
+                {
+                    Text optionTable = new Text("\n" + "Table name: " + foundTable.name, ConsoleColor.Green);
+                    optionTable.Display();
+                }
+                Text optionType = new Text("\n" + "Type: " + option.orderType, ConsoleColor.Green);
+                optionType.Display();
 
                 Text optionorderID = new Text("\n" + "Reservation Code: " + option.orderID, ConsoleColor.Green);
                 optionorderID.Display();
-
-
 
                 Console.WriteLine("\n");
             }
@@ -317,7 +311,7 @@ namespace HR_Project_B
                 string email;
                 while (true)
                 {
-                    Input emailInput = new Input(new Text("\nEmail:"), new Text("\nPlease enter a valid email!", ConsoleColor.Red), new InputSettings(false, 6, 225, "A-Za-z0-9_.-@", "", false));
+                    Input emailInput = new Input(new Text("\nEmail: "), new Text("\nPlease enter a valid email!", ConsoleColor.Red), new InputSettings(false, 6, 225, "A-Za-z0-9_.-@", "", false));
                     email = emailInput.Display();
                     if (!Regex.IsMatch(email, "^[A-Za-z0-9_.-]{1,64}@[A-Za-z-]{1,255}.(com|net|nl|org)$"))
                     {
