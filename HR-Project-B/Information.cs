@@ -8,9 +8,9 @@ namespace HR_Project_B
         public static void Start()
         {
             Text line01 = new Text("Information about Jake Darcy's restaurant\n\n", ConsoleColor.Green);
-            Text line02 = new Text("About us", ConsoleColor.Yellow);
-            Text line03 = new Text("Opening times", ConsoleColor.Yellow);
-            Text line04 = new Text("Where can you find us", ConsoleColor.Yellow);
+            Text line02 = new Text("About us\n", ConsoleColor.Yellow);
+            Text line03 = new Text("Opening times\n", ConsoleColor.Yellow);
+            Text line04 = new Text("Where can you find us\n", ConsoleColor.Yellow);
 
             line01.Display();
             line02.Display();

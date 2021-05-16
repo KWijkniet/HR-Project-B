@@ -18,7 +18,9 @@ namespace HR_Project_B
         {
             this.creditcardNumber = creditcardNumber;
             this.orderType = orderType;
+
             this.orderID = Guid.NewGuid().ToString().Substring(0,8);
+
             this.tableID = tableID;
             this.userID = userID;
             this.userName = userName;
