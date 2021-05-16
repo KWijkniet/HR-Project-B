@@ -73,8 +73,8 @@ namespace HR_Project_B
                 Text optionName= new Text("\n" + "Name: "+ option.name, ConsoleColor.Green);
                 optionName.Display();
 
-                Text optionChairsPairTable = new Text("\n"+ "Chairspairtable: " + option.chairsPairTable, ConsoleColor.Green);
-                optionChairsPairTable.Display();
+                Text optionChairsPerTable = new Text("\n"+ "Chairs per table: " + option.chairsPerTable, ConsoleColor.Green);
+                optionChairsPerTable.Display();
 
                 Text optionTables = new Text("\n"+ "Tables: " + option.tables, ConsoleColor.Green);
                 optionTables.Display();
@@ -176,13 +176,13 @@ namespace HR_Project_B
                     error.Display();
                 }
             }
-            int chairsPairTableInt;
+            int chairsPerTableInt;
             while (true)
 
             {
-                Input chairsPairTableInput = new Input(new Text("\nChairs pair table: "), new Text("\nPlease enter a valid chairs pair table!", ConsoleColor.Red), new InputSettings(false, 1, 999, "0-9"));
-                string chairsPairTable = chairsPairTableInput.Display();
-                if (chairsPairTable == null)
+                Input chairsPerTableInput = new Input(new Text("\nChairs per table: "), new Text("\nPlease enter a valid chairs per table!", ConsoleColor.Red), new InputSettings(false, 1, 999, "0-9"));
+                string chairsPerTable = chairsPerTableInput.Display();
+                if (chairsPerTable == null)
                 {
                     return;
                 }
@@ -190,20 +190,20 @@ namespace HR_Project_B
                 try
                 {
 
-                    chairsPairTableInt = int.Parse(chairsPairTable);
+                    chairsPerTableInt = int.Parse(chairsPerTable);
 
                     break;
                 }
                 catch (Exception)
                 {
-                    Text error = new Text("\nPlease enter a valid chairs pair table!", ConsoleColor.Red);
+                    Text error = new Text("\nPlease enter a valid chairs per table!", ConsoleColor.Red);
                     error.Display();
                 }
             }
 
 
 
-            AddReservationOptions(new ReservationOptions(feedouble, name, chairsPairTableInt, tablesInt));
+            AddReservationOptions(new ReservationOptions(feedouble, name, chairsPerTableInt, tablesInt));
             SaveReservation();
         }
 
@@ -284,7 +284,7 @@ namespace HR_Project_B
                 {
                     new Text("change name"),
                     new Text("change fee"),
-                    new Text("change chairs pair table"),
+                    new Text("change chairs per table"),
                     new Text("change Table"),
                     new Text("Delete"),
                     new Text("Back"),
@@ -340,14 +340,14 @@ namespace HR_Project_B
 
                         break;
                     case 2:
-                        // chairs pair table
-                        int chairsPairTableInt;
+                        // chairs per table
+                        int chairsPerTableInt;
                         while (true)
 
                         {
-                            Input chairsPairTableInput = new Input(new Text("\n Change chairs pair table: "), new Text("\nPlease enter a valid chairs pair table!", ConsoleColor.Red), new InputSettings(false, 1, 999, "0-9"));
-                            string chairsPairTable = chairsPairTableInput.Display();
-                            if (chairsPairTable == null)
+                            Input chairsPerTableInput = new Input(new Text("\n Change chairs per table: "), new Text("\nPlease enter a valid chairs per table!", ConsoleColor.Red), new InputSettings(false, 1, 999, "0-9"));
+                            string chairsPerTable = chairsPerTableInput.Display();
+                            if (chairsPerTable == null)
                             {
                                 return;
                             }
@@ -355,14 +355,14 @@ namespace HR_Project_B
                             try
                             {
 
-                                chairsPairTableInt = int.Parse(chairsPairTable);
-                                reservation.chairsPairTable = chairsPairTableInt;
+                                chairsPerTableInt = int.Parse(chairsPerTable);
+                                reservation.chairsPerTable = chairsPerTableInt;
                                 SaveReservation();
                                 break;
                             }
                             catch (Exception)
                             {
-                                Text error = new Text("\nPlease enter a valid chairs pair table!", ConsoleColor.Red);
+                                Text error = new Text("\nPlease enter a valid chairs per table!", ConsoleColor.Red);
                                 error.Display();
                             }
                         }
@@ -382,7 +382,6 @@ namespace HR_Project_B
 
                             try
                             {
-
                                 tablesInt = int.Parse(tables);
                                 reservation.tables = tablesInt;
                                 SaveReservation();
@@ -409,7 +408,5 @@ namespace HR_Project_B
                 }
             }
         }
-
-
-    }
+    } 
 }
