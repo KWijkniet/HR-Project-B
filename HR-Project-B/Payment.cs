@@ -9,6 +9,149 @@ namespace HR_Project_B
 {
     class Payment
     {
+        private static MenuCategory[] categories;
+        private static FileManager fm = new FileManager("Menu.json");
+        private static ShoppingBasket basket = new ShoppingBasket();
+
+        public static void Start(ShoppingBasket _basket, MenuCategory[] _categories)
+        {
+            categories = _categories;
+            basket = _basket;
+            Display();
+        }
+
+        public static void Pay()
+        {
+            string name = Program.account.name;
+            string email = Program.account.email;
+            if (Program.account.role == 1)
+            {
+                Input nameInput = new Input(new Text("\nName:"), new Text("\nPlease enter a valid name!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z ", "", false));
+                name = nameInput.Display();
+
+                while (true)
+                {
+                    Input emailInput = new Input(new Text("\nEmail:"), new Text("\nPlease enter a valid email!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z0-9_.-@", "", false));
+                    email = emailInput.Display();
+                    if (!Regex.IsMatch(email, "^[A-Za-z0-9_.-]{1,64}@[A-Za-z-]{1,255}.(com|net|nl|org)$"))
+                    {
+                        Text error = new Text("\nPlease enter a valid email.", ConsoleColor.Red); error.Display();
+                        continue;
+                    }
+                    else { break; }
+                }
+            }
+
+            CustomerReservations.LoadReservation();
+            while (true)
+            {
+                Input reservationInput = new Input(new Text("\nReservation Code:"), new Text("\nPlease enter a valid reservation code!", ConsoleColor.Red), new InputSettings(false, 8, 8, "A-Za-z0-9-", "", false));
+                string id = reservationInput.Display();
+
+                Reservation[] reservations = CustomerReservations.reservations;
+                Reservation foundReservation = null;
+                foreach (Reservation reservation in reservations)
+                {
+                    if(reservation.orderID == id)
+                    {
+                        foundReservation = reservation;
+                        break;
+                    }
+                }
+
+                if (foundReservation == null)
+                {
+                    Text error = new Text("\nPlease enter a valid Reservation code.", ConsoleColor.Red);
+                    error.Display();
+                    continue;
+                }
+                break;
+            }
+
+            //complete payment
+            Console.WriteLine("");
+            Menu menu = new Menu(new Text("Order has successfully been paid. Press enter to continue."));
+            menu.Display();
+        }
+
+        public static bool ValidateCreditCard(string creditcard)
+        {
+            int[] parts = new int[creditcard.Length];
+
+            for (int i = 0; i < parts.Length; i++)
+            {
+                parts[i] = (int)(creditcard[i] - '0');
+            }
+
+            for (int i = parts.Length - 2; i >= 0; i -= 2)
+            {
+                int temp = parts[i];
+                temp *= 2;
+                
+                if(temp > 9)
+                {
+                    temp = temp % 10 + 1;
+                }
+
+                parts[i] = temp;
+            }
+
+            int total = 0;
+            for (int i = 0; i < parts.Length; i++)
+            {
+                total += parts[i];
+            }
+
+            return total % 10 == 0;
+        }
+
+        private static void Display()
+        {
+            Program.ClearConsole();
+            Console.WriteLine("\nReceipt:");
+
+            Dictionary<string, int> items = basket.GetBasket();
+            foreach (string id in items.Keys)
+            {
+                MenuItem item = IdToItem(id);
+                Console.WriteLine("{0,-20} {1,7}", $"{item.name} ({items[id]}x)", $"{ item.price * items[id]} $");
+            }
+
+            Console.WriteLine("----------------- +");
+            Console.WriteLine($"Total price = {CalculatePrice()} $");
+        }
+
+        private static double CalculatePrice()
+        {
+            double result = 0;
+
+            Dictionary<string, int> items = basket.GetBasket();
+            foreach (string id in items.Keys)
+            {
+                MenuItem item = IdToItem(id);
+                result += item.price * items[id];
+            }
+
+            return result;
+        }
+
+        private static MenuItem IdToItem(string id)
+        {
+            foreach (MenuCategory category in categories)
+            {
+                foreach (MenuItem item in category.items)
+                {
+                    if(id == item.id)
+                    {
+                        return item;
+                    }
+                }
+            }
+
+            return null;
+        }
+
+        //old
         public static string[] GetUserPaymentInformation(int userRole) //Program.account.role
         {
             if (userRole == 0)
@@ -52,6 +195,7 @@ namespace HR_Project_B
 
         public static void ShowReceipt(Tuple<string, int, double>[] itemInfo) //Should take array with tuples containing <iten name, item amount, item price>
         {
+            Console.Clear();
             //Dummy Values
             Tuple<string, int, double> item1 = Tuple.Create("Steak", 2, 7.50);
             Tuple<string, int, double> item2 = Tuple.Create("Pasta", 1, 6.0);
@@ -64,9 +208,10 @@ namespace HR_Project_B
             Console.WriteLine("Receipt:");
             for (int i = 0; i < pickedMenuItemInfo.Length; i++)
             {
-                Console.WriteLine("{0,-20} {1,7}", $"{pickedMenuItemInfo[i].Item1} ({pickedMenuItemInfo[i].Item2}x)", $"{ pickedMenuItemInfo[i].Item3 * pickedMenuItemInfo[i].Item2} $");
+                Console.OutputEncoding = Encoding.UTF8;
+                Console.WriteLine("{0,-20} {1,7}", $"{pickedMenuItemInfo[i].Item1} ({pickedMenuItemInfo[i].Item2}x)", $"{ pickedMenuItemInfo[i].Item3 * pickedMenuItemInfo[i].Item2} €");
             }
-            Console.WriteLine("----------------- +"); Console.WriteLine($"Total price = {CalculateTotalPrice(pickedMenuItemInfo)} $");
+            Console.WriteLine("----------------- +"); Console.WriteLine($"Total price = {CalculateTotalPrice(pickedMenuItemInfo)} €");
         }
     }
 }
