@@ -1,20 +1,2 @@
 [
-  {
-    "creditcardNumber": "aaaa",
-    "orderType": "Table reservation",
-    "orderID": "c6125b12",
-    "tableID": "efa83b37-d569-4dad-ba2a-35c946e14a7f",
-    "userID": "0",
-    "userName": "test",
-    "userEmail": "test@test.nl"
-  },
-  {
-    "creditcardNumber": "aaaa",
-    "orderType": "Takeaway",
-    "orderID": "5dea8f82",
-    "tableID": "",
-    "userID": "0",
-    "userName": "test",
-    "userEmail": "test@test.nl"
-  }
 ]

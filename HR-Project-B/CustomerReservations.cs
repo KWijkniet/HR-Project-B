@@ -149,6 +149,9 @@ namespace HR_Project_B
             }
             ReservationOptions table = tables[selected];
 
+
+            //Payment
+
             string creditCard;
 
             while (true)
@@ -168,7 +171,6 @@ namespace HR_Project_B
                 }
             }
 
-
             Reservation reservation = new Reservation(creditCard, "Table reservation", table.id, Program.account.role == 1 ? "" : Program.account.id, name, email);
            
             Reservation[] temp = new Reservation[reservations.Length + 1];
@@ -180,6 +182,7 @@ namespace HR_Project_B
             reservations = temp;
             SaveReservation();
 
+         
 
         }
 
