@@ -88,7 +88,7 @@ namespace HR_Project_B.Components
                 int amount = options.Length;
                 if(title.text.Length > 0)
                 {
-                    amount+= Regex.Matches(title.text, "\n").Count;
+                    amount += Regex.Matches(title.text, "\n").Count;
                 }
                 Console.SetCursorPosition(0, Console.CursorTop - amount);
             }

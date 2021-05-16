@@ -53,7 +53,9 @@ namespace HR_Project_B
                 }
             }
         }
-        private static void LoadReservation()
+
+        public static void LoadReservation()
+
         {
             FileManager fm = new FileManager("Reservations.json");
 
@@ -156,7 +158,7 @@ namespace HR_Project_B
 
             while (true)
             {
-                Input creditInput = new Input(new Text("\nCredit card:"), new Text("\nPlease enter a credit card!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z ", "", false));
+                Input creditInput = new Input(new Text("\nCredit card:"), new Text("\nPlease enter a credit card!", ConsoleColor.Red), new InputSettings(false, 13, 16, "0-9", "", false));
                 creditCard = creditInput.Display();
 
                 if (Payment.ValidateCreditCard(creditCard))
@@ -273,7 +275,7 @@ namespace HR_Project_B
                 Text optionTable = new Text("\n" + "Table name: " + foundTable.name, ConsoleColor.Green);
                 optionTable.Display();
 
-                Text optionorderID = new Text("\n" + "Order id: " + option.orderID, ConsoleColor.Green);
+                Text optionorderID = new Text("\n" + "Reservation Code: " + option.orderID, ConsoleColor.Green);
                 optionorderID.Display();
 
 
