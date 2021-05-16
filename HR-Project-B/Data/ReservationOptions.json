@@ -3,28 +3,28 @@
     "id": "a4bfbc0f-9636-42ce-a0b0-1add9e6f68a6",
     "fee": 5.0,
     "name": "2 person table",
-    "chairsPairTable": 2,
+    "chairsPerTable": 2,
     "tables": 7
   },
   {
     "id": "efa83b37-d569-4dad-ba2a-35c946e14a7f",
     "fee": 25.0,
     "name": "5 people table",
-    "chairsPairTable": 5,
+    "chairsPerTable": 5,
     "tables": 4
   },
   {
     "id": "121affaf-f66f-4e08-83f8-9a585626342c",
     "fee": 50.0,
     "name": "party table",
-    "chairsPairTable": 15,
+    "chairsPerTable": 15,
     "tables": 3
   },
   {
     "id": "8cdbb6d8-1ab2-4fca-8e3f-adb6572a19eb",
     "fee": 3.0,
     "name": "dd",
-    "chairsPairTable": 3,
+    "chairsPerTable": 3,
     "tables": 3
   }
 ]

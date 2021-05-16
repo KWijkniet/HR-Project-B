@@ -40,11 +40,10 @@ namespace HR_Project_B
 
         public static void Login()
         {
-            string email = "";
             while (true)
             {
                 Input emailInput = new Input(new Text("\nEmail:"), new Text("\nPlease enter a valid email!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z0-9_.-@"));
-                email = emailInput.Display();
+                string email = emailInput.Display();
                 if (email == null)
                 {
                     return;

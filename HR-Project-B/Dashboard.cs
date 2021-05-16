@@ -81,12 +81,18 @@ namespace HR_Project_B
                         Reservations.Start();
                         break;
                     case 3: //Take-Away
+                        CustomerReservations.CreateTakeaway();
                         break;
-                    case 4: //Cancel reservation
+                    case 4: //Cancel Reservation
+                        CustomerReservations.CancelReservation();
                         break;
                     case 5: //Bookings
+                        Console.WriteLine("Not implemented yet!");
+                        Console.Read();
                         break;
                     case 6: //Finance
+                        Console.WriteLine("Not implemented yet!");
+                        Console.Read();
                         break;
                     case 7:
                         Information.Start();

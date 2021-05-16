@@ -19,6 +19,7 @@ namespace HR_Project_B
             LoadReservation();
             LoadTables();
 
+
             while (true)
             {
                 Program.ClearConsole();
@@ -50,13 +51,8 @@ namespace HR_Project_B
                     default:
                         break;
                 }
-
-
             }
-
         }
-
-
         private static void LoadReservation()
         {
             FileManager fm = new FileManager("Reservations.json");
@@ -102,7 +98,7 @@ namespace HR_Project_B
             string email;
             if (Program.account.role == 0)
             {
-                Input emailInput = new Input(new Text("\nEmail:"), new Text("\nPlease enter a valid email!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z0-9_.-@"));
+                Input emailInput = new Input(new Text("\nEmail:"), new Text("\nPlease enter a valid email!", ConsoleColor.Red), new InputSettings(false, 6, 225, "A-Za-z0-9_.-@", "", false));
                 email = emailInput.Display();
                 if (email == null)
                 {
@@ -121,7 +117,7 @@ namespace HR_Project_B
                 {
                     return;
                 }
-
+                
             }
             else
             {
@@ -153,7 +149,9 @@ namespace HR_Project_B
             }
             ReservationOptions table = tables[selected];
 
+
             //Payment
+
             string creditCard;
 
             while (true)
@@ -173,9 +171,8 @@ namespace HR_Project_B
                 }
             }
 
-
-            Reservation reservation = new Reservation(creditCard, "Table reservation", table.id,Program.account.role == 1 ? "": Program.account.id, name, email);
-
+            Reservation reservation = new Reservation(creditCard, "Table reservation", table.id, Program.account.role == 1 ? "" : Program.account.id, name, email);
+           
             Reservation[] temp = new Reservation[reservations.Length + 1];
             for (int i = 0; i < reservations.Length; i++)
             {
@@ -189,7 +186,74 @@ namespace HR_Project_B
 
         }
 
-        private static void VieuwReservation()
+        public static void CreateTakeaway() //should be private
+        {
+            LoadReservation();
+
+            string name;
+            string email;
+            if (Program.account.role == 0)
+            {
+                Input emailInput = new Input(new Text("\nEmail: "), new Text("\nPlease enter a valid email!", ConsoleColor.Red), new InputSettings(false, 6, 225, "A-Za-z0-9_.-@", "", false));
+                email = emailInput.Display();
+                if (email == null)
+                {
+                    return;
+                }
+                else if (!Regex.IsMatch(email, "^[A-Za-z0-9_.-]{1,64}@[A-Za-z-]{1,255}.(com|net|nl|org)$"))
+                {
+                    Text error = new Text("\nPlease enter a valid email.", ConsoleColor.Red);
+                    error.Display();
+
+                }
+
+                Input nameInput = new Input(new Text("\nName: "), new Text("\nPlease enter a valid name!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z "));
+                name = nameInput.Display();
+                if (name == null)
+                {
+                    return;
+                }
+            }
+            else
+            {
+                name = Program.account.name;
+                email = Program.account.email;
+            }
+
+            string creditCard;
+
+            while (true)
+            {
+                Input creditInput = new Input(new Text("\nCredit card: "), new Text("\nPlease enter a credit card!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z ", "", false));
+                creditCard = creditInput.Display();
+
+                if (Payment.ValidateCreditCard(creditCard))
+                {
+                    break;
+                }
+                else
+                {
+                    Text error = new Text("\nPlease enter a valid Credit card.", ConsoleColor.Red);
+                    error.Display();
+                    continue;
+                }
+            }
+
+            Reservation reservation = new Reservation(creditCard, "Takeaway", "", Program.account.role == 1 ? "" : Program.account.id, name, email);
+
+            Reservation[] temp = new Reservation[reservations.Length + 1];
+            for (int i = 0; i < reservations.Length; i++)
+            {
+                temp[i] = reservations[i];
+            }
+            temp[^1] = reservation;
+            reservations = temp;
+            SaveReservation();
+        }
+            
+            
+
+        private static void VieuwReservation() //VIEWreservation
         {
             foreach (Reservation option in FilterReservations())
             {
@@ -232,36 +296,26 @@ namespace HR_Project_B
                     if(option.userID == Program.account.id)
                     {
                         count++;
-
-
                     }
-                
                 }
                 results = new Reservation[count];
                 int index = 0;
                 
                 foreach (Reservation option in reservations)
                 {
-
                     if (option.userID == Program.account.id)
                     {
                         results[index] = option;
                         index++;
-
-
-
                     }
-
-
                 }
-                
             }
             else
             {
                 string email;
                 while (true)
                 {
-                    Input emailInput = new Input(new Text("\nEmail:"), new Text("\nPlease enter a valid email!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z0-9_.-@", "", false));
+                    Input emailInput = new Input(new Text("\nEmail:"), new Text("\nPlease enter a valid email!", ConsoleColor.Red), new InputSettings(false, 6, 225, "A-Za-z0-9_.-@", "", false));
                     email = emailInput.Display();
                     if (!Regex.IsMatch(email, "^[A-Za-z0-9_.-]{1,64}@[A-Za-z-]{1,255}.(com|net|nl|org)$"))
                     {
@@ -274,45 +328,69 @@ namespace HR_Project_B
                 int count = 0;
                 foreach (Reservation option in reservations)
                 {
-
                     if (option.userEmail == email)
                     {
                         count++;
-
-
                     }
-
                 }
                 results = new Reservation[count];
                 int index = 0;
 
                 foreach (Reservation option in reservations)
                 {
-
                     if (option.userEmail == email)
                     {
                         results[index] = option;
                         index++;
-
-
-
                     }
-
-
                 }
             }
-            return results;
-            
+            return results;   
         }
+        public static void CancelReservation()
+        {
+            LoadReservation();
 
+            if (reservations.Length == 0) { Text line01 = new Text("\nThere are no current reservations.\n", ConsoleColor.Red); line01.Display(); Menu menu = new Menu(new Text("Press enter to go back")); menu.Display(); return; }
+            Input orderIDInput = new Input(new Text("\nEnter the unique ID of the reservation you want to cancel: "), new Text("\nPlease enter a valid ID!", ConsoleColor.Red), new InputSettings(false, 8, 8, "a-z0-9"));
+            string orderID = orderIDInput.Display();
+            for (int i = 0; i < reservations.Length; i++)
+            {
+                if (reservations[i].orderID == orderID) 
+                {
+                    //Display order?
+                    Text reservation = new Text("\nDo you want to cancel this order?");
+                    Text[] options = new Text[]
+                    {
+                    new Text("Yes"),
+                    new Text("No"),
+                    };
 
-
-
-
-
-
-
-
-
+                    Menu setupReservation = new Menu(reservation, options);
+                    int response = setupReservation.Display();
+                    if (response == 0) {
+                        Reservation[] temp = new Reservation[reservations.Length - 1];
+                        int index = 0;
+                        for (int j = 0; j < reservations.Length; j++)
+                        {
+                            if (j != i)
+                            {
+                                temp[index] = reservations[j];
+                                index++;
+                            }
+                        }
+                        reservations = temp;
+                        SaveReservation();
+                    }
+                    return;
+                }
+                else if (i == reservations.Length-1 ) {      
+                    Text line01 = new Text("\nYour reservation was not found!\n", ConsoleColor.Red); line01.Display();
+                    Menu menu = new Menu(new Text("Press enter to go back"));
+                    menu.Display();
+                    return;
+                }
+            }
+        }
     }
 }
