@@ -7,6 +7,7 @@ namespace HR_Project_B
     {
         private static MenuCategory[] categories;
         private static FileManager fm = new FileManager("Menu.json");
+        private static ShoppingBasket basket = new ShoppingBasket();
 
         public static void Start()
         {
@@ -89,8 +90,25 @@ namespace HR_Project_B
                 Console.WriteLine("\n");
             }
 
-            Menu menu = new Menu(new Text("Press enter to go back"));
-            menu.Display();
+            Text title = new Text("Select an option below:");
+            Text[] options = new Text[]
+            {
+                new Text("Pay"),
+                new Text("Back")
+            };
+            Menu menu = new Menu(title, options);
+            int selected = menu.Display();
+
+            switch (selected)
+            {
+                case 0:
+                    PayMenu();
+                    break;
+                case 1:
+                    return;
+                default:
+                    break;
+            }
         }
 
         private static void CreateCategory()
@@ -443,6 +461,145 @@ namespace HR_Project_B
                 temp[i] = categories[i].name;
             }
             return temp;
+        }
+
+        private static void PayMenu()
+        {
+            while (true)
+            {
+                Program.ClearConsole();
+                Console.OutputEncoding = System.Text.Encoding.UTF8;
+                int count = 0;
+
+                for (int i = 0; i < categories.Length; i++)
+                {
+                    count += categories[i].items.Count;
+                }
+
+                Text title = new Text("Select an option below:");
+                Text[] options = new Text[count + 2];
+
+                int index = 0;
+                for (int i = 0; i < categories.Length; i++)
+                {
+                    for (int j = 0; j < categories[i].items.Count; j++)
+                    {
+                        MenuItem item = categories[i].items[j];
+                        Text tmp = new Text((index + 1) + ". " + item.name + " (€" + item.price + ")");
+
+                        options[index] = tmp;
+                        index++;
+                    }
+                }
+                options[^1] = new Text("Back");
+                options[^2] = new Text("Next step");
+
+                Menu menu = new Menu(title, options);
+                int selected = menu.Display();
+
+                if (selected == options.Length - 1)
+                {
+                    //back
+                    return;
+                }
+                else if (selected == options.Length - 2)
+                {
+                    //next step
+                    Payment.Start(basket, categories);
+                    title = new Text("Select an option below:");
+                    options = new Text[]
+                    {
+                        new Text("Confirm"),
+                        new Text("Back")
+                    };
+
+                    menu = new Menu(title, options);
+                    selected = menu.Display();
+
+                    if(selected == 0)
+                    {
+                        Program.ClearConsole();
+                        Payment.Start(basket, categories);
+                        Payment.Pay();
+                    }
+                }
+                else
+                {
+                    //select amount
+                    PayMenuItemOptions(selected);
+                }
+            }
+        }
+
+        private static void PayMenuItemOptions(int selectedItem)
+        {
+            while (true)
+            {
+                Program.ClearConsole();
+                Console.OutputEncoding = System.Text.Encoding.UTF8;
+
+                Text title = new Text("Select an option below:");
+                Text[] options = new Text[]
+                {
+                    new Text("Add to basket"),
+                    new Text("Remove from basket"),
+                    new Text("Back")
+                };
+
+                Menu menu = new Menu(title, options);
+                int selected = menu.Display();
+
+                if (selected != 2)
+                {
+                    Input amountInput = new Input(new Text("How many?"), new Text("Please enter an invalid amount.", ConsoleColor.Red), new InputSettings(true));
+                    string result = amountInput.Display();
+                    if (result == null)
+                    {
+                        continue;
+                    }
+
+                    try
+                    {
+                        int amount = int.Parse(result);
+
+                        int index = 0;
+                        string id = "";
+                        for (int i = 0; i < categories.Length; i++)
+                        {
+                            for (int j = 0; j < categories[i].items.Count; j++)
+                            {
+                                if (index == selectedItem)
+                                {
+                                    id = categories[i].items[j].id;
+                                    break;
+                                }
+                                index++;
+                            }
+
+                            if (id.Length > 0)
+                            {
+                                break;
+                            }
+                        }
+
+                        //add to basket
+                        if(selected == 0)
+                        {
+                            basket.AddToBasket(id, amount);
+                        }
+                        else
+                        {
+                            basket.RemoveFromBasket(id, amount);
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        Text error = new Text("\nPlease enter a valid amount!", ConsoleColor.Red);
+                        error.Display();
+                    }
+                }
+                return;
+            }
         }
     }
 }

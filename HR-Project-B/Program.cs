@@ -11,7 +11,13 @@ namespace HR_Project_B
             1 = Customer
             2 = Chef
             3 = Manager
-            4 = Admin 
+            4 = Admin
+
+            Test CreditCard numbers:
+            378282246310005
+            371449635398431
+            30569309025904
+            https://www.paypalobjects.com/en_AU/vhelp/paypalmanager_help/credit_card_numbers.htm
         */
         public static Account[] accounts;
         public static Account account;
