@@ -24,7 +24,7 @@ namespace HR_Project_B
         {
             string name = Program.account.name;
             string email = Program.account.email;
-            if (Program.account.role == 1)
+            if (Program.account.role == 0)
             {
                 Input nameInput = new Input(new Text("\nName:"), new Text("\nPlease enter a valid name!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z ", "", false));
                 name = nameInput.Display();
@@ -52,7 +52,7 @@ namespace HR_Project_B
                 Reservation foundReservation = null;
                 foreach (Reservation reservation in reservations)
                 {
-                    if(reservation.orderID == id)
+                    if(reservation.orderID == id && reservation.status == "Canceled")
                     {
                         foundReservation = reservation;
                         break;
@@ -61,10 +61,13 @@ namespace HR_Project_B
 
                 if (foundReservation == null)
                 {
-                    Text error = new Text("\nPlease enter a valid Reservation code.", ConsoleColor.Red);
+                    Text error = new Text("\nPlease enter a valid Reservation code. If the reservation has been canceled you cant pay for it", ConsoleColor.Red);
                     error.Display();
                     continue;
                 }
+
+                foundReservation.status = "Paid";
+                CustomerReservations.SaveReservation();
                 break;
             }
 
