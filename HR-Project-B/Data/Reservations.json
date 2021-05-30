@@ -1,47 +1,24 @@
 [
   {
     "creditcardNumber": "378282246310005",
-    "orderType": "Table reservation",
-    "orderID": "8e84a074",
+    "orderType": "Reservation",
+    "orderID": "cf12384e",
     "tableID": "a4bfbc0f-9636-42ce-a0b0-1add9e6f68a6",
     "userID": "0",
     "userName": "test",
-    "userEmail": "test@test.nl"
+    "userEmail": "test@test.nl",
+    "date": "29/05/2021 24:00",
+    "status": "Open"
   },
   {
-    "creditcardNumber": "371449635398431",
-    "orderType": "Table reservation",
-    "orderID": "a9e672c6",
-    "tableID": "efa83b37-d569-4dad-ba2a-35c946e14a7f",
-    "userID": "0",
-    "userName": "test",
-    "userEmail": "test@test.nl"
-  },
-  {
-    "creditcardNumber": "30569309025904",
-    "orderType": "Table reservation",
-    "orderID": "72b72c2e",
+    "creditcardNumber": "378282246310005",
+    "orderType": "Reservation",
+    "orderID": "4680f283",
     "tableID": "a4bfbc0f-9636-42ce-a0b0-1add9e6f68a6",
     "userID": "0",
     "userName": "test",
-    "userEmail": "test@test.nl"
-  },
-  {
-    "creditcardNumber": "30569309025904",
-    "orderType": "Takeaway",
-    "orderID": "d4dd88f5",
-    "tableID": "",
-    "userID": "0",
-    "userName": "test",
-    "userEmail": "test@test.nl"
-  },
-  {
-    "creditcardNumber": "30569309025904",
-    "orderType": "Takeaway",
-    "orderID": "9675aeda",
-    "tableID": "",
-    "userID": "0",
-    "userName": "test",
-    "userEmail": "test@test.nl"
+    "userEmail": "test@test.nl",
+    "date": "29/05/2021 22:00",
+    "status": "Paid"
   }
 ]
