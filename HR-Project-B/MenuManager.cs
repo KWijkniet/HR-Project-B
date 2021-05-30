@@ -78,7 +78,7 @@ namespace HR_Project_B
                 {
                     MenuItem item = category.GetItem(i);
 
-                    Text itemText = new Text("\n- " + item.name + " (€" + item.price + "):");
+                    Text itemText = new Text("\n- " + item.name + " (€" + item.price.ToString("0.00") + "):");
                     itemText.Display();
 
                     if (item.description.Length > 0)

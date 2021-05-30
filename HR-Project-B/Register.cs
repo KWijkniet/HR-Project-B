@@ -13,7 +13,8 @@ namespace HR_Project_B
             {
                 new Text("Login"),
                 new Text("Register an account"),
-                new Text("Continue as guest")
+                new Text("Continue as guest"),
+                new Text("Exit")
             };
 
             Menu menu = new Menu(message, messages);
@@ -31,10 +32,12 @@ namespace HR_Project_B
                 case 2:
                     Guest();
                     break;
+                case 3:
+                    Environment.Exit(0);
+                    break;
                 default:
                     break;
             }
-
             return;
         }
 
@@ -42,7 +45,7 @@ namespace HR_Project_B
         {
             while (true)
             {
-                Input emailInput = new Input(new Text("\nEmail:"), new Text("\nPlease enter a valid email!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z0-9_.-@"));
+                Input emailInput = new Input(new Text("\nEmail: "), new Text("\nPlease enter a valid email!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z0-9_.-@"));
                 string email = emailInput.Display();
                 if (email == null)
                 {
@@ -55,7 +58,7 @@ namespace HR_Project_B
                     continue;
                 }
 
-                Input passwordInput = new Input(new Text("\nPassword:"), new Text("\nPlease enter a valid password!", ConsoleColor.Red), new InputSettings(false, 1, 999, "A-Za-z0-9"));
+                Input passwordInput = new Input(new Text("\nPassword: "), new Text("\nPlease enter a valid password!", ConsoleColor.Red), new InputSettings(false, 1, 999, "A-Za-z0-9"));
                 string password = passwordInput.Display();
                 if (password == null)
                 {
@@ -72,7 +75,7 @@ namespace HR_Project_B
                     }
                 }
 
-                if (!hasFound)
+                if (!hasFound) 
                 {
                     Text error = new Text("\nIncorrect email or password. Please try again.", ConsoleColor.Red);
                     error.Display();
@@ -85,7 +88,7 @@ namespace HR_Project_B
         {
             while (true)
             {
-                Input emailInput = new Input(new Text("\nEmail:"), new Text("\nPlease enter a valid email!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z0-9_.-@"));
+                Input emailInput = new Input(new Text("\nEmail: "), new Text("\nPlease enter a valid email!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z0-9_.-@"));
                 string email = emailInput.Display();
                 if (email == null)
                 {
@@ -115,21 +118,21 @@ namespace HR_Project_B
                     continue;
                 }
 
-                Input nameInput = new Input(new Text("\nName:"), new Text("\nPlease enter a valid name!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z "));
+                Input nameInput = new Input(new Text("\nName: "), new Text("\nPlease enter a valid name!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z "));
                 string name = nameInput.Display();
                 if(name == null)
                 {
                     return;
                 }
 
-                Input passwordInput = new Input(new Text("\nPassword:"), new Text("\nPlease enter a valid password!", ConsoleColor.Red), new InputSettings(false, 8, 128, "A-Za-z0-9"));
+                Input passwordInput = new Input(new Text("\nPassword (atleast 8 long and 1 number): "), new Text("\nPlease enter a valid password!", ConsoleColor.Red), new InputSettings(false, 8, 128, "A-Za-z0-9"));
                 string password = passwordInput.Display();
                 if (password == null)
                 {
                     return;
                 }
 
-                Input phoneInput = new Input(new Text("\nPhone Number:"), new Text("\nPlease enter a valid phone number!", ConsoleColor.Red), new InputSettings(false, 10, 10, "0-9"));
+                Input phoneInput = new Input(new Text("\nPhone Number: "), new Text("\nPlease enter a valid phone number!", ConsoleColor.Red), new InputSettings(false, 10, 10, "0-9"));
                 string phone = "+31" + phoneInput.Display();
                 if (phone == null)
                 {

@@ -42,8 +42,8 @@ namespace HR_Project_B
                         CreateReservation();
                         break;
                     case 1:
-                        //Vieuw Category
-                        VieuwReservation();
+                        //View Category
+                        ViewReservation();
                         break;
                     case 2:
                         //back
@@ -98,7 +98,7 @@ namespace HR_Project_B
             string email;
             if (Program.account.role == 0)
             {
-                Input emailInput = new Input(new Text("\nEmail:"), new Text("\nPlease enter a valid email!", ConsoleColor.Red), new InputSettings(false, 6, 225, "A-Za-z0-9_.-@", "", false));
+                Input emailInput = new Input(new Text("\nEmail: "), new Text("\nPlease enter a valid email!", ConsoleColor.Red), new InputSettings(false, 6, 225, "A-Za-z0-9_.-@", "", false));
                 email = emailInput.Display();
                 if (email == null)
                 {
@@ -110,8 +110,9 @@ namespace HR_Project_B
                     error.Display();
 
                 }
-
-                Input nameInput = new Input(new Text("\nName:"), new Text("\nPlease enter a valid name!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z "));
+                
+                Input nameInput = new Input(new Text("\nName: "), new Text("\nPlease enter a valid name!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z "));
+ 
                 name = nameInput.Display();
                 if (name == null)
                 {
@@ -122,8 +123,6 @@ namespace HR_Project_B
             {
                 name = Program.account.name;
                 email = Program.account.email;
-
-
             }
 
             Program.ClearConsole();
@@ -285,7 +284,7 @@ namespace HR_Project_B
             SaveReservation();
         }
            
-        private static void VieuwReservation() //VIEWreservation
+        private static void ViewReservation()
         {
             foreach (Reservation option in FilterReservations())
             {
