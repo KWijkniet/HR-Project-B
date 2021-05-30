@@ -26,12 +26,12 @@ namespace HR_Project_B
             string email = Program.account.email;
             if (Program.account.role == 1)
             {
-                Input nameInput = new Input(new Text("\nName:"), new Text("\nPlease enter a valid name!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z ", "", false));
+                Input nameInput = new Input(new Text("\nName: "), new Text("\nPlease enter a valid name!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z ", "", false));
                 name = nameInput.Display();
 
                 while (true)
                 {
-                    Input emailInput = new Input(new Text("\nEmail:"), new Text("\nPlease enter a valid email!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z0-9_.-@", "", false));
+                    Input emailInput = new Input(new Text("\nEmail: "), new Text("\nPlease enter a valid email!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z0-9_.-@", "", false));
                     email = emailInput.Display();
                     if (!Regex.IsMatch(email, "^[A-Za-z0-9_.-]{1,64}@[A-Za-z-]{1,255}.(com|net|nl|org)$"))
                     {
@@ -45,7 +45,7 @@ namespace HR_Project_B
             CustomerReservations.LoadReservation();
             while (true)
             {
-                Input reservationInput = new Input(new Text("\nReservation Code:"), new Text("\nPlease enter a valid reservation code!", ConsoleColor.Red), new InputSettings(false, 8, 8, "A-Za-z0-9-", "", false));
+                Input reservationInput = new Input(new Text("\nReservation Code: "), new Text("\nPlease enter a valid reservation code!", ConsoleColor.Red), new InputSettings(false, 8, 8, "A-Za-z0-9-", "", false));
                 string id = reservationInput.Display();
 
                 Reservation[] reservations = CustomerReservations.reservations;
@@ -76,6 +76,7 @@ namespace HR_Project_B
 
         public static bool ValidateCreditCard(string creditcard)
         {
+            if (creditcard == null) { return false; }
             int[] parts = new int[creditcard.Length];
 
             for (int i = 0; i < parts.Length; i++)
@@ -109,16 +110,17 @@ namespace HR_Project_B
         {
             Program.ClearConsole();
             Console.WriteLine("\nReceipt:");
+            Console.OutputEncoding = Encoding.UTF8;
 
             Dictionary<string, int> items = basket.GetBasket();
             foreach (string id in items.Keys)
             {
                 MenuItem item = IdToItem(id);
-                Console.WriteLine("{0,-20} {1,7}", $"{item.name} ({items[id]}x)", $"{ item.price * items[id]} $");
+                Console.WriteLine("{0,-20} {1,7}", $"{item.name} ({items[id]}x)", $"€{ Math.Round(item.price * items[id],2):0.00}"); //:0.00 = 5.9 --> 5.90
             }
 
             Console.WriteLine("----------------- +");
-            Console.WriteLine($"Total price = {CalculatePrice()} $");
+            Console.WriteLine($"Total price = €{Math.Round(CalculatePrice(),2):0.00} "); //:0.00 = 5.9 --> 5.90
         }
 
         private static double CalculatePrice()
@@ -209,9 +211,9 @@ namespace HR_Project_B
             for (int i = 0; i < pickedMenuItemInfo.Length; i++)
             {
                 Console.OutputEncoding = Encoding.UTF8;
-                Console.WriteLine("{0,-20} {1,7}", $"{pickedMenuItemInfo[i].Item1} ({pickedMenuItemInfo[i].Item2}x)", $"{ pickedMenuItemInfo[i].Item3 * pickedMenuItemInfo[i].Item2} €");
+                Console.WriteLine("{0,-20} {1,7}", $"{pickedMenuItemInfo[i].Item1} ({pickedMenuItemInfo[i].Item2}x)", $"€{ pickedMenuItemInfo[i].Item3 * pickedMenuItemInfo[i].Item2:0.00}");
             }
-            Console.WriteLine("----------------- +"); Console.WriteLine($"Total price = {CalculateTotalPrice(pickedMenuItemInfo)} €");
+            Console.WriteLine("----------------- +"); Console.WriteLine($"Total price = €{CalculateTotalPrice(pickedMenuItemInfo):0.00}");
         }
     }
 }

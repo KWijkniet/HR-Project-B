@@ -42,9 +42,6 @@ namespace HR_Project_B
             new DashboardOption(7, "Info", new int[0]),
             new DashboardOption(8, "Payment", new int[0]),
             new DashboardOption(9, "Logout", new int[0]),
-
-           
-
         };
 
         public static void Start()

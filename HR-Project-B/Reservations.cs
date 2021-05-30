@@ -50,24 +50,16 @@ namespace HR_Project_B
                     default:
                         break;
                 }
-
-
-            
-            
-           
-            }
-
-
-
-            
+            }   
         }
 
         public static void ViewReservations()
         {
+            Console.OutputEncoding = Encoding.UTF8;
             foreach (ReservationOptions option in reservationOptions)
             {
                 
-                Text optionFee = new Text("\n"+ "Fee: " + option.fee, ConsoleColor.Green);
+                Text optionFee = new Text("\n"+ "Fee: " + "€" + option.fee.ToString("0.00"), ConsoleColor.Green);
                 optionFee.Display();
 
                 Text optionName= new Text("\n" + "Name: "+ option.name, ConsoleColor.Green);
@@ -119,7 +111,7 @@ namespace HR_Project_B
 
         private static void CreateReservationOptions()
         {
-            Input nameInput = new Input(new Text("\n Enter name: "), new Text("\nPlease enter a valid name!", ConsoleColor.Red), new InputSettings());
+            Input nameInput = new Input(new Text("\nEnter name: "), new Text("\nPlease enter a valid name!", ConsoleColor.Red), new InputSettings());
             string name = nameInput.Display();
             if (name == null)
             {
@@ -138,7 +130,7 @@ namespace HR_Project_B
                 }
 
                 try
-                {
+{
                     var parts = fee.Split(".");
                     fee = string.Join(",", parts);
                     feedouble = double.Parse(fee);
@@ -200,9 +192,6 @@ namespace HR_Project_B
                     error.Display();
                 }
             }
-
-
-
             AddReservationOptions(new ReservationOptions(feedouble, name, chairsPerTableInt, tablesInt));
             SaveReservation();
         }
@@ -314,7 +303,7 @@ namespace HR_Project_B
                         while (true)
 
                         {
-                            Input feeInput = new Input(new Text("\n Change cost of fee: "), new Text("\nPlease enter a valid cost of fee!", ConsoleColor.Red), new InputSettings(false, 1, 999, "0-9,."));
+                            Input feeInput = new Input(new Text("\nChange cost of fee: "), new Text("\nPlease enter a valid cost of fee!", ConsoleColor.Red), new InputSettings(false, 1, 999, "0-9,."));
                             string fee = feeInput.Display();
                             if (fee == null)
                             {
@@ -345,7 +334,7 @@ namespace HR_Project_B
                         while (true)
 
                         {
-                            Input chairsPerTableInput = new Input(new Text("\n Change chairs per table: "), new Text("\nPlease enter a valid chairs per table!", ConsoleColor.Red), new InputSettings(false, 1, 999, "0-9"));
+                            Input chairsPerTableInput = new Input(new Text("\nChange chairs per table: "), new Text("\nPlease enter a valid chairs per table!", ConsoleColor.Red), new InputSettings(false, 1, 999, "0-9"));
                             string chairsPerTable = chairsPerTableInput.Display();
                             if (chairsPerTable == null)
                             {
