@@ -13,8 +13,10 @@ namespace HR_Project_B
         public string userID;
         public string userName;
         public string userEmail;
+        public string date;
+        public string status;
 
-        public Reservation(string creditcardNumber, string orderType, string tableID, string userID, string userName, string userEmail)
+        public Reservation(string creditcardNumber, string orderType, string tableID, string userID, string userName, string userEmail, string date)
         {
             this.creditcardNumber = creditcardNumber;
             this.orderType = orderType;
@@ -25,8 +27,9 @@ namespace HR_Project_B
             this.userID = userID;
             this.userName = userName;
             this.userEmail = userEmail;
-
-    }
+            this.date = date;
+            this.status = "Open";
+        }
 
         public Reservation(dynamic data)
         {
@@ -37,15 +40,9 @@ namespace HR_Project_B
             this.userID = data.userID;
             this.userName = data.userName;
             this.userEmail = data.userEmail;
+            this.date = data.date;
+            this.status = data.status;
         }
-        /*
-        id(unique key)
-        account_id
-        items(met de amounts)
-    date
-    credit card
-    en user gegevens als dat persoon geen account heeft
-        */
     }
 }
 
