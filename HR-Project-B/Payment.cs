@@ -12,6 +12,7 @@ namespace HR_Project_B
         private static MenuCategory[] categories;
         private static FileManager fm = new FileManager("Menu.json");
         private static ShoppingBasket basket = new ShoppingBasket();
+        private static FileManager pf = new FileManager("PayFood.json");
 
         public static void Start(ShoppingBasket _basket, MenuCategory[] _categories)
         {
@@ -150,7 +151,27 @@ namespace HR_Project_B
 
             return null;
         }
+        private static void SavePayFood(PayFood data)
+        {
 
+            dynamic[] found = pf.ReadJSON();
+            PayFood[] orderedFood = new PayFood[found.Length];
+            for (int i = 0; i < found.Length; i++)
+            {
+                PayFood item = new PayFood(found[i]);
+
+                orderedFood[i] = item;
+            }
+
+            found = new dynamic[orderedFood.Length + 1];
+            for (int i = 0; i < orderedFood.Length; i++)
+            {
+                found[i] = orderedFood[i];
+            }
+            found[^1] = data;
+
+            pf.WriteJSON(found);
+        }
         //old
         public static string[] GetUserPaymentInformation(int userRole) //Program.account.role
         {
@@ -213,5 +234,6 @@ namespace HR_Project_B
             }
             Console.WriteLine("----------------- +"); Console.WriteLine($"Total price = {CalculateTotalPrice(pickedMenuItemInfo)} €");
         }
+    
     }
 }
