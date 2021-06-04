@@ -6,36 +6,68 @@ namespace HR_Project_B
 {
     class ShoppingBasket
     {
-        private Dictionary<string, int> items = new Dictionary<string, int>();
+        private ShoppingBasketItem[] items = new ShoppingBasketItem[0];
 
         public void AddToBasket(string id, int amount)
         {
-            if (items.ContainsKey(id))
+            foreach (ShoppingBasketItem item in items)
             {
-                items[id] += amount;
+                if (item.id == id)
+                {
+                    item.amount += amount;
+                    return;
+                }
             }
-            else
+
+            ShoppingBasketItem[] tmp = new ShoppingBasketItem[items.Length + 1];
+            for (int i = 0; i < items.Length; i++)
             {
-                items.Add(id, amount);
+                tmp[i] = items[i];
             }
+            tmp[^1] = new ShoppingBasketItem(id, amount);
+            items = tmp;
         }
 
         public void RemoveFromBasket(string id, int amount)
         {
-            if (items.ContainsKey(id))
+            int index = -1;
+            for (int i = 0; i < items.Length; i++)
             {
-                items[id] -= amount;
-
-                if(items[id] <= 0)
+                if (items[i].id == id)
                 {
-                    items.Remove(id);
+                    items[i].amount -= amount;
+                    if (items[i].amount <= 0)
+                    {
+                        index = i;
+                        break;
+                    }
                 }
+            }
+
+            if (index >= 0)
+            {
+                ShoppingBasketItem[] tmp = new ShoppingBasketItem[items.Length - 1];
+                int newIndex = 0;
+                for (int i = 0; i < items.Length; i++)
+                {
+                    if (i != index)
+                    {
+                        tmp[newIndex] = items[newIndex];
+                        newIndex += 1;
+                    }
+                }
+                items = tmp;
             }
         }
 
-        public Dictionary<string, int> GetBasket()
+        public ShoppingBasketItem[] GetBasket()
         {
             return items;
+        }
+
+        public void SetBasket(ShoppingBasketItem[] items)
+        {
+            this.items = items;
         }
     }
 }

@@ -14,14 +14,14 @@ namespace HR_Project_B
     {
         public static ReservationOptions[] tables;
         public static Reservation[] reservations;
-        public static 
+        
             
             
 
         public static void Start()
         {
             LoadReservation();
-            LoadTables();
+            
         }
         //reservation data
         public static void LoadReservation()

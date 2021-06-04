@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using HR_Project_B.Components;
+using Newtonsoft.Json;
 
 namespace HR_Project_B
 
@@ -69,6 +70,7 @@ namespace HR_Project_B
 
                 foundReservation.status = "Paid";
                 CustomerReservations.SaveReservation();
+                //SavePayFood(new PayFood(id,basket));
                 break;
             }
 
@@ -116,26 +118,26 @@ namespace HR_Project_B
             Console.WriteLine("\nReceipt:");
             Console.OutputEncoding = Encoding.UTF8;
 
-            Dictionary<string, int> items = basket.GetBasket();
-            foreach (string id in items.Keys)
+            ShoppingBasketItem[] items = basket.GetBasket();
+            foreach (ShoppingBasketItem shoppingItem in items)
             {
-                MenuItem item = IdToItem(id);
-                Console.WriteLine("{0,-20} {1,7}", $"{item.name} ({items[id]}x)", $"€{ Math.Round(item.price * items[id],2):0.00}"); //:0.00 = 5.9 --> 5.90
+                MenuItem item = IdToItem(shoppingItem.id);
+                Console.WriteLine("{0,-20} {1,7}", $"{item.name} ({shoppingItem.amount}x)", $"€{ Math.Round(item.price * shoppingItem.amount, 2):0.00}"); //:0.00 = 5.9 --> 5.90
             }
 
             Console.WriteLine("----------------- +");
-            Console.WriteLine($"Total price = €{Math.Round(CalculatePrice(),2):0.00} "); //:0.00 = 5.9 --> 5.90
+            Console.WriteLine($"Total price = €{Math.Round(CalculatePrice(), 2):0.00} "); //:0.00 = 5.9 --> 5.90
         }
 
         private static double CalculatePrice()
         {
             double result = 0;
 
-            Dictionary<string, int> items = basket.GetBasket();
-            foreach (string id in items.Keys)
+            ShoppingBasketItem[] items = basket.GetBasket();
+            foreach (ShoppingBasketItem shoppingItem in items)
             {
-                MenuItem item = IdToItem(id);
-                result += item.price * items[id];
+                MenuItem item = IdToItem(shoppingItem.id);
+                result += item.price * shoppingItem.amount;
             }
 
             return result;
@@ -172,8 +174,13 @@ namespace HR_Project_B
             for (int i = 0; i < orderedFood.Length; i++)
             {
                 found[i] = orderedFood[i];
+                //dynamic[] tmp = orderedFood[i].shoppingBasket.GetBasket();
+                //found[i].shoppingBasket = JsonConvert.SerializeObject(tmp, Formatting.Indented);
             }
+           
+
             found[^1] = data;
+            found[^1].shoppingBasket = JsonConvert.SerializeObject(data.shoppingBasket, Formatting.Indented);
 
             pf.WriteJSON(found);
         }

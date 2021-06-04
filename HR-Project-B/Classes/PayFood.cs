@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HR_Project_B.Classes
+namespace HR_Project_B
 {
     class PayFood
     {
@@ -18,7 +18,8 @@ namespace HR_Project_B.Classes
         public PayFood(dynamic data)
         {
             this.orderID = data.orderID;
-            this.shoppingBasket = data.shoppingBasket;
+            this.shoppingBasket = new ShoppingBasket();
+            this.shoppingBasket.SetBasket(data.shoppingBasket);
         }
 
     }

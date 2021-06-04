@@ -7,8 +7,8 @@
     "userID": "0",
     "userName": "test",
     "userEmail": "test@test.nl",
-    "date": "29/05/2021 24:00",
-    "status": "Open"
+    "date": null,
+    "status": null
   },
   {
     "creditcardNumber": "378282246310005",
@@ -18,7 +18,73 @@
     "userID": "0",
     "userName": "test",
     "userEmail": "test@test.nl",
-    "date": "29/05/2021 22:00",
+    "date": null,
+    "status": null
+  },
+  {
+    "creditcardNumber": "378282246310005",
+    "orderType": "Table reservation",
+    "orderID": "a91cac71",
+    "tableID": "a4bfbc0f-9636-42ce-a0b0-1add9e6f68a6",
+    "userID": "16236bbe-09ec-494d-8159-e0cc5b9758cb",
+    "userName": "chef",
+    "userEmail": "chef@chef.nl",
+    "date": null,
+    "status": null
+  },
+  {
+    "creditcardNumber": "378282246310005",
+    "orderType": "Reservation",
+    "orderID": "db503a94",
+    "tableID": "a4bfbc0f-9636-42ce-a0b0-1add9e6f68a6",
+    "userID": "16236bbe-09ec-494d-8159-e0cc5b9758cb",
+    "userName": "chef",
+    "userEmail": "chef@chef.nl",
+    "date": "",
+    "status": "Paid"
+  },
+  {
+    "creditcardNumber": "378282246310005",
+    "orderType": "Reservation",
+    "orderID": "87ca1422",
+    "tableID": "121affaf-f66f-4e08-83f8-9a585626342c",
+    "userID": "16236bbe-09ec-494d-8159-e0cc5b9758cb",
+    "userName": "chef",
+    "userEmail": "chef@chef.nl",
+    "date": "",
+    "status": "Paid"
+  },
+  {
+    "creditcardNumber": "378282246310005",
+    "orderType": "Reservation",
+    "orderID": "cba5c2b2",
+    "tableID": "8cdbb6d8-1ab2-4fca-8e3f-adb6572a19eb",
+    "userID": "16236bbe-09ec-494d-8159-e0cc5b9758cb",
+    "userName": "chef",
+    "userEmail": "chef@chef.nl",
+    "date": "",
+    "status": "Paid"
+  },
+  {
+    "creditcardNumber": "378282246310005",
+    "orderType": "Reservation",
+    "orderID": "47bb3875",
+    "tableID": "efa83b37-d569-4dad-ba2a-35c946e14a7f",
+    "userID": "16236bbe-09ec-494d-8159-e0cc5b9758cb",
+    "userName": "chef",
+    "userEmail": "chef@chef.nl",
+    "date": "",
+    "status": "Paid"
+  },
+  {
+    "creditcardNumber": "378282246310005",
+    "orderType": "Reservation",
+    "orderID": "07b7fe87",
+    "tableID": "efa83b37-d569-4dad-ba2a-35c946e14a7f",
+    "userID": "16236bbe-09ec-494d-8159-e0cc5b9758cb",
+    "userName": "chef",
+    "userEmail": "chef@chef.nl",
+    "date": "",
     "status": "Paid"
   }
 ]
