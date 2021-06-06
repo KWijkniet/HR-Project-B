@@ -10,7 +10,6 @@ using System.Text.RegularExpressions;
 namespace HR_Project_B
 {
     class CustomerReservations
-
     {
         public static ReservationOptions[] tables;
         public static Reservation[] reservations;
@@ -55,7 +54,6 @@ namespace HR_Project_B
         }
 
         public static void LoadReservation()
-
         {
             FileManager fm = new FileManager("Reservations.json");
 
@@ -83,13 +81,10 @@ namespace HR_Project_B
             fm.WriteJSON(foundOptions);
         }
 
-
         private static void LoadTables()
         {
             Reservations.LoadReservation();
             tables = Reservations.reservationOptions;
-
-
         }
 
         private static void CreateReservation()
@@ -158,7 +153,7 @@ namespace HR_Project_B
 
                 if (!ValidateDate(date))
                 {
-                    Text error = new Text("\nPlease enter a valid date!LOL", ConsoleColor.Red);
+                    Text error = new Text("\nPlease enter a valid date!", ConsoleColor.Red);
                     error.Display();
                     continue;
                 }
@@ -454,33 +449,15 @@ namespace HR_Project_B
 
         private static bool ValidateDate(string date)
         {
-            string[] dateTimeParts = date.Split(' ');
-
-            if(dateTimeParts.Length != 2)
+            try
+            {
+                DateTime dateTime = DateTime.Parse(date);
+                return true;
+            }
+            catch (Exception)
             {
                 return false;
             }
-
-            string[] dateParts = dateTimeParts[0].Split('/');
-            string[] timeParts = dateTimeParts[1].Split(':');
-
-            if(dateParts.Length != 3 || timeParts.Length != 2)
-            {
-                return false;
-            }
-
-            if (dateParts[0].Length != 2 || dateParts[1].Length != 2 || dateParts[2].Length != 4 || timeParts[0].Length != 2 || timeParts[1].Length != 2)
-            {
-                return false;
-            }
-
-            //check if the selected date is within opening hours
-            if(int.Parse(dateParts[0]) < 12)
-            {
-                return false;
-            }
-
-            return true;
         }
 
         private static bool ReservationAvailable(string date, ReservationOptions table)
@@ -509,44 +486,26 @@ namespace HR_Project_B
 
         private static bool DateInRange(string reservation, string date)
         {
-            string[] reservationParts = reservation.Split(' ');
-            string[] timePartsA = reservationParts[1].Split(':');
+            DateTime reservationDate = DateTime.Parse(reservation);
 
-            string[] dateParts = date.Split(' ');
-            string[] timePartsB = dateParts[1].Split(':');
+            DateTime rangeMin = reservationDate.AddHours(-2);
+            DateTime rangeMax = reservationDate.AddHours(2);
 
-            if (Math.Abs(int.Parse(timePartsA[0]) - int.Parse(timePartsB[0])) < 2)
-            {
-                return true;
-            }
+            DateTime selectedDate = DateTime.Parse(date);
 
-            return false;
+            return selectedDate > rangeMin && selectedDate < rangeMax;
         }
 
         private static bool CheckExpired(Reservation reservation)
         {
-            string now = DateTime.Now.ToString("dd/MM/yyy hh:mm");
-            string[] nowParts = now.Split(' ');
-            string[] dateNowParts = nowParts[0].Split('/');
-            string[] timeNowParts = nowParts[1].Split(':');
+            DateTime date = DateTime.Parse(reservation.date);
+            DateTime now = DateTime.Now;
 
-            string[] parts = reservation.date.Split(' ');
-            string[] dateParts = parts[0].Split('/');
-            string[] timeParts = parts[1].Split(':');
+            //set reservation date to the time the reservation ends
+            date.AddHours(2);
 
-            //check date
-            if(int.Parse(dateNowParts[0]) > int.Parse(dateParts[0]) || int.Parse(dateNowParts[1]) > int.Parse(dateParts[1]) || int.Parse(dateNowParts[2]) > int.Parse(dateParts[2]))
-            {
-                //Console.WriteLine("Date expired: " + now + " VS " + reservation.date);
-                return true;
-            }
-
-            //check time
-            if (int.Parse(timeNowParts[0]) > int.Parse(timeParts[0]))
-            {
-                //Console.WriteLine("Time expired: " + now + " VS " + reservation.date);
-                return true;
-            }
+            //has expired
+            if (now >= date) { return true; }
 
             return false;
         }
