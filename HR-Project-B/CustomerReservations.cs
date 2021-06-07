@@ -281,9 +281,10 @@ namespace HR_Project_B
            
         private static void ViewReservation()
         {
+            //Loop through all reservations (after applying a filter to the list)
             foreach (Reservation option in FilterReservations())
             {
-
+                //Display the info about the reservation
                 Text optionName = new Text("\n" + "Name: " + option.userName, ConsoleColor.Green);
                 optionName.Display();
                 ReservationOptions foundTable = null;
@@ -321,6 +322,7 @@ namespace HR_Project_B
         private static Reservation[] FilterReservations()
         {
             Reservation[] results;
+            //if the user is logged in return the users reservations
             if (Program.account.role != 0)
             {
                 int count = 0;
@@ -343,6 +345,7 @@ namespace HR_Project_B
                     }
                 }
             }
+            //If the user is a guest ask for credentials and then return all connected reservations
             else
             {
                 string email;
@@ -383,35 +386,45 @@ namespace HR_Project_B
 
         public static void CancelReservation()
         {
+            //Load all reservations from the json
             LoadReservation();
 
+            //Check if there are any reservations
             if (reservations.Length == 0)
             {
+                //Display error and return
                 Text line01 = new Text("\nThere are no current reservations.\n", ConsoleColor.Red);
                 line01.Display();
                 Menu menu = new Menu(new Text("Press enter to go back")); menu.Display();
                 return;
             }
             
+            //Request the unique id that belongs to that reservation
             Input orderIDInput = new Input(new Text("\nEnter the unique ID of the reservation you want to cancel: "), new Text("\nPlease enter a valid ID!", ConsoleColor.Red), new InputSettings(false, 8, 8, "a-z0-9"));
             string orderID = orderIDInput.Display();
             
+            //Find the correct reservation
             for (int i = 0; i < reservations.Length; i++)
             {
+                //Check if the reservation data matches the input and is still valid
                 if (reservations[i].orderID == orderID && reservations[i].status != "Canceled") 
                 {
+                    //Check if it has expired (you are too late)
                     if (reservations[i].status == "Expired" || CheckExpired(reservations[i]))
                     {
+                        //Show error
                         Text expiredText = new Text("\nThis reservation has expired", ConsoleColor.Red);
                         expiredText.Display();
                         
+                        //Update reservation status if needed
                         reservations[i].status = "Expired";
+                        //Save reservations
                         SaveReservation();
 
                         return;
                     }
 
-                    //Display order?
+                    //Cancel order?
                     Text reservation = new Text("\nDo you want to cancel this order?");
                     Text[] options = new Text[]
                     {
@@ -419,26 +432,18 @@ namespace HR_Project_B
                         new Text("No"),
                     };
 
+                    //If yes then set status to canceled
                     Menu setupReservation = new Menu(reservation, options);
                     int response = setupReservation.Display();
                     if (response == 0) {
-                        //Reservation[] temp = new Reservation[reservations.Length - 1];
-                        //int index = 0;
-                        //for (int j = 0; j < reservations.Length; j++)
-                        //{
-                        //    if (j != i)
-                        //    {
-                        //        temp[index] = reservations[j];
-                        //        index++;
-                        //    }
-                        //}
-                        //reservations = temp;
+                        //Change status to canceled
                         reservations[i].status = "Canceled";
                         SaveReservation();
                     }
                     return;
                 }
-                else if (i == reservations.Length-1 ) {      
+                //If none can be found display an error
+                else if (i == reservations.Length-1 ) {
                     Text line01 = new Text("\nYour reservation was not found!\n", ConsoleColor.Red); line01.Display();
                     Menu menu = new Menu(new Text("Press enter to go back"));
                     menu.Display();
@@ -449,6 +454,7 @@ namespace HR_Project_B
 
         private static bool ValidateDate(string date)
         {
+            //Check if the given string is a valid datetime
             try
             {
                 DateTime dateTime = DateTime.Parse(date);
@@ -462,43 +468,57 @@ namespace HR_Project_B
 
         private static bool ReservationAvailable(string date, ReservationOptions table)
         {
+            //Get the count of tables that are available
             int count = table.tables;
+
+            //Check how many tables have been reserved for that time slot
             foreach (Reservation reservation in reservations)
             {
+                //Check if a reservation has expired
                 if (CheckExpired(reservation))
                 {
                     reservation.status = "Expired";
                 }
 
+                //Check if its the correct table, if the status is correct and if it is in the same time slot
                 if(reservation.tableID == table.id && reservation.status == "Open" && reservation.orderType == "Reservation" && DateInRange(reservation.date, date))
                 {
                     count--;
                 }
             }
+            //Save possible changes
             SaveReservation();
 
+            //If all tables have been reserved return false
             if (count <= 0)
             {
                 return false;
             }
+            //There are tables available so return true
             return true;
         }
 
         private static bool DateInRange(string reservation, string date)
         {
+            //Convert string to datetime
             DateTime reservationDate = DateTime.Parse(reservation);
 
+            //Create the range by adding and removing 2 hours from the datetime
             DateTime rangeMin = reservationDate.AddHours(-2);
             DateTime rangeMax = reservationDate.AddHours(2);
 
+            //Convert string to datetime
             DateTime selectedDate = DateTime.Parse(date);
 
+            //Check if the datetime is in the 2 hour range
             return selectedDate > rangeMin && selectedDate < rangeMax;
         }
 
         private static bool CheckExpired(Reservation reservation)
         {
-            DateTime date = DateTime.Parse(reservation.date);
+            //Convert string to datetime
+            DateTime date = DateTime.Parse(reservation.date.ToString());
+            //Get current datetime
             DateTime now = DateTime.Now;
 
             //set reservation date to the time the reservation ends
