@@ -32,7 +32,7 @@ namespace HR_Project_B.Components
                 Console.ForegroundColor = color;
                 Console.BackgroundColor = background;
             }
-
+           
             if (newLine)
             {
                 Console.WriteLine(text);

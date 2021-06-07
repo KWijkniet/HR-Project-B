@@ -20,9 +20,7 @@ namespace HR_Project_B.Components
         {
             title.text += "\n";
             this.title = title;
-
             this.options = options;
-
             this.prefix = prefix;
             this.clearPrefix = "";
 
@@ -30,7 +28,6 @@ namespace HR_Project_B.Components
             {
                 this.clearPrefix += " ";
             }
-
             FixOptionsStringLength();
         }
 
@@ -41,7 +38,6 @@ namespace HR_Project_B.Components
             {
                 returnText
             };
-
             this.prefix = prefix;
             this.clearPrefix = "";
 

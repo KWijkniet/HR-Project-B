@@ -34,7 +34,6 @@ namespace HR_Project_B.Components
                 }
                 return customRegex;
             }
-
             if (ignoreLength)
             {
                 return "^[" + allowedCharacters + "]$";
@@ -75,7 +74,6 @@ namespace HR_Project_B.Components
                     Console.CursorVisible = wasCursorVisible;
                     return null;
                 }
-
                 if (Regex.IsMatch(result, settings.GetRegex()))
                 {
                     Console.CursorVisible = wasCursorVisible;

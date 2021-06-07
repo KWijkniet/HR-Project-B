@@ -10,15 +10,12 @@ using System.Text.RegularExpressions;
 namespace HR_Project_B
 {
     class CustomerReservations
-
     {
-        public static ReservationOptions[] tables;
-        public static Reservation[] reservations;
+        public static ReservationOptions[] tables; public static Reservation[] reservations;
         public static void Start()
         {
             LoadReservation();
             LoadTables();
-
 
             while (true)
             {
@@ -55,7 +52,6 @@ namespace HR_Project_B
         }
 
         public static void LoadReservation()
-
         {
             FileManager fm = new FileManager("Reservations.json");
 
@@ -79,17 +75,13 @@ namespace HR_Project_B
             {
                 foundOptions[i] = reservations[i];
             }
-
             fm.WriteJSON(foundOptions);
         }
-
 
         private static void LoadTables()
         {
             Reservations.LoadReservation();
             tables = Reservations.reservationOptions;
-
-
         }
 
         private static void CreateReservation()
@@ -108,11 +100,9 @@ namespace HR_Project_B
                 {
                     Text error = new Text("\nPlease enter a valid email.", ConsoleColor.Red);
                     error.Display();
-
                 }
                 
                 Input nameInput = new Input(new Text("\nName: "), new Text("\nPlease enter a valid name!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z "));
- 
                 name = nameInput.Display();
                 if (name == null)
                 {
@@ -202,12 +192,11 @@ namespace HR_Project_B
             SaveReservation();
         }
 
-        public static void CreateTakeaway() //should be private
+        public static void CreateTakeaway()
         {
             LoadReservation();
 
-            string name;
-            string email;
+            string name; string email;
             if (Program.account.role == 0)
             {
                 Input emailInput = new Input(new Text("\nEmail: "), new Text("\nPlease enter a valid email!", ConsoleColor.Red), new InputSettings(false, 6, 225, "A-Za-z0-9_.-@", "", false));
@@ -220,7 +209,6 @@ namespace HR_Project_B
                 {
                     Text error = new Text("\nPlease enter a valid email.", ConsoleColor.Red);
                     error.Display();
-
                 }
 
                 Input nameInput = new Input(new Text("\nName: "), new Text("\nPlease enter a valid name!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z "));
@@ -232,8 +220,7 @@ namespace HR_Project_B
             }
             else
             {
-                name = Program.account.name;
-                email = Program.account.email;
+                name = Program.account.name; email = Program.account.email;
             }
 
             string date = "";
@@ -288,7 +275,6 @@ namespace HR_Project_B
         {
             foreach (Reservation option in FilterReservations())
             {
-
                 Text optionName = new Text("\n" + "Name: " + option.userName, ConsoleColor.Green);
                 optionName.Display();
                 ReservationOptions foundTable = null;
@@ -547,7 +533,6 @@ namespace HR_Project_B
                 //Console.WriteLine("Time expired: " + now + " VS " + reservation.date);
                 return true;
             }
-
             return false;
         }
     }

@@ -449,7 +449,6 @@ namespace HR_Project_B
                     index++;
                 }
             }
-
             categories = temp;
         }
 
