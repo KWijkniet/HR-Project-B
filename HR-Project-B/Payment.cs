@@ -158,32 +158,34 @@ namespace HR_Project_B
 
             return null;
         }
-        private static void SavePayFood(PayFood data)
-        {
+        // We did this to make the overvieuw but it didn't work.
 
-            dynamic[] found = pf.ReadJSON();
-            PayFood[] orderedFood = new PayFood[found.Length];
-            for (int i = 0; i < found.Length; i++)
-            {
-                PayFood item = new PayFood(found[i]);
+        //private static void SavePayFood(PayFood data)
+        //{
 
-                orderedFood[i] = item;
-            }
+        //    dynamic[] found = pf.ReadJSON();
+        //    PayFood[] orderedFood = new PayFood[found.Length];
+        //    for (int i = 0; i < found.Length; i++)
+        //    {
+        //        PayFood item = new PayFood(found[i]);
 
-            found = new dynamic[orderedFood.Length + 1];
-            for (int i = 0; i < orderedFood.Length; i++)
-            {
-                found[i] = orderedFood[i];
-                //dynamic[] tmp = orderedFood[i].shoppingBasket.GetBasket();
-                //found[i].shoppingBasket = JsonConvert.SerializeObject(tmp, Formatting.Indented);
-            }
+        //        orderedFood[i] = item;
+        //    }
+
+        //    found = new dynamic[orderedFood.Length + 1];
+        //    for (int i = 0; i < orderedFood.Length; i++)
+        //    {
+        //        found[i] = orderedFood[i];
+        //        //dynamic[] tmp = orderedFood[i].shoppingBasket.GetBasket();
+        //        //found[i].shoppingBasket = JsonConvert.SerializeObject(tmp, Formatting.Indented);
+        //    }
            
 
-            found[^1] = data;
-            found[^1].shoppingBasket = JsonConvert.SerializeObject(data.shoppingBasket, Formatting.Indented);
+        //    found[^1] = data;
+        //    found[^1].shoppingBasket = JsonConvert.SerializeObject(data.shoppingBasket, Formatting.Indented);
 
-            pf.WriteJSON(found);
-        }
+        //    pf.WriteJSON(found);
+        //}
         //old
         public static string[] GetUserPaymentInformation(int userRole) //Program.account.role
         {

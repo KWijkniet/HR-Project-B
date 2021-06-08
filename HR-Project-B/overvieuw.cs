@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using System.IO;
 using HR_Project_B.Components;
 using System.Text.RegularExpressions;
+//We tried to make a overvieuw page were you can see what items are orderd and how much the profit is. But it didn't work because we did get whole time errors or it didn't save the items and show it in to json file.
 
+/*
 namespace HR_Project_B
 {
     class overvieuw
@@ -53,4 +55,4 @@ namespace HR_Project_B
             fm.WriteJSON(foundOptions);
         }
     }
-}
+}*/

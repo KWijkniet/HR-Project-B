@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
-namespace HR_Project_B
+// we did this make for the overvieuw but it didn't work.
+/*namespace HR_Project_B
 {
     class PayFood
     {
@@ -26,4 +26,4 @@ namespace HR_Project_B
 
 
 
-}
+}*/
