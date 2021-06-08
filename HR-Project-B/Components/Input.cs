@@ -40,7 +40,6 @@ namespace HR_Project_B.Components
                     Console.CursorVisible = wasCursorVisible;
                     return null;
                 }
-
                 if (Regex.IsMatch(result, settings.GetRegex()))
                 {
                     Console.CursorVisible = wasCursorVisible;

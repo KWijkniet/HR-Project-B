@@ -43,7 +43,7 @@ namespace HR_Project_B.Components
                 Console.ForegroundColor = color;
                 Console.BackgroundColor = background;
             }
-
+          
             //Should it be displayed on a new line
             if (newLine)
             {

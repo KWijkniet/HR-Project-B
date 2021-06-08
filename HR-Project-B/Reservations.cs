@@ -58,7 +58,6 @@ namespace HR_Project_B
             Console.OutputEncoding = Encoding.UTF8;
             foreach (ReservationOptions option in reservationOptions)
             {
-                
                 Text optionFee = new Text("\n"+ "Fee: " + "€" + option.fee.ToString("0.00"), ConsoleColor.Green);
                 optionFee.Display();
 
@@ -75,7 +74,6 @@ namespace HR_Project_B
             }
             Menu menu = new Menu(new Text("Press enter to go back"));
             menu.Display();
-
         }
 
         // Load accounts from the file
@@ -88,10 +86,7 @@ namespace HR_Project_B
             for (int i = 0; i < foundOptions.Length; i++)
             {
                 ReservationOptions newReservationOptions = new ReservationOptions(foundOptions[i]);
-
                 reservationOptions[i] = newReservationOptions;
-
-
             }
         }
 
@@ -105,7 +100,6 @@ namespace HR_Project_B
             {
                 foundOptions[i] = reservationOptions[i];
             }
-
             fm.WriteJSON(foundOptions);
         }
 
@@ -117,10 +111,9 @@ namespace HR_Project_B
             {
                 return;
             }
-
             double feedouble;
             while (true)
-            
+
             {
                 Input feeInput = new Input(new Text("\nCost of fee: "), new Text("\nPlease enter a valid cost of fee!", ConsoleColor.Red), new InputSettings(false, 1, 999, "0-9,."));
                 string fee = feeInput.Display();
@@ -128,13 +121,11 @@ namespace HR_Project_B
                 {
                     return;
                 }
-
                 try
-{
+                {
                     var parts = fee.Split(".");
                     fee = string.Join(",", parts);
                     feedouble = double.Parse(fee);
-
                     break;
                 }
                 catch (Exception)
@@ -143,10 +134,8 @@ namespace HR_Project_B
                     error.Display();
                 }
             }
-
             int tablesInt;
             while (true)
-
             {
                 Input tablesInput = new Input(new Text("\nNumber of tables: "), new Text("\nPlease enter a valid number of tables!", ConsoleColor.Red), new InputSettings(false, 1, 999, "0-9"));
                 string tables = tablesInput.Display();
@@ -154,12 +143,9 @@ namespace HR_Project_B
                 {
                     return;
                 }
-
                 try
                 {
-
                     tablesInt = int.Parse(tables);
-
                     break;
                 }
                 catch (Exception)
@@ -170,7 +156,6 @@ namespace HR_Project_B
             }
             int chairsPerTableInt;
             while (true)
-
             {
                 Input chairsPerTableInput = new Input(new Text("\nChairs per table: "), new Text("\nPlease enter a valid chairs per table!", ConsoleColor.Red), new InputSettings(false, 1, 999, "0-9"));
                 string chairsPerTable = chairsPerTableInput.Display();
@@ -178,12 +163,9 @@ namespace HR_Project_B
                 {
                     return;
                 }
-
                 try
                 {
-
                     chairsPerTableInt = int.Parse(chairsPerTable);
-
                     break;
                 }
                 catch (Exception)
@@ -220,7 +202,6 @@ namespace HR_Project_B
                     index++;
                 }
             }
-
             reservationOptions = temp;
         }
 
@@ -278,16 +259,13 @@ namespace HR_Project_B
                     new Text("Delete"),
                     new Text("Back"),
                 };
-
                 Menu menu = new Menu(message, messages);
                 int selected = menu.Display();
-
                 Program.ClearConsole();
 
                 switch (selected)
                 {
-                    case 0:
-                        //Edit name
+                    case 0: //Edit name
                         Input nameInput = new Input(new Text("\nChange name: "), new Text("\nPlease enter a valid name!", ConsoleColor.Red), new InputSettings());
                         string name = nameInput.Display();
                         if (name == null)
@@ -297,11 +275,9 @@ namespace HR_Project_B
                         reservation.name = name;
                         SaveReservation();
                         break;
-                    case 1:
-                        // fee
+                    case 1: // fee
                         double feedouble;
                         while (true)
-
                         {
                             Input feeInput = new Input(new Text("\nChange cost of fee: "), new Text("\nPlease enter a valid cost of fee!", ConsoleColor.Red), new InputSettings(false, 1, 999, "0-9,."));
                             string fee = feeInput.Display();
@@ -309,7 +285,6 @@ namespace HR_Project_B
                             {
                                 return;
                             }
-
                             try
                             {
                                 var parts = fee.Split(".");
@@ -326,13 +301,10 @@ namespace HR_Project_B
                                 error.Display();
                             }
                         }
-
                         break;
-                    case 2:
-                        // chairs per table
+                    case 2: // chairs per table
                         int chairsPerTableInt;
                         while (true)
-
                         {
                             Input chairsPerTableInput = new Input(new Text("\nChange chairs per table: "), new Text("\nPlease enter a valid chairs per table!", ConsoleColor.Red), new InputSettings(false, 1, 999, "0-9"));
                             string chairsPerTable = chairsPerTableInput.Display();
@@ -340,10 +312,8 @@ namespace HR_Project_B
                             {
                                 return;
                             }
-
                             try
                             {
-
                                 chairsPerTableInt = int.Parse(chairsPerTable);
                                 reservation.chairsPerTable = chairsPerTableInt;
                                 SaveReservation();
@@ -356,11 +326,9 @@ namespace HR_Project_B
                             }
                         }
                         break;
-                    case 3:
-                        // tables
+                    case 3: // tables
                         int tablesInt;
                         while (true)
-
                         {
                             Input tablesInput = new Input(new Text("\nNumber of tables: "), new Text("\nPlease enter a valid number of tables!", ConsoleColor.Red), new InputSettings(false, 1, 999, "0-9"));
                             string tables = tablesInput.Display();
@@ -368,7 +336,6 @@ namespace HR_Project_B
                             {
                                 return;
                             }
-
                             try
                             {
                                 tablesInt = int.Parse(tables);
@@ -383,14 +350,11 @@ namespace HR_Project_B
                             }
                         }
                         break;
-
-                    case 4:
-                        //Delete
+                    case 4: //Delete
                         RemoveReservationOptions(reservation);
                         SaveReservation();
                         return;
-                    case 5:
-                        //Back
+                    case 5: //Back
                         return;
                     default:
                         break;

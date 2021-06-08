@@ -35,7 +35,6 @@ namespace HR_Project_B
                     Console.ReadKey();
                     continue;
                 }
-                
                 if (selectUser.id == "0")
                 {
                     Text error = new Text("you can't edit the guest account!", ConsoleColor.Red);
@@ -43,7 +42,6 @@ namespace HR_Project_B
                     Console.ReadKey();
                     continue;
                 }
-
                 EditUser(selectUser);
             }
         }
@@ -72,7 +70,6 @@ namespace HR_Project_B
                         new Text("Admin"),
                         new Text("Back"),
                 };
-
                 Menu roleMenu = new Menu(roleText, roles);
                 int selectedRole = roleMenu.Display();
                 if (selectedRole == roles.Length - 1) { return; }

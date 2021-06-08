@@ -41,7 +41,7 @@ namespace HR_Project_B.Components
             {
                 this.clearPrefix += " ";
             }
-
+          
             //Make all the options the same length (using spaces) so the highlighted areas match with the other options
             FixOptionsStringLength();
         }
@@ -54,7 +54,7 @@ namespace HR_Project_B.Components
             {
                 returnText
             };
-
+          
             //Set prefix and clear prefix
             this.prefix = prefix;
             this.clearPrefix = "";
