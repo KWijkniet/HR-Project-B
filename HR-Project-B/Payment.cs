@@ -52,7 +52,7 @@ namespace HR_Project_B
                 Reservation foundReservation = null;
                 foreach (Reservation reservation in reservations)
                 {
-                    if(reservation.orderID == id && reservation.status == "Canceled")
+                    if(reservation.orderID == id && (reservation.status == "Open" || reservation.status == "Expired"))
                     {
                         foundReservation = reservation;
                         break;
@@ -115,11 +115,11 @@ namespace HR_Project_B
             Console.WriteLine("\nReceipt:");
             Console.OutputEncoding = Encoding.UTF8;
 
-            Dictionary<string, int> items = basket.GetBasket();
-            foreach (string id in items.Keys)
+            ShoppingBasketItem[] items = basket.GetBasket();
+            foreach (ShoppingBasketItem shoppingItem in items)
             {
-                MenuItem item = IdToItem(id);
-                Console.WriteLine("{0,-20} {1,7}", $"{item.name} ({items[id]}x)", $"€{ Math.Round(item.price * items[id],2):0.00}"); //:0.00 = 5.9 --> 5.90
+                MenuItem item = IdToItem(shoppingItem.id);
+                Console.WriteLine("{0,-20} {1,7}", $"{item.name} ({shoppingItem.amount}x)", $"€{ Math.Round(item.price * shoppingItem.amount, 2):0.00}"); //:0.00 = 5.9 --> 5.90
             }
 
             Console.WriteLine("----------------- +");
@@ -130,11 +130,11 @@ namespace HR_Project_B
         {
             double result = 0;
 
-            Dictionary<string, int> items = basket.GetBasket();
-            foreach (string id in items.Keys)
+            ShoppingBasketItem[] items = basket.GetBasket();
+            foreach (ShoppingBasketItem shoppingItem in items)
             {
-                MenuItem item = IdToItem(id);
-                result += item.price * items[id];
+                MenuItem item = IdToItem(shoppingItem.id);
+                result += item.price * shoppingItem.amount;
             }
 
             return result;

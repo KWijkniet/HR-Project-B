@@ -595,6 +595,7 @@ namespace HR_Project_B
                     {
                         Text error = new Text("\nPlease enter a valid amount!", ConsoleColor.Red);
                         error.Display();
+                        Console.ReadKey();
                     }
                 }
                 return;

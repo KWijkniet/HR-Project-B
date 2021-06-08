@@ -3,45 +3,11 @@ using System.Text.RegularExpressions;
 
 namespace HR_Project_B.Components
 {
-    class InputSettings
-    {
-        public int minLength;                   //Min length of the string
-        public int maxLength;                   //Max length of the string
-        public string allowedCharacters;        //A regex of the characters that are allowed to be pressed.
-        public string customRegex;              //Custom regex to override the allowedCharacters
-        public bool newLine = false;            //Show the input below the text
-        public bool canEscape = true;           //can you press escape to cancel the input
-
-        //set the settings when creating the input settings (with default values)
-        public InputSettings(bool newLine = false, int minLength = 1, int maxLength = 999, string allowedCharacters = "A-Za-z0-9 ", string customRegex = "", bool canEscape = true)
-        {
-            this.minLength = minLength;
-            this.maxLength = maxLength;
-            this.allowedCharacters = allowedCharacters;
-            this.newLine = newLine;
-            this.customRegex = customRegex;
-            this.canEscape = canEscape;
-        }
-
-        //Get the regex that should be used to validate the input value
-        public string GetRegex(bool ignoreLength = false)
-        {
-            if(customRegex.Length > 0)
-            {
-                if (ignoreLength)
-                {
-                    return Regex.Replace(customRegex, "{.*?}", string.Empty);
-                }
-                return customRegex;
-            }
-            if (ignoreLength)
-            {
-                return "^[" + allowedCharacters + "]$";
-            }
-            return "^[" + allowedCharacters + "]{" + minLength + "," + maxLength + "}$";
-        }
-    }
-
+    /*
+     * The input component makes it easier to ask for a input without going through the troubles of adding alot of while loops and unclean code to check if the value is accaptable.
+     * The input allows for a quick 2 line of simple code to have the functionallity that you require.
+     * To use it all you need are 2 text components (the input label and the error message). The settings are optional.
+     */
     class Input
     {
         public Text text;
@@ -98,6 +64,10 @@ namespace HR_Project_B.Components
                 switch (readKeyResult.Key)
                 {
                     case ConsoleKey.Escape:
+                        if (!settings.canEscape)
+                        {
+                            break;
+                        }
                         return null;
                     case ConsoleKey.Enter:
                         return result;
