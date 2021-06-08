@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using HR_Project_B.Components;
+using Newtonsoft.Json;
 
 namespace HR_Project_B
 
@@ -12,6 +13,7 @@ namespace HR_Project_B
         private static MenuCategory[] categories;
         private static FileManager fm = new FileManager("Menu.json");
         private static ShoppingBasket basket = new ShoppingBasket();
+        private static FileManager pf = new FileManager("PayFood.json");
 
         public static void Start(ShoppingBasket _basket, MenuCategory[] _categories)
         {
@@ -68,6 +70,7 @@ namespace HR_Project_B
 
                 foundReservation.status = "Paid";
                 CustomerReservations.SaveReservation();
+                //SavePayFood(new PayFood(id,basket));
                 break;
             }
 
@@ -123,7 +126,7 @@ namespace HR_Project_B
             }
 
             Console.WriteLine("----------------- +");
-            Console.WriteLine($"Total price = €{Math.Round(CalculatePrice(),2):0.00} "); //:0.00 = 5.9 --> 5.90
+            Console.WriteLine($"Total price = €{Math.Round(CalculatePrice(), 2):0.00} "); //:0.00 = 5.9 --> 5.90
         }
 
         private static double CalculatePrice() //Calculates the total price in basket
@@ -155,5 +158,34 @@ namespace HR_Project_B
 
             return null;
         }
+      
+        // We did this to make the overvieuw but it didn't work.
+
+        //private static void SavePayFood(PayFood data)
+        //{
+
+        //    dynamic[] found = pf.ReadJSON();
+        //    PayFood[] orderedFood = new PayFood[found.Length];
+        //    for (int i = 0; i < found.Length; i++)
+        //    {
+        //        PayFood item = new PayFood(found[i]);
+
+        //        orderedFood[i] = item;
+        //    }
+
+        //    found = new dynamic[orderedFood.Length + 1];
+        //    for (int i = 0; i < orderedFood.Length; i++)
+        //    {
+        //        found[i] = orderedFood[i];
+        //        //dynamic[] tmp = orderedFood[i].shoppingBasket.GetBasket();
+        //        //found[i].shoppingBasket = JsonConvert.SerializeObject(tmp, Formatting.Indented);
+        //    }
+           
+
+        //    found[^1] = data;
+        //    found[^1].shoppingBasket = JsonConvert.SerializeObject(data.shoppingBasket, Formatting.Indented);
+
+        //    pf.WriteJSON(found);
+        //}
     }
 }
