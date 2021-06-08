@@ -80,11 +80,6 @@ namespace HR_Project_B
                     case 5:
                         Information.Start();
                         break;
-                    case 6:
-                        Payment.GetUserPaymentInformation(Program.account.role);
-                        Payment.ShowReceipt(null);
-                        Console.ReadKey();
-                        break;
                     case 7:
                         Program.account = null;
                         return;
