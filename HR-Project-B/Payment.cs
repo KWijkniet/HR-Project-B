@@ -54,7 +54,7 @@ namespace HR_Project_B
                 Reservation foundReservation = null;
                 foreach (Reservation reservation in reservations)
                 {
-                    if(reservation.orderID == id && reservation.status == "Canceled")
+                    if(reservation.orderID == id && (reservation.status == "Open" || reservation.status == "Expired"))
                     {
                         foundReservation = reservation;
                         break;
@@ -80,7 +80,7 @@ namespace HR_Project_B
             menu.Display();
         }
 
-        public static bool ValidateCreditCard(string creditcard)
+        public static bool ValidateCreditCard(string creditcard) //Validates if creditcard info is valid according to creditcard rules
         {
             if (creditcard == null) { return false; }
             int[] parts = new int[creditcard.Length];
@@ -112,7 +112,7 @@ namespace HR_Project_B
             return total % 10 == 0;
         }
 
-        private static void Display()
+        private static void Display() //Displays order in a receipt format
         {
             Program.ClearConsole();
             Console.WriteLine("\nReceipt:");
@@ -129,7 +129,7 @@ namespace HR_Project_B
             Console.WriteLine($"Total price = €{Math.Round(CalculatePrice(), 2):0.00} "); //:0.00 = 5.9 --> 5.90
         }
 
-        private static double CalculatePrice()
+        private static double CalculatePrice() //Calculates the total price in basket
         {
             double result = 0;
 
@@ -158,6 +158,7 @@ namespace HR_Project_B
 
             return null;
         }
+      
         // We did this to make the overvieuw but it didn't work.
 
         //private static void SavePayFood(PayFood data)
@@ -186,68 +187,5 @@ namespace HR_Project_B
 
         //    pf.WriteJSON(found);
         //}
-        //old
-        public static string[] GetUserPaymentInformation(int userRole) //Program.account.role
-        {
-            if (userRole == 0)
-            {
-                Text line1 = new Text("Please fill in the information below:\n", ConsoleColor.Yellow); line1.Display();
-
-                Input nameInput = new Input(new Text("\nName:"), new Text("\nPlease enter a valid name!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z "));
-                string userName = nameInput.Display();
-
-                string userEmail;
-                while (true)
-                {
-                    Input emailInput = new Input(new Text("\nEmail:"), new Text("\nPlease enter a valid email!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z0-9_.-@"));
-                    userEmail = emailInput.Display();
-                    if (!Regex.IsMatch(userEmail, "^[A-Za-z0-9_.-]{1,64}@[A-Za-z-]{1,255}.(com|net|nl|org)$"))
-                    {
-                        Text error = new Text("\nPlease enter a valid email.", ConsoleColor.Red); error.Display();
-                        continue;
-                    }
-                    else { break; }
-                }
-
-                Input phoneInput = new Input(new Text("\nPhone Number:"), new Text("\nPlease enter a valid phone number!", ConsoleColor.Red), new InputSettings(false, 10, 10, "0-9"));
-                string userPhone = "+31" + phoneInput.Display();
-
-                return new string[] { Program.account.id, userName, userEmail, userPhone };
-            }
-            else { return new string[] { Program.account.id, Program.account.name, Program.account.email, Program.account.phone, };}
-        }
-
-        public static double CalculateTotalPrice(Tuple<string, int, double>[] itemInfo) //Takes array with tuples containing <iten name, item amount, item price>
-        {
-            double totalPrice = 0;
-
-            for (int i = 0; i < itemInfo.Length; i++)
-            {
-                totalPrice += itemInfo[i].Item3 * itemInfo[i].Item2;
-            }
-            return totalPrice;
-        }
-
-        public static void ShowReceipt(Tuple<string, int, double>[] itemInfo) //Should take array with tuples containing <iten name, item amount, item price>
-        {
-            Console.Clear();
-            //Dummy Values
-            Tuple<string, int, double> item1 = Tuple.Create("Steak", 2, 7.50);
-            Tuple<string, int, double> item2 = Tuple.Create("Pasta", 1, 6.0);
-            Tuple<string, int, double> item3 = Tuple.Create("Coca Cola", 3, 2.0);
-            Tuple<string, int, double> item4 = Tuple.Create("Ice Cream", 3, 4.50);
-            //Tuple<string, int, double>[] pickedMenuItemInfo = itemInfo;
-            Tuple<string, int, double>[] pickedMenuItemInfo = new Tuple<string, int, double>[] { item1, item2, item3, item4 };
-
-            Console.WriteLine("");
-            Console.WriteLine("Receipt:");
-            for (int i = 0; i < pickedMenuItemInfo.Length; i++)
-            {
-                Console.OutputEncoding = Encoding.UTF8;
-                Console.WriteLine("{0,-20} {1,7}", $"{pickedMenuItemInfo[i].Item1} ({pickedMenuItemInfo[i].Item2}x)", $"€{ pickedMenuItemInfo[i].Item3 * pickedMenuItemInfo[i].Item2:0.00}");
-            }
-            Console.WriteLine("----------------- +"); Console.WriteLine($"Total price = €{CalculateTotalPrice(pickedMenuItemInfo):0.00}");
-        }
-    
     }
 }

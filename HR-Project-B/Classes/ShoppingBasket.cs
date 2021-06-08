@@ -12,7 +12,7 @@ namespace HR_Project_B
         {
             foreach (ShoppingBasketItem item in items)
             {
-                if (item.id == id)
+                if(item.id == id)
                 {
                     item.amount += amount;
                     return;
@@ -33,24 +33,23 @@ namespace HR_Project_B
             int index = -1;
             for (int i = 0; i < items.Length; i++)
             {
-                if (items[i].id == id)
+                if(items[i].id == id)
                 {
                     items[i].amount -= amount;
-                    if (items[i].amount <= 0)
+                    if(items[i].amount <= 0)
                     {
                         index = i;
                         break;
                     }
                 }
             }
-
-            if (index >= 0)
+            if(index >= 0)
             {
                 ShoppingBasketItem[] tmp = new ShoppingBasketItem[items.Length - 1];
                 int newIndex = 0;
                 for (int i = 0; i < items.Length; i++)
                 {
-                    if (i != index)
+                    if(i != index)
                     {
                         tmp[newIndex] = items[newIndex];
                         newIndex += 1;

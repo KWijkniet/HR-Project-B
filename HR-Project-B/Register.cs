@@ -74,7 +74,6 @@ namespace HR_Project_B
                         return;
                     }
                 }
-
                 if (!hasFound) 
                 {
                     Text error = new Text("\nIncorrect email or password. Please try again.", ConsoleColor.Red);
@@ -83,7 +82,6 @@ namespace HR_Project_B
                 }
             }
         }
-
         public static void RegisterAccount()
         {
             while (true)

@@ -10,15 +10,12 @@ using System.Text.RegularExpressions;
 namespace HR_Project_B
 {
     class CustomerReservations
-
     {
-        public static ReservationOptions[] tables;
-        public static Reservation[] reservations;
+        public static ReservationOptions[] tables; public static Reservation[] reservations;
         public static void Start()
         {
             LoadReservation();
             LoadTables();
-
 
             while (true)
             {
@@ -55,7 +52,6 @@ namespace HR_Project_B
         }
 
         public static void LoadReservation()
-
         {
             FileManager fm = new FileManager("Reservations.json");
 
@@ -79,17 +75,13 @@ namespace HR_Project_B
             {
                 foundOptions[i] = reservations[i];
             }
-
             fm.WriteJSON(foundOptions);
         }
-
 
         private static void LoadTables()
         {
             Reservations.LoadReservation();
             tables = Reservations.reservationOptions;
-
-
         }
 
         private static void CreateReservation()
@@ -108,11 +100,9 @@ namespace HR_Project_B
                 {
                     Text error = new Text("\nPlease enter a valid email.", ConsoleColor.Red);
                     error.Display();
-
                 }
                 
                 Input nameInput = new Input(new Text("\nName: "), new Text("\nPlease enter a valid name!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z "));
- 
                 name = nameInput.Display();
                 if (name == null)
                 {
@@ -158,7 +148,7 @@ namespace HR_Project_B
 
                 if (!ValidateDate(date))
                 {
-                    Text error = new Text("\nPlease enter a valid date!LOL", ConsoleColor.Red);
+                    Text error = new Text("\nPlease enter a valid date!", ConsoleColor.Red);
                     error.Display();
                     continue;
                 }
@@ -202,12 +192,11 @@ namespace HR_Project_B
             SaveReservation();
         }
 
-        public static void CreateTakeaway() //should be private
+        public static void CreateTakeaway()
         {
             LoadReservation();
 
-            string name;
-            string email;
+            string name; string email;
             if (Program.account.role == 0)
             {
                 Input emailInput = new Input(new Text("\nEmail: "), new Text("\nPlease enter a valid email!", ConsoleColor.Red), new InputSettings(false, 6, 225, "A-Za-z0-9_.-@", "", false));
@@ -220,7 +209,6 @@ namespace HR_Project_B
                 {
                     Text error = new Text("\nPlease enter a valid email.", ConsoleColor.Red);
                     error.Display();
-
                 }
 
                 Input nameInput = new Input(new Text("\nName: "), new Text("\nPlease enter a valid name!", ConsoleColor.Red), new InputSettings(false, 3, 15, "A-Za-z "));
@@ -232,8 +220,7 @@ namespace HR_Project_B
             }
             else
             {
-                name = Program.account.name;
-                email = Program.account.email;
+                name = Program.account.name; email = Program.account.email;
             }
 
             string date = "";
@@ -286,9 +273,10 @@ namespace HR_Project_B
            
         private static void ViewReservation()
         {
+            //Loop through all reservations (after applying a filter to the list)
             foreach (Reservation option in FilterReservations())
             {
-
+                //Display the info about the reservation
                 Text optionName = new Text("\n" + "Name: " + option.userName, ConsoleColor.Green);
                 optionName.Display();
                 ReservationOptions foundTable = null;
@@ -326,6 +314,7 @@ namespace HR_Project_B
         private static Reservation[] FilterReservations()
         {
             Reservation[] results;
+            //if the user is logged in return the users reservations
             if (Program.account.role != 0)
             {
                 int count = 0;
@@ -348,6 +337,7 @@ namespace HR_Project_B
                     }
                 }
             }
+            //If the user is a guest ask for credentials and then return all connected reservations
             else
             {
                 string email;
@@ -388,35 +378,45 @@ namespace HR_Project_B
 
         public static void CancelReservation()
         {
+            //Load all reservations from the json
             LoadReservation();
 
+            //Check if there are any reservations
             if (reservations.Length == 0)
             {
+                //Display error and return
                 Text line01 = new Text("\nThere are no current reservations.\n", ConsoleColor.Red);
                 line01.Display();
                 Menu menu = new Menu(new Text("Press enter to go back")); menu.Display();
                 return;
             }
             
+            //Request the unique id that belongs to that reservation
             Input orderIDInput = new Input(new Text("\nEnter the unique ID of the reservation you want to cancel: "), new Text("\nPlease enter a valid ID!", ConsoleColor.Red), new InputSettings(false, 8, 8, "a-z0-9"));
             string orderID = orderIDInput.Display();
             
+            //Find the correct reservation
             for (int i = 0; i < reservations.Length; i++)
             {
+                //Check if the reservation data matches the input and is still valid
                 if (reservations[i].orderID == orderID && reservations[i].status != "Canceled") 
                 {
+                    //Check if it has expired (you are too late)
                     if (reservations[i].status == "Expired" || CheckExpired(reservations[i]))
                     {
+                        //Show error
                         Text expiredText = new Text("\nThis reservation has expired", ConsoleColor.Red);
                         expiredText.Display();
                         
+                        //Update reservation status if needed
                         reservations[i].status = "Expired";
+                        //Save reservations
                         SaveReservation();
 
                         return;
                     }
 
-                    //Display order?
+                    //Cancel order?
                     Text reservation = new Text("\nDo you want to cancel this order?");
                     Text[] options = new Text[]
                     {
@@ -424,26 +424,18 @@ namespace HR_Project_B
                         new Text("No"),
                     };
 
+                    //If yes then set status to canceled
                     Menu setupReservation = new Menu(reservation, options);
                     int response = setupReservation.Display();
                     if (response == 0) {
-                        //Reservation[] temp = new Reservation[reservations.Length - 1];
-                        //int index = 0;
-                        //for (int j = 0; j < reservations.Length; j++)
-                        //{
-                        //    if (j != i)
-                        //    {
-                        //        temp[index] = reservations[j];
-                        //        index++;
-                        //    }
-                        //}
-                        //reservations = temp;
+                        //Change status to canceled
                         reservations[i].status = "Canceled";
                         SaveReservation();
                     }
                     return;
                 }
-                else if (i == reservations.Length-1 ) {      
+                //If none can be found display an error
+                else if (i == reservations.Length-1 ) {
                     Text line01 = new Text("\nYour reservation was not found!\n", ConsoleColor.Red); line01.Display();
                     Menu menu = new Menu(new Text("Press enter to go back"));
                     menu.Display();
@@ -454,100 +446,79 @@ namespace HR_Project_B
 
         private static bool ValidateDate(string date)
         {
-            string[] dateTimeParts = date.Split(' ');
-
-            if(dateTimeParts.Length != 2)
+            //Check if the given string is a valid datetime
+            try
+            {
+                DateTime dateTime = DateTime.Parse(date);
+                return true;
+            }
+            catch (Exception)
             {
                 return false;
             }
-
-            string[] dateParts = dateTimeParts[0].Split('/');
-            string[] timeParts = dateTimeParts[1].Split(':');
-
-            if(dateParts.Length != 3 || timeParts.Length != 2)
-            {
-                return false;
-            }
-
-            if (dateParts[0].Length != 2 || dateParts[1].Length != 2 || dateParts[2].Length != 4 || timeParts[0].Length != 2 || timeParts[1].Length != 2)
-            {
-                return false;
-            }
-
-            //check if the selected date is within opening hours
-            if(int.Parse(dateParts[0]) < 12)
-            {
-                return false;
-            }
-
-            return true;
         }
 
         private static bool ReservationAvailable(string date, ReservationOptions table)
         {
+            //Get the count of tables that are available
             int count = table.tables;
+
+            //Check how many tables have been reserved for that time slot
             foreach (Reservation reservation in reservations)
             {
+                //Check if a reservation has expired
                 if (CheckExpired(reservation))
                 {
                     reservation.status = "Expired";
                 }
 
+                //Check if its the correct table, if the status is correct and if it is in the same time slot
                 if(reservation.tableID == table.id && reservation.status == "Open" && reservation.orderType == "Reservation" && DateInRange(reservation.date, date))
                 {
                     count--;
                 }
             }
+            //Save possible changes
             SaveReservation();
 
+            //If all tables have been reserved return false
             if (count <= 0)
             {
                 return false;
             }
+            //There are tables available so return true
             return true;
         }
 
         private static bool DateInRange(string reservation, string date)
         {
-            string[] reservationParts = reservation.Split(' ');
-            string[] timePartsA = reservationParts[1].Split(':');
+            //Convert string to datetime
+            DateTime reservationDate = DateTime.Parse(reservation);
 
-            string[] dateParts = date.Split(' ');
-            string[] timePartsB = dateParts[1].Split(':');
+            //Create the range by adding and removing 2 hours from the datetime
+            DateTime rangeMin = reservationDate.AddHours(-2);
+            DateTime rangeMax = reservationDate.AddHours(2);
 
-            if (Math.Abs(int.Parse(timePartsA[0]) - int.Parse(timePartsB[0])) < 2)
-            {
-                return true;
-            }
+            //Convert string to datetime
+            DateTime selectedDate = DateTime.Parse(date);
 
-            return false;
+            //Check if the datetime is in the 2 hour range
+            return selectedDate > rangeMin && selectedDate < rangeMax;
         }
 
         private static bool CheckExpired(Reservation reservation)
         {
-            string now = DateTime.Now.ToString("dd/MM/yyy hh:mm");
-            string[] nowParts = now.Split(' ');
-            string[] dateNowParts = nowParts[0].Split('/');
-            string[] timeNowParts = nowParts[1].Split(':');
+            //Convert string to datetime
+            DateTime date = DateTime.Parse(reservation.date.ToString());
+            //Get current datetime
+            DateTime now = DateTime.Now;
 
-            string[] parts = reservation.date.Split(' ');
-            string[] dateParts = parts[0].Split('/');
-            string[] timeParts = parts[1].Split(':');
+            //set reservation date to the time the reservation ends
+            date.AddHours(2);
 
-            //check date
-            if(int.Parse(dateNowParts[0]) > int.Parse(dateParts[0]) || int.Parse(dateNowParts[1]) > int.Parse(dateParts[1]) || int.Parse(dateNowParts[2]) > int.Parse(dateParts[2]))
-            {
-                //Console.WriteLine("Date expired: " + now + " VS " + reservation.date);
-                return true;
-            }
-
-            //check time
-            if (int.Parse(timeNowParts[0]) > int.Parse(timeParts[0]))
-            {
-                //Console.WriteLine("Time expired: " + now + " VS " + reservation.date);
-                return true;
-            }
-
+            //has expired
+            if (now >= date) { return true; }
+          
             return false;
         }
     }

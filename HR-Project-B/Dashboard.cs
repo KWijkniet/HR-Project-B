@@ -6,9 +6,7 @@ namespace HR_Project_B
 {
     public class DashboardOption
     {
-        public string name;
-        public int id;
-        public int[] allowedRoles;
+        public string name; public int id; public int[] allowedRoles;
 
         public DashboardOption(int id, string name, int[] options)
         {
@@ -34,11 +32,10 @@ namespace HR_Project_B
             new DashboardOption(0, "Menu", new int[0]),
             new DashboardOption(1, "Manage Users", new int[]{4}),
             new DashboardOption(2, "Manage Tables", new int[]{4}),
-            new DashboardOption(8,"Reservation",new int []{0,1,3}),
+            new DashboardOption(8, "Reservation",new int []{0,1,3}),
             new DashboardOption(3, "Take-away", new int[]{0,1}),
             new DashboardOption(4, "Cancel reservation", new int[]{0,1}),
             new DashboardOption(5, "Info", new int[0]),
-            new DashboardOption(6, "Payment", new int[0]),
             new DashboardOption(7, "Logout", new int[0]),
         };
 
@@ -58,7 +55,6 @@ namespace HR_Project_B
                 {
                     messages[i] = new Text(menuOptions[i].name);
                 }
-
                 Menu menu = new Menu(message, messages);
                 int selected = menu.Display();
 
@@ -66,19 +62,19 @@ namespace HR_Project_B
 
                 switch (menuOptions[selected].id)
                 {
-                    case 0:
+                    case 0: //Menu CRUD
                         MenuManager.Start();
                         break;
-                    case 1:
+                    case 1: //User CRUD
                         UserManager.Start();
                         break;
-                    case 2:
+                    case 2: //Reservation CRUD
                         Reservations.Start();
                         break;
-                    case 3: //Take-Away
+                    case 3: //Make take-away
                         CustomerReservations.CreateTakeaway();
                         break;
-                    case 4: //Cancel Reservation
+                    case 4: //Cancel reservation
                         CustomerReservations.CancelReservation();
                         break;
                     case 5:
