@@ -54,7 +54,6 @@ namespace HR_Project_B
                     string[] lines = File.ReadAllLines(path);
                     lines[i] = json;
 
-
                     StreamWriter sw = new StreamWriter(path, false);
                     foreach (string line in lines)
                     {
@@ -63,7 +62,6 @@ namespace HR_Project_B
                     sw.Close();
                     return;
                 }
-
                 i++;
             }
         }

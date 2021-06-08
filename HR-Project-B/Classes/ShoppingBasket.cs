@@ -43,7 +43,6 @@ namespace HR_Project_B
                     }
                 }
             }
-
             if(index >= 0)
             {
                 ShoppingBasketItem[] tmp = new ShoppingBasketItem[items.Length - 1];

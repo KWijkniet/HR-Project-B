@@ -7,8 +7,8 @@ namespace HR_Project_B
     class Reservation
     {
         public string creditcardNumber;
-        public string orderType; //take-away || table reservation
-        public string orderID; //unique
+        public string orderType;
+        public string orderID;
         public string tableID;
         public string userID;
         public string userName;
