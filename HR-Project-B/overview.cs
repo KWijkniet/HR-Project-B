@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using HR_Project_B.Components;
 using System.Text.RegularExpressions;
-//We tried to make a overvieuw page were you can see what items are orderd and how much the profit is. But it didn't work because we did get whole time errors or it didn't save the items and show it in to json file.
+//We tried to make an overview page where you can see what items are ordered and what the profit is, but it didn't work due to numerous errors we weren't able to fix, such as saving the items and sending it to a json file.
 
 /*
 namespace HR_Project_B
