@@ -21,10 +21,10 @@
     "tables": 3
   },
   {
-    "id": "8cdbb6d8-1ab2-4fca-8e3f-adb6572a19eb",
-    "fee": 3.0,
-    "name": "dd",
-    "chairsPerTable": 3,
-    "tables": 3
+    "id": "1043b7d3-b5f0-497b-90d1-05e5ea6bf24c",
+    "fee": 2.6,
+    "name": "Single Chair",
+    "chairsPerTable": 1,
+    "tables": 4
   }
 ]

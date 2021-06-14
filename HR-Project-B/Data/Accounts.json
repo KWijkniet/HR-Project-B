@@ -19,8 +19,24 @@
     "id": "16236bbe-09ec-494d-8159-e0cc5b9758cb",
     "name": "chef",
     "password": "chef",
-    "role": 3,
+    "role": 1,
     "email": "chef@chef.nl",
     "phone": "+31 123456789"
+  },
+  {
+    "id": "fe0800ef-97ef-4667-a95a-0059aca4f9fc",
+    "name": "jane doe",
+    "password": "password1",
+    "role": 1,
+    "email": "jane@doe.nl",
+    "phone": "+310612345678"
+  },
+  {
+    "id": "720bc7ec-db3e-453b-a459-194a284e5eeb",
+    "name": "john doe",
+    "password": "johndoe1",
+    "role": 1,
+    "email": "john@doe.nl",
+    "phone": "+310612345678"
   }
 ]

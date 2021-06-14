@@ -180,7 +180,7 @@ namespace HR_Project_B
                 }
             }
 
-            Reservation reservation = new Reservation(creditCard, "Reservation", table.id, Program.account.role == 1 ? "" : Program.account.id, name, email, date);
+            Reservation reservation = new Reservation(creditCard, "Reservation", table.id, Program.account.role == 0 ? "" : Program.account.id, name, email, date);
            
             Reservation[] temp = new Reservation[reservations.Length + 1];
             for (int i = 0; i < reservations.Length; i++)
@@ -320,7 +320,7 @@ namespace HR_Project_B
                 int count = 0;
                 foreach (Reservation option in reservations)
                 {
-                    if(option.userID == Program.account.id)
+                    if(option.userName == Program.account.name && option.userEmail == Program.account.email)
                     {
                         count++;
                     }
@@ -330,7 +330,7 @@ namespace HR_Project_B
                 
                 foreach (Reservation option in reservations)
                 {
-                    if (option.userID == Program.account.id)
+                    if (option.userName == Program.account.name && option.userEmail == Program.account.email)
                     {
                         results[index] = option;
                         index++;

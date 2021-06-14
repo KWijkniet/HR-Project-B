@@ -56,15 +56,15 @@
     ]
   },
   {
-    "id": "a144ed39-d16c-4aac-b9ea-8b2dfcf86c0a",
+    "id": "1d17fd0d-1cc0-48ed-aa23-78e45838705e",
     "name": "test",
-    "description": "test",
+    "description": "new description",
     "items": [
       {
-        "id": "5b8bf795-b600-4935-88a3-f5a2ca00394f",
-        "categoryId": "a144ed39-d16c-4aac-b9ea-8b2dfcf86c0a",
-        "name": "test item",
-        "description": "test",
+        "id": "02fe0bc8-1a2c-43ae-92e1-b865a339e001",
+        "categoryId": "1d17fd0d-1cc0-48ed-aa23-78e45838705e",
+        "name": "product",
+        "description": "description",
         "price": 10.0
       }
     ]

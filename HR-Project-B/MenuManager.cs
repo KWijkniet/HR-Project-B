@@ -12,7 +12,7 @@ namespace HR_Project_B
         public static void Start()
         {
             LoadMenu();
-
+            basket = new ShoppingBasket();
             if (Program.account.role <= 1 || Program.account.role == 3)
             {
                 ViewMenu();

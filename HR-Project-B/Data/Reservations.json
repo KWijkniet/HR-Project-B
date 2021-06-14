@@ -20,5 +20,38 @@
     "userEmail": "test@test.com",
     "date": "09/11/2021 11:11",
     "status": "Paid"
+  },
+  {
+    "creditcardNumber": "378282246310005",
+    "orderType": "Reservation",
+    "orderID": "a5b6f4a4",
+    "tableID": "8cdbb6d8-1ab2-4fca-8e3f-adb6572a19eb",
+    "userID": "",
+    "userName": "jane doe",
+    "userEmail": "jane@doe.nl",
+    "date": "12/06/2021 15:00",
+    "status": "Expired"
+  },
+  {
+    "creditcardNumber": "378282246310005",
+    "orderType": "Reservation",
+    "orderID": "3779ad55",
+    "tableID": "a4bfbc0f-9636-42ce-a0b0-1add9e6f68a6",
+    "userID": "",
+    "userName": "test",
+    "userEmail": "test@test.nl",
+    "date": "28/06/2021 17:00",
+    "status": "Paid"
+  },
+  {
+    "creditcardNumber": "378282246310005",
+    "orderType": "Reservation",
+    "orderID": "b91a89dd",
+    "tableID": "1043b7d3-b5f0-497b-90d1-05e5ea6bf24c",
+    "userID": "720bc7ec-db3e-453b-a459-194a284e5eeb",
+    "userName": "john doe",
+    "userEmail": "john@doe.nl",
+    "date": "12/06/2021 19:00",
+    "status": "Paid"
   }
 ]
